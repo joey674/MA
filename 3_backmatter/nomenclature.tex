@@ -1,0 +1,42 @@
+%!TEX root = ./main.tex
+\makenomenclature
+
+% Überschrift
+\renewcommand{\nomname}{Abkürzungs- und Symbolverzeichnis}
+
+% Makro für Einheiten
+\newcommand{\nomunit}[1]{\renewcommand{\nomentryend}{\hfill $\left[ #1 \right]$} }
+
+% Nomenclaturabschnitte definieren
+\renewcommand{\nomgroup}[1]{%
+	\ifthenelse{\equal{#1}{S}}{\item[\textbf{Symbolverzeichnis}]}{%
+		\ifthenelse{\equal{#1}{A}}{\item[\textbf{Abkürzungsverzeichnis}]} {
+		  \ifthenelse{\equal{#1}{I}}{\item[\textbf{Indexverzeichnis}]} {} } }	
+		 }
+
+% Einträge hinzufügen
+
+% Formelzeichen
+% Hier die verwendeten Formel- und Symbolzeichen auflisten. Diese dienen nur als Beispiel
+\nomenclature[S]{$\dot{m''}$}{spezifischer Massenstrom \nomunit{\frac{kg}{s m^{2}}}}
+\nomenclature[S]{$D$}{Diffusionskoeffizient \nomunit{\frac{m^{2}}{s}}}
+\nomenclature[S]{$C$}{Massenkonzentration \nomunit{\frac{kg}{m^{3}}}}
+\nomenclature[S]{...}{Formelzeichen hinzufügen \nomunit{Einheit}}
+
+% Indizes 
+% Hier die verwendeten Indizes auflisten. Dies dient nur als Beispiel
+\nomenclature[I]{$I$}{Innerhalb der Wand direkt an der Gasseite}%
+\nomenclature[I]{$W$}{Wasser}%
+\nomenclature[I]{...}{Index hinzufügen}%
+
+% Abkürzungen
+% Hier die verwendeten Abkürzungen auflisten. Dies dient nur als Beispiel
+\nomenclature[A]{$TPMS$}{Dreifach periodische Minimaloberfläche}%
+\nomenclature[A]{$spez.$}{spezifisch}%
+\nomenclature[A]{$i.A.$}{im Allgemeinen}%
+\nomenclature[A]{...}{Abkürzungen hinzufügen}
+
+\cleardoublepage% or \clearpage
+\markboth{\nomname}{\nomname}
+\printnomenclature
+

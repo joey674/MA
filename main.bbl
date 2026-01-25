@@ -1,0 +1,113 @@
+% $ biblatex auxiliary file $
+% $ biblatex bbl format version 3.1 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated by
+% biber as required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+
+\refsection{0}
+  \datalist[entry]{none/global//global/global}
+    \entry{Abel2000}{article}{}
+      \name{author}{5}{}{%
+        {{hash=eeec5c2a61a67586eff721b0dc6e7dd3}{%
+           family={Abel},
+           familyi={A\bibinitperiod},
+           given={O.},
+           giveni={O\bibinitperiod}}}%
+        {{hash=4a7a6643975924a35184e56c96fc5b73}{%
+           family={Helbig},
+           familyi={H\bibinitperiod},
+           given={A.},
+           giveni={A\bibinitperiod}}}%
+        {{hash=ecdd74ce20aa7e3e8b146501537479fb}{%
+           family={Marquardt},
+           familyi={M\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=79335455585a23d8b51f9c79fb2df077}{%
+           family={Zwick},
+           familyi={Z\bibinitperiod},
+           given={H.},
+           giveni={H\bibinitperiod}}}%
+        {{hash=30572e8f0f82e11c61e8cfadb2c5deb7}{%
+           family={Daszkowski},
+           familyi={D\bibinitperiod},
+           given={T.},
+           giveni={T\bibinitperiod}}}%
+      }
+      \strng{namehash}{889d1edd2bd4ab018f97899a05319ed2}
+      \strng{fullhash}{ce9f89a3e6fcb8b96d8010a0c051da15}
+      \strng{bibnamehash}{ce9f89a3e6fcb8b96d8010a0c051da15}
+      \strng{authorbibnamehash}{ce9f89a3e6fcb8b96d8010a0c051da15}
+      \strng{authornamehash}{889d1edd2bd4ab018f97899a05319ed2}
+      \strng{authorfullhash}{ce9f89a3e6fcb8b96d8010a0c051da15}
+      \field{labelalpha}{Abel2000}
+      \field{sortinit}{1}
+      \field{sortinithash}{50c6687d7fc80f50136d75228e3c59ba}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Journal of Process Control}
+      \field{number}{4}
+      \field{title}{Productivity optimization of an industrial semi-batch polymerization reactor under safety constraints}
+      \field{volume}{10}
+      \field{year}{2000}
+      \field{pages}{351\bibrangedash 362}
+      \range{pages}{12}
+      \verb{doi}
+      \verb 10.1016/S0959-1524(99)00049-9
+      \endverb
+    \endentry
+    \entry{Marquardt2005}{article}{}
+      \name{author}{2}{}{%
+        {{hash=ecdd74ce20aa7e3e8b146501537479fb}{%
+           family={Marquardt},
+           familyi={M\bibinitperiod},
+           given={W.},
+           giveni={W\bibinitperiod}}}%
+        {{hash=ed18cf9d75d22cdd3f9fa8587e409ef3}{%
+           family={Mönnigmann},
+           familyi={M\bibinitperiod},
+           given={M.},
+           giveni={M\bibinitperiod}}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \strng{fullhash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \strng{bibnamehash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \strng{authorbibnamehash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \strng{authornamehash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \strng{authorfullhash}{dbdd63218b4fac2e7de1e88d4213cb8e}
+      \field{labelalpha}{Marq2005}
+      \field{sortinit}{2}
+      \field{sortinithash}{ed39bb39cf854d5250e95b1c1f94f4ed}
+      \field{labelnamesource}{author}
+      \field{labeltitlesource}{title}
+      \field{journaltitle}{Computers and Chemical Engineering}
+      \field{number}{6}
+      \field{title}{{Constructive nonlinear dynamics in process systems engineering}}
+      \field{volume}{29}
+      \field{year}{2005}
+      \field{pages}{1265\bibrangedash 1275}
+      \range{pages}{11}
+      \verb{doi}
+      \verb 10.1016/j.compchemeng.2005.02.009
+      \endverb
+    \endentry
+  \enddatalist
+\endrefsection
+\endinput
+
