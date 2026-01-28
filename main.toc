@@ -19,13 +19,13 @@
 \contentsline {section}{\numberline {2.2}Dense 3D Reconstruction}{3}{section.2.2}%
 \contentsline {subsection}{\numberline {2.2.1}Related Work}{4}{subsection.2.2.1}%
 \contentsline {subsection}{\numberline {2.2.2}State of the Art: DA3}{9}{subsection.2.2.2}%
-\contentsline {section}{\numberline {2.3}SLAM and Manifold Optimization}{14}{section.2.3}%
-\contentsline {chapter}{\numberline {3}Materials and Methods}{15}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Neural Network Architecture and Training}{15}{section.3.1}%
-\contentsline {section}{\numberline {3.2}Real-Time Dense SLAM Framework}{15}{section.3.2}%
-\contentsline {chapter}{\numberline {4}Results and Discussion}{16}{chapter.4}%
-\contentsline {chapter}{\numberline {5}Conclusion and Outlook}{17}{chapter.5}%
-\contentsline {chapter}{\nonumberline Bibliography}{18}{chapter*.15}%
-\contentsline {chapter}{\nonumberline List of Figures}{19}{chapter*.16}%
-\contentsline {chapter}{\nonumberline List of Tables}{20}{chapter*.17}%
-\contentsline {chapter}{\numberline {A}Appendix}{21}{appendix.A}%
+\contentsline {section}{\numberline {2.3}SLAM and Optimization}{14}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Materials and Methods}{19}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Neural Network Architecture and Training}{19}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Real-Time Dense SLAM Framework}{19}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Results and Discussion}{20}{chapter.4}%
+\contentsline {chapter}{\numberline {5}Conclusion and Outlook}{21}{chapter.5}%
+\contentsline {chapter}{\nonumberline Bibliography}{22}{chapter*.20}%
+\contentsline {chapter}{\nonumberline List of Figures}{24}{chapter*.21}%
+\contentsline {chapter}{\nonumberline List of Tables}{25}{chapter*.22}%
+\contentsline {chapter}{\numberline {A}Appendix}{26}{appendix.A}%

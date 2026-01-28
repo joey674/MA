@@ -232,5 +232,67 @@ This training strategy enables DA3 to effectively leverage heterogeneous dataset
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{SLAM and Manifold Optimization}
-\label{sec:slam_theory}
+\section{SLAM and Optimization}
+\label{sec:slam_and_optimization}
+Visual Simultaneous Localization and Mapping (SLAM) estimates the camera trajectory while building a map of the environment from image streams. A comprehensive survey of the field can be found in~\cite{cadena2016slam}. Classical visual SLAM systems are often keyframe-based and feature-driven, e.g., PTAM~\cite{klein2007ptam} and ORB-SLAM/ORB-SLAM2~\cite{murartal2015orbslam,murartal2017orbslam2}. In contrast, direct methods such as LSD-SLAM~\cite{engel2014lsdslam} and DSO~\cite{engel2018dso} avoid explicit feature matching and minimize photometric error over selected pixels. These two families share a common structure: a front-end responsible for data association and pose tracking, and a back-end that enforces global consistency via optimization.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Standard Visual SLAM Pipeline}
+Despite differences in sensors and implementations, most classical visual SLAM systems follow a modular pipeline that separates tracking, mapping, and optimization~\cite{cadena2016slam,murartal2015orbslam,murartal2017orbslam2}, as illustrated in Fig.~\ref{fig:slam_pipeline}.
+
+\begin{enumerate}
+    \item \textbf{Initialization:} the system is bootstrapped by estimating an initial set of camera poses and map points from a short image sequence, typically using monocular epipolar geometry or direct depth measurements in stereo/RGB-D settings.
+
+    \item \textbf{Tracking (front-end):} for each incoming frame, visual features (e.g., ORB keypoints) are extracted and matched against the local map. The current camera pose is estimated by solving a Perspective-$n$-Point (PnP) or epipolar geometry problem, with robust outlier rejection commonly performed using RANSAC to handle incorrect correspondences.
+
+    \item \textbf{Local mapping:} selected keyframes are inserted into the map, new 3D landmarks are triangulated, and redundant points or keyframes are culled. To maintain local consistency, a local bundle adjustment (BA) is applied to jointly refine recent camera poses and map points.
+
+    \item \textbf{Loop closure and global optimization:} revisited places are detected using visual place recognition. Once a loop is confirmed, global consistency is enforced by pose graph optimization or global bundle adjustment, correcting accumulated drift in camera poses and the map.
+\end{enumerate}
+
+This clear separation between a fast front-end for real-time pose tracking and a back-end for global optimization has been a defining characteristic of classical visual SLAM systems.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/slam_and_optimization_orbslam.png}
+    \caption{Standard visual SLAM pipeline}
+    \label{fig:slam_pipeline}
+\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Robust Estimation with RANSAC}
+In practical scenes, data association inevitably contains outliers due to repetitive textures, motion blur, and dynamic objects. RANSAC (Random Sample Consensus) addresses this by repeatedly sampling minimal sets to hypothesize a model, scoring it by the number of inliers, and finally re-estimating the model using the best consensus set~\cite{fischler1981ransac}. In visual SLAM, RANSAC is widely used for essential matrix estimation (e.g., the five-point method) and for PnP pose estimation~\cite{nister2004fivepointmethod,matas2005ransac}. A typical iteration evaluates the geometric residual
+\begin{center}
+    $ \| \mathbf{x}' - \pi(\mathbf{T}\,\mathbf{X}) \| < \tau, $
+\end{center}
+where $\pi(\cdot)$ denotes the projection model, $\mathbf{T}\in SE(3)$ is the pose, and $\tau$ is an inlier threshold. Given an inlier ratio $w$ and a minimal sample size $s$, the required number of iterations for confidence $p$ is $N=\log(1-p)/\log(1-w^s)$~\cite{fischler1981ransac}. This procedure provides a robust front-end estimate that can be further refined by non-linear optimization.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Bundle Adjustment}
+Bundle adjustment (BA) is the core optimization that jointly refines camera poses and 3D landmark positions by minimizing reprojection error~\cite{triggs2000bundle}. Given camera poses $\{\mathbf{T}_i\}$ and landmarks $\{\mathbf{X}_j\}$, the classical objective is
+\begin{center}
+    $ \min_{\{\mathbf{T}_i,\mathbf{X}_j\}} \sum_{i,j} \rho\left(\left\| \mathbf{x}_{ij} - \pi(\mathbf{T}_i\,\mathbf{X}_j) \right\|^2\right), $
+\end{center}
+where $\mathbf{x}_{ij}$ is the observed feature and $\rho(\cdot)$ is a robust loss. BA is typically solved with Levenberg--Marquardt using sparse linear algebra and Schur complement to eliminate point variables efficiently~\cite{triggs2000bundle,agarwal2010bundle}. In SLAM, local BA is executed on a sliding window of recent keyframes for real-time performance, while pose-graph optimization (e.g., with g2o) is used to enforce global consistency after loop closure~\cite{kummerle2011g2o}.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Pose and Map Transformations on SE(3) and Sim(3)}
+Rigid-body poses in SLAM are commonly represented on the Lie group $SE(3)$, where a transformation is
+\begin{center}
+    $ \mathbf{T} =
+    \begin{bmatrix}
+    \mathbf{R} & \mathbf{t} \\
+    \mathbf{0}^\top & 1
+    \end{bmatrix}, \quad \mathbf{R}\in SO(3),\ \mathbf{t}\in\mathbb{R}^3. $
+\end{center}
+Small updates are applied in the Lie algebra via the exponential map,
+$
+\mathbf{T} \leftarrow \exp(\hat{\boldsymbol{\xi}})\,\mathbf{T},
+$
+where $\boldsymbol{\xi}\in\mathbb{R}^6$ is a twist vector~\cite{barfoot2017state,sola2018lie}. This representation enables stable optimization in BA and pose-graph problems.
+
+For monocular SLAM, scale is unobservable and drift accumulates over time. Loop closure often requires a similarity transformation $Sim(3)$ that includes scale:
+\begin{center}
+    $ \mathbf{S} =
+    \begin{bmatrix}
+    s\mathbf{R} & \mathbf{t} \\
+    \mathbf{0}^\top & 1
+    \end{bmatrix}, \quad s>0. $
+\end{center}
+Closed-form alignment between two point sets under $Sim(3)$ can be obtained by Umeyama's method~\cite{umeyama1991least}, and such transformations are routinely used for loop closure correction in monocular systems like ORB-SLAM~\cite{murartal2015orbslam}. Together, $SE(3)$ and $Sim(3)$ provide the mathematical foundation for pose estimation, map alignment, and drift correction in visual SLAM~\cite{hartley2004multiple}.

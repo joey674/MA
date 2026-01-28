@@ -2199,7 +2199,29 @@
     <bcf:citekey order="14">maggio2025vggtslam</bcf:citekey>
     <bcf:citekey order="15">maggio2025vggtslam</bcf:citekey>
     <bcf:citekey order="16">maggio2025vggtslam</bcf:citekey>
-    <bcf:citekey order="17">Yoo2024</bcf:citekey>
+    <bcf:citekey order="17">cadena2016slam</bcf:citekey>
+    <bcf:citekey order="18">klein2007ptam</bcf:citekey>
+    <bcf:citekey order="19">murartal2015orbslam</bcf:citekey>
+    <bcf:citekey order="19">murartal2017orbslam2</bcf:citekey>
+    <bcf:citekey order="20">engel2014lsdslam</bcf:citekey>
+    <bcf:citekey order="21">engel2018dso</bcf:citekey>
+    <bcf:citekey order="22">cadena2016slam</bcf:citekey>
+    <bcf:citekey order="22">murartal2015orbslam</bcf:citekey>
+    <bcf:citekey order="22">murartal2017orbslam2</bcf:citekey>
+    <bcf:citekey order="23">fischler1981ransac</bcf:citekey>
+    <bcf:citekey order="24">nister2004fivepointmethod</bcf:citekey>
+    <bcf:citekey order="24">matas2005ransac</bcf:citekey>
+    <bcf:citekey order="25">fischler1981ransac</bcf:citekey>
+    <bcf:citekey order="26">triggs2000bundle</bcf:citekey>
+    <bcf:citekey order="27">triggs2000bundle</bcf:citekey>
+    <bcf:citekey order="27">agarwal2010bundle</bcf:citekey>
+    <bcf:citekey order="28">kummerle2011g2o</bcf:citekey>
+    <bcf:citekey order="29">barfoot2017state</bcf:citekey>
+    <bcf:citekey order="29">sola2018lie</bcf:citekey>
+    <bcf:citekey order="30">umeyama1991least</bcf:citekey>
+    <bcf:citekey order="31">murartal2015orbslam</bcf:citekey>
+    <bcf:citekey order="32">hartley2004multiple</bcf:citekey>
+    <bcf:citekey order="33">Yoo2024</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

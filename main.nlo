@@ -1,11 +1,11 @@
-\nomenclatureentry{S$\dot{m''}$@[{$\dot{m''}$}]\begingroup specific mass flux \nomunit{\frac{kg}{s m^{2}}}\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{S$D$@[{$D$}]\begingroup diffusion coefficient \nomunit{\frac{m^{2}}{s}}\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{S$C$@[{$C$}]\begingroup mass concentration \nomunit{\frac{kg}{m^{3}}}\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{S...@[{...}]\begingroup add symbol \nomunit{unit}\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{I$I$@[{$I$}]\begingroup inside the wall directly at the gas side\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{I$W$@[{$W$}]\begingroup water\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{I...@[{...}]\begingroup add index\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{A$TPMS$@[{$TPMS$}]\begingroup triply periodic minimal surface\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{A$spez.$@[{$spez.$}]\begingroup spec.\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{A$i.A.$@[{$i.A.$}]\begingroup in general\nomeqref {5.0}|nompageref}{18}
-\nomenclatureentry{A...@[{...}]\begingroup add abbreviations\nomeqref {5.0}|nompageref}{18}
+\nomenclatureentry{S$\dot{m''}$@[{$\dot{m''}$}]\begingroup specific mass flux \nomunit{\frac{kg}{s m^{2}}}\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{S$D$@[{$D$}]\begingroup diffusion coefficient \nomunit{\frac{m^{2}}{s}}\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{S$C$@[{$C$}]\begingroup mass concentration \nomunit{\frac{kg}{m^{3}}}\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{S...@[{...}]\begingroup add symbol \nomunit{unit}\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{I$I$@[{$I$}]\begingroup inside the wall directly at the gas side\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{I$W$@[{$W$}]\begingroup water\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{I...@[{...}]\begingroup add index\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{A$TPMS$@[{$TPMS$}]\begingroup triply periodic minimal surface\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{A$spez.$@[{$spez.$}]\begingroup spec.\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{A$i.A.$@[{$i.A.$}]\begingroup in general\nomeqref {5.0}|nompageref}{22}
+\nomenclatureentry{A...@[{...}]\begingroup add abbreviations\nomeqref {5.0}|nompageref}{22}
