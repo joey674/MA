@@ -5,7 +5,6 @@
 \label{sec:medical_background}
 In this chapter, the focus is on the theoretical background of the medical topics covered in the scope of this work, which is the basis for the development of the processing pipeline. Firstly, AC will be introduced, followed by a description of OA and its common treatment methods. The chapter ends with the depiction of state-of-the-art methods for clinically treating OA.\cite{Yoo2024}
 \subsection{Articular Cartilage}
-The human body is composed of various cells that not only form organs but also define different types of organic tissue. The fundamental four tissue types are nervous, muscular, epithelial, and connective tissue. Among these, connective tissue is the most widespread and diverse, encompassing fat tissue, blood, fibrous tissue, bone marrow, and cartilage. These connective tissues stand out due to being highly specialized and rich in matrix, which in turn ensures cohesion, mechanical support, and protection of the body's organs and structures. 
 \subsection{Osteoarthritis and its Treatment}
 \subsection{3D Bioprinting Techniques}
 
@@ -14,8 +13,10 @@ The human body is composed of various cells that not only form organs but also d
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Dense 3D Reconstruction}
 \label{sec:dense_3d_theory}
+This chapter presents the theoretical background relevant to this work, with a focus on dense 3D reconstruction from monocular sequences.
+First, related work is reviewed, covering the evolution from traditional geometry-based methods such as Structure-from-Motion (SfM) and Multi-View Stereo (MVS) to recent feed-forward transformer-based reconstruction approaches.
+Then, the reconstruction model adopted in this work, Depth Anything 3 (DA3), is introduced in detail, providing the foundation for the subsequent methodology.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-This chapter will first introduce the traditional geometry-based 3D reconstruction methods, including Structure-from-Motion (SfM) and Multi-View Stereo (MVS). Then, it will present the recent feed-forward Transformer-based 3D reconstruction methods, including DUSt3R and VGGT.
 \subsection{Related Work}
 \subsubsection*{Traditional Geometry-based 3D Reconstruction}
 \label{sec:classical_reconstruction}
@@ -30,7 +31,7 @@ of multiple stages, including image matching, triangulation,
 and bundle adjustment. COLMAP [94] is the most popular framework based on the traditional pipeline.\cite{wang2025vggt}
 
 Figure\ref{fig:classical_reconstruction_SfM} illustrates a fundamental SfM framework.The pipeline starts from multi-view image inputs, establishes inter-image correspondences through feature matching and geometric verification, and then incrementally estimates camera poses and 3D scene structure. The reconstruction is continuously refined through triangulation and bundle adjustment, resulting in a globally consistent 3D representation.
-\begin{figure}
+\begin{figure}[H]
     \centering
     \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/classical_reconstruction_SfM.png}
     \caption{Structure-from-Motion pipeline}
@@ -50,7 +51,7 @@ On the dense side, cost-volume networks [106, 114] for MVS replaced hand-crafted
 %% problem with early learning methods 
 They did reduce engineering complexity and demonstrated the feasibility of learned joint depth pose estimation, but they often struggled with scalability, generalization, and handling arbitrary input cardinalities.\cite{lin2025da3}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Feed-forward Transformer-based 3D Reconstruction}
+\subsubsection*{Feed-forward Transformer-based 3D Reconstruction}
 \label{sec:feed_forward_reconstruction}
 % Intro
 %% problem with traditional methods
@@ -83,7 +84,7 @@ MASt3R follows a similar design but also outputs descriptors that can be used to
 
 To extend the idea of DUSt3R to multiple frames, Spann3R [67] leverages a learned memory module and Cut3R [69] uses a recurrent state model. Both can incrementally reconstruct a scene using multiple images, but are each limited to short sequences. Recently, Pow3R [27] extends the DUSt3R framework to optionally take in any estimates of any combination of camera intrinsics, poses, and depth (which may be sparse or dense) and demonstrates substantial improvement in scene reconstruction and pose estimation given the added inputs. Splatt3R [60] extends the DUSt3R idea to Gaussian Splatting [29] by directly outputting the Gaussian Splatting parameters given two views, and PreF3R [8] extends this to multiple views using a similar memory framework as Spann3R. Reloc3r [13] modifies the DUSt3R framework for directly outputs relative camera poses and uses motion averaging to recover absolute poses with respect to a map database.\cite{maggio2025vggtslam}
 
-\subsubsection*{Visual Geometry Grounded Transformer and Its Variants}
+\subsubsection*{Visual Geometry Grounded Transformer}
 While DUSt3R and its follow-up works demonstrate that feed-forward models can successfully infer dense geometry from image pairs, their pairwise formulation inherently limits scalability and global reasoning. Extending such methods to multi-view settings typically requires additional post-processing steps, such as pose graph optimization or incremental fusion, which reintroduce elements of traditional pipelines.
 
 These limitations motivate the need for a unified framework that can jointly reason over an arbitrary number of views and directly model global geometric relationships in a feed-forward manner.
@@ -104,13 +105,132 @@ By unifying multi-view feature aggregation and geometry prediction within a sing
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{State of the Art: Depth Anything 3}
-DINO
+\subsection{State of the Art: DA3}
+\label{sec:da3_reconstruction}
+% 肯定 VGGT 的贡献
+While VGGT represents a significant advancement in unified feed-forward multi-view reconstruction, it still leaves room for improvement in terms of efficiency, scalability, and generalization. 
+% 明确指出三点问题：架构庞大（~1B 参数） 任意长度输入 → 显存 / 算力开销大 不适合轻量化部署
+The VGGT framework is characterized by a large and complex architecture, with model sizes reaching up to one billion parameters, which makes it unsuitable for lightweight deployment scenarios. Although VGGT supports arbitrary-length input sequences, this flexibility comes at the cost of substantial memory consumption and computational overhead, especially when processing long image sequences.
+% 强调泛化问题 在“完全未见过的场景”（如内窥镜）仍可能失败
+Moreover, despite being trained on large-scale and diverse datasets covering a wide range of common visual scenes, VGGT may still fail when confronted with domains that differ significantly from its training distribution, such as endoscopic imagery. These limitations highlight the need for a more compact and robust reconstruction model that preserves the strengths of VGGT while addressing its practical shortcomings.
+% DA3 正式登场
+To this end, Depth Anything 3 (DA3) is introduced as an improved variant built upon the VGGT paradigm. Building upon this insight, DA3 proposes a unified feed-forward model that reconstructs the visual space from arbitrary visual inputs, including multi-view image collections and video streams. Given any number of input views, with or without known camera poses, DA3 jointly predicts dense depth maps and ray maps that can be directly fused into geometrically consistent 3D point clouds.
+
+Compared to VGGT, DA3 significantly simplifies the overall framework by relying on a single DINO-based transformer backbone and enabling cross-view reasoning through token rearrangement rather than explicit multi-branch architectures. This design reduces the model size to a configurable range between 0.11B and 0.35B parameters, making DA3 substantially more suitable for lightweight and resource-constrained deployment while maintaining strong reconstruction performance.
+
+In addition, DA3 leverages a powerful depth teacher model during training, allowing it to learn robust geometric priors from large-scale data. This training strategy improves generalization and enables the model to remain effective even in previously unseen domains. Finally, DA3 introduces a depth-ray representation as a minimal yet sufficient geometric abstraction, which explicitly encodes both scene structure and camera motion while avoiding redundant or constrained prediction targets.
+
+The following sections provide a detailed description of the DA3  depth-ray formulation, its architecture, and the associated training paradigm.
+
+The following sections provide a detailed description of the DA3  depth-ray formulation, its architecture, and the associated training paradigm.
+
+% Depth-ray representation
+\subsubsection*{Depth-ray Representation}
+At the core of DA3 lies the depth--ray representation, which explicitly encodes both scene geometry and camera motion without directly predicting constrained rotation matrices. For each pixel $p=(u,v,1)^\top$, the model predicts a depth value $D(u,v)$ together with a corresponding ray
+\begin{center}
+    $ r=(t,d), \quad d=RK^{-1}p, $
+\end{center}
+where $t \in \mathbb{R}^3$ denotes the camera center and $d \in \mathbb{R}^3$ is the unnormalized ray direction in world coordinates.
+
+The predicted ray map is denoted as
+\begin{center}
+    $ M \in \mathbb{R}^{H \times W \times 6}, $
+\end{center}
+where the first three channels $M(:,:,:3)$ store per-pixel ray origins and the last three channels $M(:,:,3:)$ store the corresponding ray directions. Given the depth and ray predictions, a 3D point can be recovered by
+\begin{center}
+    $ P(u,v) = t + D(u,v) \cdot d. $
+\end{center}
+
+Beyond 3D point reconstruction, the depth--ray representation also enables direct recovery of camera parameters. The camera center $t_c$ is estimated by averaging the per-pixel ray origins:
+\begin{center}
+    $ t_c = \frac{1}{HW} \sum_{h=1}^{H} \sum_{w=1}^{W} M(h,w,:3). $
+\end{center}
+
+To recover the camera rotation $R$ and intrinsic matrix $K$, DA3 formulates the problem as estimating a homography. An identity canonical camera is first defined with intrinsics $K_I=I$. For a pixel $p$, the corresponding ray direction in this canonical camera is
+\begin{center}
+    $ d_I = K_I^{-1} p = p. $
+\end{center}
+
+The transformation from the canonical ray $d_I$ to the ray direction $d_{\text{cam}}$ in the target camera coordinate system can be written as
+\begin{center}
+    $ d_{\text{cam}} = KR d_I, $
+\end{center}
+which establishes a homography relationship
+\begin{center}
+    $ H = KR. $
+\end{center}
+
+The homography $H$ is then estimated by minimizing the geometric error between transformed canonical rays and the predicted ray directions:
+\begin{center}
+    $ H^* = \arg \min_{\|H\|=1} \sum_{h=1}^{H} \sum_{w=1}^{W} \| H p_{h,w} \times M(h,w,3:) \|. $
+\end{center}
+
+This optimization corresponds to a standard least-squares problem and can be efficiently solved using the Direct Linear Transform (DLT) algorithm. Once the optimal homography $H^*$ is obtained, the camera intrinsics $K$ and rotation $R$ are uniquely recovered via RQ decomposition, exploiting the upper-triangular structure of $K$ and the orthonormality of $R$.
+
+By jointly modeling depth and rays, this representation avoids explicit pose constraints while ensuring geometric consistency across views, and provides a compact yet expressive abstraction for feed-forward 3D reconstruction.
+
+% Architecture 
+\subsubsection*{Architecture}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/da3_reconstruction_da3.png}
+    \caption{DA3 framework overview}
+    \label{fig:da3_framework}
+\end{figure}
+As illustrated in Fig.~\ref{fig:da3_framework} shows an overview of the DA3 framework.
+Architecturally, DA3 adopts a deliberately simple design centered around a single pretrained Vision Transformer (ViT) backbone. For an input set 
+\begin{center}
+    $\mathcal{I}=\{I_i\}_{i=1}^{N_v}, I_i \in \mathbb{R}^{H \times W \times 3}$
+\end{center}
+the transformer serves as a shared feature extractor across all views, enabling the model to naturally handle variable input cardinalities.
+
+Cross-view geometric reasoning is achieved through an input-adaptive self-attention mechanism. Instead of introducing additional transformer stacks or specialized modules, DA3 rearranges token sequences in selected layers, allowing standard self-attention to operate either within individual views or across all views jointly.
+
+Dense geometric predictions in DA3 are produced by a novel dual Dense Prediction Transformer (Dual-DPT) head, which jointly regresses dense depth maps and ray maps from a shared set of visual features. As illustrated in Fig.~\ref{fig:da3_architecture}, the Dual-DPT head first processes backbone features through a common set of reassembly modules, ensuring that both prediction tasks operate on a unified and compact intermediate representation.
+
+After this shared processing stage, the features are routed into two parallel branches, corresponding to depth prediction and ray prediction, respectively. Each branch applies its own set of fusion layers to aggregate contextual information relevant to the target geometric quantity. Finally, separate output layers generate the depth map and ray map predictions. By sharing the majority of the feature processing pipeline and diverging only at the final fusion stage, the Dual-DPT design promotes strong interaction between depth and ray estimation while avoiding redundant intermediate representations.
+
+In addition to dense geometric outputs, DA3 optionally predicts camera parameters through a lightweight camera head operating on dedicated camera tokens, incurring minimal computational overhead. This joint prediction framework further reinforces geometric consistency without compromising the overall efficiency of the model.
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{4_images/2_TheoreticalBackground/da3_reconstruction_dpt.png}
+    \caption{DA3 Dual-DPT Head}
+    \label{fig:da3_architecture}
+\end{figure}
+
+% Training
+\subsubsection*{Training}
+To train a generalist geometry model across diverse data sources, DA3 adopts a teacher--student learning paradigm. A teacher model is first trained on large-scale synthetic data to generate dense and reliable pseudo-depth supervision, which is then combined with sparse or noisy real-world depth measurements. This strategy enables effective knowledge transfer while preserving geometric fidelity across diverse domains.
+
+Formally, the DA3 model $F_\theta$ maps an input image set $\mathcal{I}$ to a set of geometric predictions, including a depth map $\hat{D}$, a ray map $\hat{R}$, and an optional camera pose $\hat{c}$:
+\begin{center}
+    $F_\theta(\mathcal{I}) \to \{\hat{D}, \hat{R}, \hat{c}\}.$
+\end{center}
+The camera pose prediction is optional and primarily included for practical convenience.
+
+Prior to loss computation, all ground-truth geometric signals are normalized by a common scale factor to ensure consistent magnitude across different modalities. This scale is defined as the mean $\ell_2$ norm of the valid reprojected 3D point maps $P$, which stabilizes optimization when jointly supervising depth, rays, and reconstructed points.
+
+The overall training objective is defined as a weighted sum of several loss terms:
+\begin{center}
+    $L = L_D(\hat{D}, D) + L_M(\hat{R}, M) + L_P(\hat{D} \odot d + t, P) + \beta L_C(\hat{c}, c) + \alpha L_{\text{grad}}(\hat{D}, D),$
+\end{center}
+where $L_D$ supervises depth prediction, $L_M$ enforces consistency of ray maps, $L_P$ penalizes geometric errors in reconstructed 3D points, and $L_C$ is an optional camera pose loss.
+
+The depth supervision term is defined as
+\begin{center}
+    $ L_D(\hat{D}, D; D_c) = \frac{1}{|\Omega|} \sum_{p \in \Omega} m_p (D_{c,p} |\hat{D}_p - D_p| - \lambda_c \log D_{c,p}), $
+\end{center}
+where $D_{c,p}$ denotes the confidence associated with the ground-truth depth $D_p$, $m_p$ is a validity mask, and $\Omega$ denotes the set of valid pixels. All loss terms are based on the $\ell_1$ norm.
+
+To further regularize the depth predictions, a gradient loss is introduced:
+\begin{center}
+    $ L_{\text{grad}}(\hat{D}, D) = \| \nabla_x \hat{D} - \nabla_x D \|_1 + \| \nabla_y \hat{D} - \nabla_y D \|_1, $
+\end{center}
+where $\nabla_x$ and $\nabla_y$ denote horizontal and vertical finite difference operators. This term preserves sharp depth discontinuities while encouraging smoothness in planar regions. In practice, the weighting factors are set to $\alpha=1$ and $\beta=1$.
+
+This training strategy enables DA3 to effectively leverage heterogeneous datasets while maintaining consistent geometric supervision, resulting in a scalable and robust feed-forward reconstruction model.
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{SLAM and Manifold Optimization}
 \label{sec:slam_theory}
-% Content for Section 2.3
-% 传统slam
-% 前馈式神经网络的slam
-% 点云配准
-% 流形优化理论
