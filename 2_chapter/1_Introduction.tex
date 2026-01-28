@@ -1,4 +1,42 @@
-\chapter{Einleitung}
+\chapter{Introduction}
+\label{chap:introduction}
 
-aa
-%\chapter{Introduction}
+% \section{Background \& Socioeconomic Relevance}
+Osteoarthritis (OA) stands as a premier cause of global disability, characterized by the irreversible degradation of Articular Cartilage (AC). Due to the avascular nature of AC, its intrinsic repair capacity is remarkably limited; even minor focal lesions often fail to heal, eventually leading to chronic pain and impaired mobility. While traditional ex vivo scaffolding techniques have been widely researched, recent advancements in medical robotics and materials science are paving the way for direct, in vivo 3D bioprinting. As envisioned within the major initiative at the DWI Leibniz-Institute for Interactive Materials, a fully automatic robotic process for in situ cartilage repair offers a transformative alternative by minimizing contamination risks and bypassing the time-consuming nature of conventional methods.\cite{Yoo2024}
+% 骨关节炎（OA）是导致全球残疾的主要原因之一，其核心特征是关节软骨（AC）的不可逆退化。由于软骨组织缺乏血管，其自我修复能力极差，即使是微小的局灶性损伤也难以愈合，最终导致患者长期疼痛和行动受限。虽然传统的体外支架技术已被广泛研究，但医疗机器人和材料科学的进步正为“体内直接 3D 生物打印”铺平道路。正如 DWI 莱布尼茨互动材料研究所 的重大项目所愿，开发一种全自动机器人原位修复流程，不仅能降低污染风险，还能克服传统方法耗时长的弊端。
+
+% \section{The Problem with Current Methods}
+The success of in vivo bioprinting is fundamentally predicated on the precise 3D scanning and geometry estimation of the target lesion. Traditionally, pre-operative Magnetic Resonance Imaging (MRI) has been the gold standard; however, it suffers from systematic underestimation of lesion thickness and limited out-of-plane resolution. While photogrammetry presents a promising non-contact alternative, conventional dense 3D reconstruction algorithms often falter in the challenging endoscopic environment. These techniques are frequently hampered by weak textural features, prohibitive computational overhead, and the presence of dynamic occlusions---such as surgical instruments and flowing tissues---which compromise both the accuracy and the robustness required for real-time clinical intervention.\cite{Yoo2024}
+% 体内生物打印的成功，根本上取决于对受损区域精准的 3D 扫描和几何估计。传统上，术前核磁共振成像（MRI）是金标准，但它存在系统性低估病变厚度的问题，且出平面的分辨率有限。虽然摄影测量（Photogrammetry）提供了一种非接触式的替代方案，但传统的稠密 3D 重建算法在挑战性的内窥镜环境下往往表现不佳。这些技术通常受限于微弱的纹理特征、过高的计算开销，以及手术器械和流动组织等动态遮挡物的干扰，难以满足实时临床手术所需的精度和鲁棒性。
+
+% \section{Research Objective}
+Building upon the foundational work at DWI, this thesis aims to bridge the gap between static photogrammetry and real-time surgical navigation. The primary objective is to develop a high-precision, real-time dense 3D reconstruction and SLAM framework. By leveraging Transformer-based architectures and advanced manifold optimization, this work seeks to provide a robust spatial mapping solution that can effectively handle intraoperative occlusions and provide the necessary geometric intelligence for autonomous robotic bioprinting.
+% 承接 DWI 研究所的基础性工作，本论文旨在填补静态摄影测量与实时手术导航之间的技术空白。核心目标是开发一个高精度、实时的稠密 3D 重建与 SLAM 框架。通过利用 Transformer 架构和先进的流形优化算法，本研究力求提供一种稳健的空间建图方案，能够有效处理术中遮挡，并为全自动机器人生物打印提供必要的几何智能。
+
+% \section{Proposed Methodology}
+The proposed pipeline introduces a Transformer-based feed-forward neural network designed for high-fidelity geometry estimation, capturing global dependencies that traditional methods often miss. To ensure clinical reliability, a dedicated motion masking head is integrated to identify and decouple dynamic surgical disturbances from the static cartilage surface. Furthermore, the framework achieves high-efficiency real-time performance by utilizing an $SL(4)$ (Special Linear Group) manifold representation for SLAM, allowing for robust tracking under complex projective transformations inherent in monocular endoscopy.
+% 所提出的流程引入了一种基于 Transformer 的前馈神经网络，旨在实现高保真度的几何估计，捕捉传统方法常常忽视的全局依赖关系。为了确保临床可靠性，集成了一个专门的运动掩码头，用于识别和分离动态手术干扰与静态软骨表面。此外，该框架通过利用 $SL(4)$（特殊线性群）流形表示实现了高效的实时性能，使其能够在单目内窥镜固有的复杂投影变换下实现稳健跟踪。
+
+% \section{Thesis Structure}
+The remainder of this thesis is structured as follows:
+
+Section~\ref{sec:medical_background} discusses the medical background of knee AC and OA, emphasizing state-of-the-art treatment and 3D bioprinting techniques.
+
+Section~\ref{sec:dense_3d_theory} introduces the theoretical foundations of dense 3D reconstruction technologies.
+
+Section~\ref{sec:slam_theory} provides an overview of SLAM technologies and manifold optimization.
+
+Section~\ref{sec:network_architecture} details the architectural design and training process of the proposed Transformer-based feed-forward neural network.
+
+Section~\ref{sec:slam_framework} outlines the construction of the real-time dense SLAM framework built upon the aforementioned model.
+
+Chapter~\ref{chap:results} analyzes the experimental results obtained from the pipeline, using well plates and simulated environments as precursors.
+
+Chapter~\ref{chap:conclusion} concludes the thesis with a summary of findings and an outlook on potential optimizations for clinical application.
+% 第 2.1 节：讨论膝关节软骨（AC）和骨关节炎（OA）的医学背景，重点介绍尖端的治疗方法和 3D 生物打印技术。
+% 第 2.2 节：介绍稠密 3D 重建技术的理论基础。
+% 第 2.3 节：概述 SLAM 技术及其流形优化理论。
+% 第 3.1 节：详细阐述所提出的基于 Transformer 的前馈神经网络的架构设计与训练过程。
+% 第 3.2 节：概述基于上述模型构建的实时稠密 SLAM 框架。
+% 第 4 章：分析该流程在以孔板为前驱实验模型及模拟环境下的实验结果。
+% 第 5 章：总结研究发现，并对未来临床应用的优化方向进行展望。

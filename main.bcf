@@ -2182,8 +2182,24 @@
     <bcf:datasource type="file" datatype="bibtex">3_backmatter/literature.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Abel2000</bcf:citekey>
-    <bcf:citekey order="2">Marquardt2005</bcf:citekey>
+    <bcf:citekey order="1">Yoo2024</bcf:citekey>
+    <bcf:citekey order="2">Yoo2024</bcf:citekey>
+    <bcf:citekey order="3">Yoo2024</bcf:citekey>
+    <bcf:citekey order="4">schonberger2016SfM</bcf:citekey>
+    <bcf:citekey order="5">schonberger2016MVS</bcf:citekey>
+    <bcf:citekey order="6">wang2025vggt</bcf:citekey>
+    <bcf:citekey order="7">wang2025vggt</bcf:citekey>
+    <bcf:citekey order="8">lin2025da3</bcf:citekey>
+    <bcf:citekey order="9">lin2025da3</bcf:citekey>
+    <bcf:citekey order="10">2024dust3r</bcf:citekey>
+    <bcf:citekey order="11">lin2025da3</bcf:citekey>
+    <bcf:citekey order="12">weiszfeld1937point</bcf:citekey>
+    <bcf:citekey order="13">nister2004fivepointmethod</bcf:citekey>
+    <bcf:citekey order="13">matas2005ransac</bcf:citekey>
+    <bcf:citekey order="14">maggio2025vggtslam</bcf:citekey>
+    <bcf:citekey order="15">maggio2025vggtslam</bcf:citekey>
+    <bcf:citekey order="16">maggio2025vggtslam</bcf:citekey>
+    <bcf:citekey order="17">Yoo2024</bcf:citekey>
   </bcf:section>
   <!-- SORTING TEMPLATES -->
   <bcf:sortingtemplate name="none">

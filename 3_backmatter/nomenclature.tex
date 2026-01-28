@@ -2,39 +2,39 @@
 \makenomenclature
 
 % Überschrift
-\renewcommand{\nomname}{Abkürzungs- und Symbolverzeichnis}
+\renewcommand{\nomname}{List of Abbreviations and Symbols}
 
 % Makro für Einheiten
 \newcommand{\nomunit}[1]{\renewcommand{\nomentryend}{\hfill $\left[ #1 \right]$} }
 
 % Nomenclaturabschnitte definieren
 \renewcommand{\nomgroup}[1]{%
-	\ifthenelse{\equal{#1}{S}}{\item[\textbf{Symbolverzeichnis}]}{%
-		\ifthenelse{\equal{#1}{A}}{\item[\textbf{Abkürzungsverzeichnis}]} {
-		  \ifthenelse{\equal{#1}{I}}{\item[\textbf{Indexverzeichnis}]} {} } }	
-		 }
+		\ifthenelse{\equal{#1}{S}}{\item[\textbf{List of Symbols}]}{%
+				\ifthenelse{\equal{#1}{A}}{\item[\textbf{List of Abbreviations}]} {
+					\ifthenelse{\equal{#1}{I}}{\item[\textbf{Index}]} {} } }    
+				 }
 
 % Einträge hinzufügen
 
-% Formelzeichen
-% Hier die verwendeten Formel- und Symbolzeichen auflisten. Diese dienen nur als Beispiel
-\nomenclature[S]{$\dot{m''}$}{spezifischer Massenstrom \nomunit{\frac{kg}{s m^{2}}}}
-\nomenclature[S]{$D$}{Diffusionskoeffizient \nomunit{\frac{m^{2}}{s}}}
-\nomenclature[S]{$C$}{Massenkonzentration \nomunit{\frac{kg}{m^{3}}}}
-\nomenclature[S]{...}{Formelzeichen hinzufügen \nomunit{Einheit}}
+% Symbols
+% List the symbols used. These are examples only.
+\nomenclature[S]{$\dot{m''}$}{specific mass flux \nomunit{\frac{kg}{s m^{2}}}}
+\nomenclature[S]{$D$}{diffusion coefficient \nomunit{\frac{m^{2}}{s}}}
+\nomenclature[S]{$C$}{mass concentration \nomunit{\frac{kg}{m^{3}}}}
+\nomenclature[S]{...}{add symbol \nomunit{unit}}
 
-% Indizes 
-% Hier die verwendeten Indizes auflisten. Dies dient nur als Beispiel
-\nomenclature[I]{$I$}{Innerhalb der Wand direkt an der Gasseite}%
-\nomenclature[I]{$W$}{Wasser}%
-\nomenclature[I]{...}{Index hinzufügen}%
+% Indices
+% List the indices used. Examples only.
+\nomenclature[I]{$I$}{inside the wall directly at the gas side}%
+\nomenclature[I]{$W$}{water}%
+\nomenclature[I]{...}{add index}%
 
-% Abkürzungen
-% Hier die verwendeten Abkürzungen auflisten. Dies dient nur als Beispiel
-\nomenclature[A]{$TPMS$}{Dreifach periodische Minimaloberfläche}%
-\nomenclature[A]{$spez.$}{spezifisch}%
-\nomenclature[A]{$i.A.$}{im Allgemeinen}%
-\nomenclature[A]{...}{Abkürzungen hinzufügen}
+% Abbreviations
+% List the abbreviations used. Examples only.
+\nomenclature[A]{$TPMS$}{triply periodic minimal surface}%
+\nomenclature[A]{$spez.$}{spec.}%
+\nomenclature[A]{$i.A.$}{in general}%
+\nomenclature[A]{...}{add abbreviations}
 
 \cleardoublepage% or \clearpage
 \markboth{\nomname}{\nomname}

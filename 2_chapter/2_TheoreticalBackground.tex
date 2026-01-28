@@ -1,3 +1,116 @@
-\chapter{Theoretischer Hintergrund}
-%\chapter{Theoretical Background} 
-%\chapter{State of the Art}
+\chapter{Theoretical Background}
+\label{chap:theory}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Medical Background}
+\label{sec:medical_background}
+In this chapter, the focus is on the theoretical background of the medical topics covered in the scope of this work, which is the basis for the development of the processing pipeline. Firstly, AC will be introduced, followed by a description of OA and its common treatment methods. The chapter ends with the depiction of state-of-the-art methods for clinically treating OA.\cite{Yoo2024}
+\subsection{Articular Cartilage}
+The human body is composed of various cells that not only form organs but also define different types of organic tissue. The fundamental four tissue types are nervous, muscular, epithelial, and connective tissue. Among these, connective tissue is the most widespread and diverse, encompassing fat tissue, blood, fibrous tissue, bone marrow, and cartilage. These connective tissues stand out due to being highly specialized and rich in matrix, which in turn ensures cohesion, mechanical support, and protection of the body's organs and structures. 
+\subsection{Osteoarthritis and its Treatment}
+\subsection{3D Bioprinting Techniques}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Dense 3D Reconstruction}
+\label{sec:dense_3d_theory}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This chapter will first introduce the traditional geometry-based 3D reconstruction methods, including Structure-from-Motion (SfM) and Multi-View Stereo (MVS). Then, it will present the recent feed-forward Transformer-based 3D reconstruction methods, including DUSt3R and VGGT.
+\subsection{Related Work}
+\subsubsection*{Traditional Geometry-based 3D Reconstruction}
+\label{sec:classical_reconstruction}
+The field of 3D reconstruction has been traditionally dominated by pipeline-based approaches, namely Structure-from-Motion (SfM)\cite{schonberger2016SfM} and Multi-View Stereo (MVS)\cite{schonberger2016MVS}.
+
+% Structure from Motion
+\textbf{Structure from Motion} is a classic computer vision problem [45, 77, 80] that involves estimating camera parameters
+and reconstructing sparse point clouds from a set of images
+of a static scene captured from different viewpoints. The
+traditional SfM pipeline [2, 36, 70, 94, 103, 134] consists
+of multiple stages, including image matching, triangulation,
+and bundle adjustment. COLMAP [94] is the most popular framework based on the traditional pipeline.\cite{wang2025vggt}
+
+Figure\ref{fig:classical_reconstruction_SfM} illustrates a fundamental SfM framework.The pipeline starts from multi-view image inputs, establishes inter-image correspondences through feature matching and geometric verification, and then incrementally estimates camera poses and 3D scene structure. The reconstruction is continuously refined through triangulation and bundle adjustment, resulting in a globally consistent 3D representation.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/classical_reconstruction_SfM.png}
+    \caption{Structure-from-Motion pipeline}
+    \label{fig:classical_reconstruction_SfM}
+\end{figure}
+
+
+% Multi-view Stereo
+\textbf{Multi-view Stereo (MVS)} aims to densely reconstruct the geometry of a scene from multiple overlapping images, typically assuming known camera parameters which are often estimated via SfM~\cite{wang2025vggt}.
+The fundamental principle underlying MVS is the Photo Consistency Assumption, which posits that a 3D point in space should exhibit a similar appearance (color or intensity) when projected onto different image planes, provided the surface is approximately Lambertian. To efficiently identify corresponding points across views, MVS leverages Epipolar Geometry. Instead of searching the entire image domain, pairwise matching is constrained to epipolar lines determined by the relative camera poses, thereby significantly reducing computational complexity. Based on these geometric constraints, the algorithm estimates a depth map for each reference image by aggregating information from neighboring views. Finally, in the Fusion stage, these individual depth maps are integrated into a globally consistent point cloud or mesh, filtering out outliers to produce a high-fidelity dense estimation of the scene geometry.
+
+% early learning methods in SfM/MVS
+Early learning methods injected robustness at the component
+level: learned detectors [20], descriptors for matching [22], and differentiable optimization layers that expose
+pose/depth updates to gradient flow [31, 33, 62]. 
+On the dense side, cost-volume networks [106, 114] for MVS replaced hand-crafted regularization with 3D CNNs, improving depth accuracy especially at large baselines and thin structures compared with classical PatchMatch.\cite{lin2025da3}
+%% problem with early learning methods 
+They did reduce engineering complexity and demonstrated the feasibility of learned joint depth pose estimation, but they often struggled with scalability, generalization, and handling arbitrary input cardinalities.\cite{lin2025da3}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Feed-forward Transformer-based 3D Reconstruction}
+\label{sec:feed_forward_reconstruction}
+% Intro
+%% problem with traditional methods
+Traditional Geometry-based methods remain strong on well-textured scenes, but their modularity and brittle correspondences complicate robustness under low texture, specularities, or large viewpoint changes.
+
+The emergence of feed-forward 3D reconstruction methods is closely tied to the introduction of attention mechanisms. Unlike convolutional operations that rely on local receptive fields, attention enables explicit modeling of long-range dependencies by computing pairwise interactions between elements in a sequence.
+In the context of multi-view geometry, this property is particularly appealing, as 3D reconstruction inherently requires reasoning over global spatial relationships and correspondences across views. By allowing features from different images to directly attend to each other, attention mechanisms provide a natural alternative to explicit feature matching and geometric verification used in traditional pipelines.
+
+Leveraging attention-based architectures, recent approaches formulate 3D reconstruction as a feed-forward prediction problem, where geometric quantities such as depth, camera motion, or point maps are directly inferred from image features. This paradigm eliminates the need for iterative optimization and decoupled processing stages, enabling end-to-end learning of visual geometry from data.
+
+\subsubsection*{DUSt3R: A Pioneering Feed-forward Transformer-based Method}
+A turning point came with DUSt3R,a radically novel paradigm for Dense and Unconstrained Stereo 3D Reconstruction of arbitrary image\cite{2024dust3r}, which leveraged transformers to directly predict point map between two views and compute both depth and relative pose in a purely feed-forward manner. This work laid the foundation for subsequent transformer-based methods aiming to unify multi-view geometry estimation at scale.\cite{lin2025da3}
+
+As illustrated in Fig.~\ref{fig:dust3r_framework}, given two input images $I_1$ and $I_2$, both images are first processed by a shared image feature extractor to obtain dense visual representations. The feature extractor can be implemented using either convolutional neural networks or transformer-based architectures; in DUSt3R, a Vision Transformer (ViT) is adopted as the encoder, whose architectural details will be discussed in the next chapter.
+The extracted feature tokens from the two views are then passed to two transformer decoders, which iteratively exchange information through cross-attention. This mechanism allows features from one view to attend to and reason about features from the other view, enabling implicit correspondence discovery without explicit feature matching.
+
+Based on the fused multi-view features, two regression heads predict dense point maps for each input image, along with associated confidence maps. Importantly, both point maps are expressed in a common coordinate frame defined by the first camera view $I_1$, thereby establishing a shared geometric reference across the two images. From the predicted point maps, camera intrinsics such as focal lengths can be estimated using the Weiszfeld algorithm \cite{weiszfeld1937point}, and relative camera poses can be recovered using minimal solvers such as 3-point RANSAC \cite{nister2004fivepointmethod,matas2005ransac}.
+
+By directly regressing dense geometry in a feed-forward manner, DUSt3R eliminates the need for explicit feature matching, geometric verification, and iterative optimization, demonstrating the feasibility of learning-based geometric reasoning from image pairs. \cite{maggio2025vggtslam}
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/feed_forward_reconstruction_dust3r.png}
+    \caption{DUSt3R framework overview}
+    \label{fig:dust3r_framework}
+\end{figure}
+
+
+\subsubsection*{Follow-up Works}
+MASt3R follows a similar design but also outputs descriptors that can be used to generate pairwise correspondences between the two frames. MASt3R-SFM [14] demonstrates global optimization of multiple images using MASt3R but computation scales quickly with the number of frames. \cite{maggio2025vggtslam}
+
+To extend the idea of DUSt3R to multiple frames, Spann3R [67] leverages a learned memory module and Cut3R [69] uses a recurrent state model. Both can incrementally reconstruct a scene using multiple images, but are each limited to short sequences. Recently, Pow3R [27] extends the DUSt3R framework to optionally take in any estimates of any combination of camera intrinsics, poses, and depth (which may be sparse or dense) and demonstrates substantial improvement in scene reconstruction and pose estimation given the added inputs. Splatt3R [60] extends the DUSt3R idea to Gaussian Splatting [29] by directly outputting the Gaussian Splatting parameters given two views, and PreF3R [8] extends this to multiple views using a similar memory framework as Spann3R. Reloc3r [13] modifies the DUSt3R framework for directly outputs relative camera poses and uses motion averaging to recover absolute poses with respect to a map database.\cite{maggio2025vggtslam}
+
+\subsubsection*{Visual Geometry Grounded Transformer and Its Variants}
+While DUSt3R and its follow-up works demonstrate that feed-forward models can successfully infer dense geometry from image pairs, their pairwise formulation inherently limits scalability and global reasoning. Extending such methods to multi-view settings typically requires additional post-processing steps, such as pose graph optimization or incremental fusion, which reintroduce elements of traditional pipelines.
+
+These limitations motivate the need for a unified framework that can jointly reason over an arbitrary number of views and directly model global geometric relationships in a feed-forward manner.
+
+As a culmination of feed-forward reconstruction models inspired by DUSt3R, VGGT (Visual Geometry Grounded Transformer) extends pairwise geometric reasoning to arbitrary-length image sequences within a unified architecture. An overview of the VGGT framework is shown in Figure~\ref{fig:vggt_framework}. Given a set of input images, VGGT first decomposes each image into a sequence of visual tokens using a pretrained image feature extractor. In the original formulation, self-supervised features obtained from DINO are employed to provide semantically rich and geometrically consistent representations. These per-image token sequences are then concatenated, and camera-specific tokens are appended to enable explicit modeling of camera parameters.
+
+The core of VGGT consists of multiple transformer layers that alternate between global attention and frame-wise attention. Global attention allows tokens from different views to directly interact, facilitating cross-view information exchange and long-range geometric reasoning. In contrast, frame-wise attention focuses on refining features within each individual image. By alternating between these two attention mechanisms, VGGT jointly captures both intra-view structure and inter-view geometric relationships across the entire image set.
+
+Based on the aggregated token representations, VGGT employs multiple prediction heads to regress diverse geometric quantities. A dedicated camera head estimates camera intrinsics and extrinsics, while dense prediction transformer (DPT) heads are used to generate dense depth maps, point maps, and feature tracks. Importantly, these outputs are expressed in a common coordinate frame, enabling consistent multi-view reconstruction without explicit correspondence estimation or incremental optimization.
+
+By unifying multi-view feature aggregation and geometry prediction within a single feed-forward transformer, VGGT represents a significant step toward holistic and scalable dense 3D reconstruction from unconstrained image collections.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/feed_forward_reconstruction_vggt.png}
+    \caption{VGGT framework overview}
+    \label{fig:vggt_framework}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{State of the Art: Depth Anything 3}
+DINO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{SLAM and Manifold Optimization}
+\label{sec:slam_theory}
+% Content for Section 2.3
+% 传统slam
+% 前馈式神经网络的slam
+% 点云配准
+% 流形优化理论
