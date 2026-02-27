@@ -1,10 +1,75 @@
 \chapter{Materials and Methods}
 \label{chap:methods}
+In this section, we present the DynaDA3-SLAM system, a comprehensive framework designed for dense 3D reconstruction and camera pose estimation in monocular surgical environments.
+The first section introduces DynaDA3, an enhanced version of DA3 tailored to endoscopic 3D reconstruction that can remove dynamic occlusions. 
+The second section details DynaDA3-SLAM, a SLAM framework built upon DynaDA3 that leverages projective submap alignment and global optimization on the $SL(4)$/$Sim(3)$ manifold.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{DynaDA3}
+\label{sec:network_architecture} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Preprocessing}
+Endoscopic video data typically presents unique visual challenges compared to standard datasets, including a circular field of view (FOV) surrounded by black borders and non-uniform illumination characterized by specular reflections and underexposed peripheral regions. 
+To ensure the robustness of the subsequent network inference, we apply a two-stage preprocessing pipeline comprising region of interest cropping and illumination correction.
 
-\section{Neural Network Architecture and Training}
-\label{sec:network_architecture}
-% Content for Section 3.1
+\subsubsection{Region of Interest Cropping}
+To eliminate irrelevant information from the black borders and focus the network's attention on the surgical site, we employ a fixed-ratio cropping strategy. As implemented in our pipeline, we extract a square region from the original video frames. The crop size is determined dynamically based on the image height:
+\begin{center}
+    $ S_{crop} = H_{img} \times \lambda_{crop} $
+\end{center}
+where $H_{img}$ is the height of the original frame and $\lambda_{crop}$ is a scaling factor (experimentally set to 0.65 for the C3VD2 dataset) to cover the relevant endoscopic view. The crop window is centered horizontally with a learned offset to align with the endoscopic center, and positioned vertically to retain a balanced view of the surgical cavity, discarding the extreme upper and lower black margins.
 
-\section{Real-Time Dense SLAM Framework}
+\subsubsection{Illumination Correction /TODO: with Sang's Method/}
+Surgical scenes often suffer from drastic lighting variations, including strong specular highlights caused by the endoscope's light source and dark shadows in deep cavities. We implement a multi-stage brightness adjustment algorithm operating in the CIELAB color space to mitigate these artifacts while preserving tissue details.
+
+First, the input RGB image is converted to the CIELAB space, and operations are performed solely on the Luminance ($L$) channel to avoid color distortion. The correction pipeline consists of four key steps:
+
+\begin{enumerate}
+    \item \textbf{Local Contrast Enhancement:} We apply Contrast Limited Adaptive Histogram Equalization (CLAHE) with a clip limit of 2.0 and a grid size of $8\times8$. This enhances local texture details in low-contrast tissue areas.
+    
+    \item \textbf{Highlight Suppression and Shadow Boosting:} To handle extreme lighting, we employ threshold-based masking. Pixels exceeding a brightness threshold ($T_{bright}=230$) are attenuated by a reduction factor ($\alpha=0.7$) to suppress specular glare. Conversely, pixels below a dark threshold ($T_{dark}=30$) are amplified ($\beta=1.5$) to reveal hidden details in shadowed regions.
+    
+    \item \textbf{Global Gamma Correction:} An adaptive gamma correction is applied based on the mean brightness of the image. Images with low mean brightness ($\mu < 100$) undergo gamma compression ($\gamma=0.8$) to brighten the scene globally, while overly bright images ($\mu > 150$) are darkened ($\gamma=1.2$) to prevent washout.
+    
+    \item \textbf{Detail Enhancement:} Finally, a high-pass filter kernel is applied to sharpen tissue structures, and the result is blended with the brightness-adjusted image to produce the final preprocessed input.
+\end{enumerate}
+
+The processed Luminance channel is merged back with the original A and B channels and converted to RGB, providing a normalized, detail-rich input for the DynaDA3 network.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Architecture}
+\label{subsec:architecture}
+
+As illustrated in Figure~\ref{fig:DynaDA3_architecture}, the DynaDA3 architecture is constructed upon the Depth Anything V3 (DA3) framework~\cite{lin2025da3}. The system is composed of two primary stages: a frozen geometric foundation model for feature extraction and geometric estimation, and a trainable DPT Head for dynamic occlusion segmentation.
+
+\subsubsection*{DA3 Backbone and Geometric Outputs}
+The backbone of DynaDA3 utilizes the DINOv2 ViT-Large encoder initialized with DA3 pre-trained weights. To preserve the robust zero-shot geometric generalization capabilities of the foundation model, the backbone parameters are frozen during training. 
+The input image is processed to extract multi-scale semantic tokens from specific transformer layers (e.g., layers 11, 15, 19, and 23 for the ViT-L configuration). Simultaneously, the original DA3 Dual DPT Head processes these tokens to predict dense Depth and Ray maps. Crucially, we also extract the pixel-wise \textbf{Confidence Map} ($\mathbf{C}$) generated by the geometric head. This confidence map serves as a proxy for geometric uncertainty, where regions of low confidence often correspond to dynamic surgical tools, smoke, or specular reflections that violate multi-view consistency.
+
+\subsubsection*{DPT Head}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Training}
+The training process is divided into two stages to ensure stability. First, we freeze the DINOv2 backbone and the pre-trained DA3 heads, fine-tuning only the DPT Head on the [Dataset Name] dataset. The occlusion segmentation is supervised using a combination of weighted binary cross-entropy (BCE) loss and Dice loss:
+\begin{center}
+    $ \mathcal{L}_{motion} = \lambda_{bce}\mathcal{L}_{BCE} + \lambda_{dice}\mathcal{L}_{Dice}, $
+\end{center}
+where $\lambda$ represents the balancing coefficients. Once the DPT Head converges, we unfreeze the entire network for joint end-to-end fine-tuning, ensuring the geometric predictions and motion-aware masking are mutually optimized for the surgical domain.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{DynaDA3-SLAM}
 \label{sec:slam_framework}
-% Content for Section 3.2
+Leveraging the filtered geometry provided by DynaDA3, we construct the DynaDA3-SLAM system. This pipeline incrementally builds and aligns local submaps to recover a globally consistent map.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Local Submap Generation with Motion Gating}
+Following the strategy of VGGT-SLAM~\cite{maggio2025vggtslam}, we select keyframes from the input video stream based on a disparity threshold to ensure sufficient parallax. These frames are processed by DynaDA3 to generate depth, ray, and confidence maps. During point cloud generation, we utilize the Motion Mask predicted by the DPT Head to filter the input. Points corresponding to dynamic regions (mask value $0$) are discarded, ensuring that the resulting local submap $S$ consists solely of static geometry and preventing dynamic objects from corrupting pose estimation.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Submap Alignment via Projective Transformation}
+Since the input consists of uncalibrated monocular video without absolute scale, reconstruction is subject to projective ambiguity. A similarity transformation ($Sim(3)$) is often insufficient to align submaps in this general setting. We therefore model the relative transformation between overlapping submaps as a 15-DOF homography matrix $H \in SL(4)$~\cite{maggio2025vggtslam}. We estimate $H$ by solving the linear system $X_a = H X_b$ for corresponding static points between submaps using a RANSAC-based solver.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Loop Closure}
+To correct accumulated drift, we perform image retrieval to identify non-sequential overlapping submaps. Upon detection, we estimate the relative homography between the current submap and the retrieved historical submap, and add this as a loop-closure constraint to the optimization graph.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \subsection{Global Optimization on the $SL(4)$ Manifold}
+% Finally, we formulate the global trajectory estimation as a factor-graph optimization problem defined on the $SL(4)$ manifold. We seek to estimate the absolute homographies $\hat{H}$ that minimize the nonlinear least squares error of all relative constraints:
+% \begin{center}
+%     $ \hat{H} = \operatorname{argmin}_{H \in SL(4)} \sum_{(i,j) \in \mathcal{L}} \left\| \operatorname{Log}\left(H_i^{-1} H_j (H_j^i)^{-1}\right) \right\|^2. $
+% \end{center}
+% By optimizing on the Lie group, the system ensures mathematically rigorous updates to camera poses and map structure, resulting in a consistent dense 3D reconstruction of the surgical environment.
