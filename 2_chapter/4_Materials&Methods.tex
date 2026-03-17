@@ -2,7 +2,7 @@
 \label{chap:methods}
 In this section, we present the DynaDA3-SLAM system, a comprehensive framework designed for dense 3D reconstruction and camera pose estimation in monocular surgical environments.
 The first section introduces DynaDA3, an enhanced version of DA3 tailored to endoscopic 3D reconstruction that can remove dynamic occlusions. 
-The second section details DynaDA3-SLAM, a SLAM framework built upon DynaDA3 that leverages projective submap alignment and global optimization on the $SL(4)$/$Sim(3)$ manifold.
+The second section details DynaDA3-SLAM, a SLAM framework built upon DynaDA3 that leverages projective submap alignment and global optimization on the $SL(4)$ and $Sim(3)$ manifolds.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{DynaDA3}
 \label{sec:network_architecture} 
@@ -58,13 +58,13 @@ where $\lambda$ represents the balancing coefficients. Once the DPT Head converg
 \label{sec:slam_framework}
 Leveraging the filtered geometry provided by DynaDA3, we construct the DynaDA3-SLAM system. This pipeline incrementally builds and aligns local submaps to recover a globally consistent map.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Local Submap Generation with Motion Gating}
+\subsection{Local Chunk of Point Cloud}
 Following the strategy of VGGT-SLAM~\cite{maggio2025vggtslam}, we select keyframes from the input video stream based on a disparity threshold to ensure sufficient parallax. These frames are processed by DynaDA3 to generate depth, ray, and confidence maps. During point cloud generation, we utilize the Motion Mask predicted by the DPT Head to filter the input. Points corresponding to dynamic regions (mask value $0$) are discarded, ensuring that the resulting local submap $S$ consists solely of static geometry and preventing dynamic objects from corrupting pose estimation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Submap Alignment via Projective Transformation}
+\subsection{Point Cloud Alignment via Projective Transformation}
 Since the input consists of uncalibrated monocular video without absolute scale, reconstruction is subject to projective ambiguity. A similarity transformation ($Sim(3)$) is often insufficient to align submaps in this general setting. We therefore model the relative transformation between overlapping submaps as a 15-DOF homography matrix $H \in SL(4)$~\cite{maggio2025vggtslam}. We estimate $H$ by solving the linear system $X_a = H X_b$ for corresponding static points between submaps using a RANSAC-based solver.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Loop Closure}
+\subsection{Optimization}
 To correct accumulated drift, we perform image retrieval to identify non-sequential overlapping submaps. Upon detection, we estimate the relative homography between the current submap and the retrieved historical submap, and add this as a loop-closure constraint to the optimization graph.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \subsection{Global Optimization on the $SL(4)$ Manifold}
