@@ -1,0 +1,247 @@
+\chapter{Results and Discussion}
+\label{chap:results}
+
+\providecommand{\tbd}{\textit{TBD}}
+
+This chapter presents the benchmark categories that are directly relevant to the proposed system, namely pose estimation, depth reconstruction, 3D scene quality, SLAM, and dynamic obstacle prediction. Although the cited methods are not always evaluated on exactly the same datasets, they report the same types of experiments targeted by DynaDA3 and DynaDA3-SLAM. Therefore, their published results are organized here as task-consistent literature baselines, while dedicated rows are reserved for the final results of the proposed method.
+% 本章围绕与本文方法直接相关的几类实验结果展开，
+% 主要包括位姿估计、深度重建、三维场景质量、SLAM 以及动态障碍物预测。
+% 尽管所引用方法并不总是在完全相同的数据集上进行评估，
+% 但它们所报告的实验类型与 DynaDA3 和 DynaDA3-SLAM 的目标任务是一致的。
+% 因此，本文将这些已发表结果整理为按任务对应的文献基线，
+% 同时为本文方法的最终实验结果预留专门位置。
+
+\section{Pose Estimation Results}
+Accurate pose recovery is a prerequisite for both geometric reconstruction and SLAM. For this reason, short-window pose estimation is first compared with representative monocular endoscopic methods. Table~\ref{tab:pose_scared} summarizes the pose benchmark reported on SCARED by Endo3R~\cite{endo3r2025}, where the task is to recover stable camera motion over 5-frame snippets.
+% 精确的位姿恢复是几何重建和 SLAM 的前提条件。
+% 因此，本文首先将短窗口位姿估计结果与具有代表性的单目内窥镜方法进行比较。
+% 表~\ref{tab:pose_scared} 汇总了 Endo3R~\cite{endo3r2025}
+% 在 SCARED 上报告的位姿 benchmark，
+% 其任务是在 5-frame 片段上稳定恢复相机运动。
+
+\begin{table}[htbp]
+    \centering
+    \caption[Pose estimation results on SCARED]{Comparison of pose estimation results on SCARED (5-frame evaluation), reproduced from Endo3R~\cite{endo3r2025}.}
+    \label{tab:pose_scared}
+    \begin{tabular}{lccc}
+        \toprule
+        \textbf{Method} & \textbf{ATE $\downarrow$} & \textbf{$RPE_r$ $\downarrow$} & \textbf{$RPE_t$ $\downarrow$} \\
+        \midrule
+        Endo-SfM & 0.157 & 0.252 & 0.259 \\
+        AF-SfM & 0.125 & 0.235 & 0.241 \\
+        EndoDAC & 0.124 & 0.223 & 0.233 \\
+        Robust & 0.131 & 0.241 & 0.245 \\
+        Endo3R & 0.112 & 0.201 & 0.228 \\
+        DynaDA3 (Ours) & \multicolumn{3}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+Among the methods listed in Table~\ref{tab:pose_scared}, Endo3R reports the lowest ATE and the best overall short-window pose consistency. This result indicates that feed-forward geometry models can already provide competitive motion recovery before being integrated into a full SLAM pipeline. In parallel, Endo3DAC~\cite{endo3dac2025} reports a mean ATE of 0.0583 on SCARED under a similar short-sequence pose evaluation, which further supports the use of recent geometry foundation models as strong pose baselines for the proposed method.
+% 在表~\ref{tab:pose_scared} 所列的方法中，
+% Endo3R 取得了最低的 ATE 和整体最优的短窗口位姿一致性。
+% 这一结果表明，前馈式几何模型即使在尚未集成到完整 SLAM 系统之前，
+% 也已经能够提供具有竞争力的相机运动恢复能力。
+% 与此同时，Endo3DAC~\cite{endo3dac2025} 在相近的短序列位姿评估中，
+% 在 SCARED 上报告了 0.0583 的平均 ATE，
+% 这进一步说明近期的几何基础模型可以作为本文方法的重要位姿基线。
+
+\section{Depth Reconstruction Results}
+Depth prediction is treated as an independent benchmark because it measures the frame-wise geometric quality produced by the model before any global fusion or mapping stage. For the proposed system, this experiment answers how accurately DynaDA3 can recover local scene geometry from endoscopic video.
+% 深度预测被视为一个独立 benchmark，
+% 因为它衡量的是模型在全局融合或建图之前所输出的逐帧几何质量。
+% 对本文方法而言，这一实验回答的是 DynaDA3
+% 能否从内窥镜视频中准确恢复局部场景几何。
+
+Table~\ref{tab:depth_reconstruction} summarizes representative depth-oriented reconstruction results from Endo3R~\cite{endo3r2025}. To keep the comparison focused, only a compact set of strong baselines is retained, including EndoDAC, Endo DM, Monst3R, and Endo3R. These methods cover endoscopy-specific adaptation, more general monocular reconstruction, and recent feed-forward geometric modeling.
+% 表~\ref{tab:depth_reconstruction} 总结了 Endo3R~\cite{endo3r2025}
+% 中具有代表性的深度导向重建结果。
+% 为了使比较更集中，本文只保留一组较强且有代表性的基线方法，
+% 包括 EndoDAC、Endo DM、Monst3R 和 Endo3R。
+% 这些方法分别覆盖了内窥镜领域适配、较通用的单目重建，
+% 以及近期的前馈式几何建模路线。
+
+\begin{table}[htbp]
+    \centering
+    \caption[Depth reconstruction results]{Comparison of depth-oriented reconstruction results on SCARED and Hamlyn, condensed from Endo3R~\cite{endo3r2025}.}
+    \label{tab:depth_reconstruction}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{llcccc}
+        \toprule
+        \textbf{Dataset} & \textbf{Method} & \textbf{Abs Rel $\downarrow$} & \textbf{RMSE $\downarrow$} & \textbf{$\delta < 1.25$ $\uparrow$} & \textbf{FPS $\uparrow$} \\
+        \midrule
+        SCARED & EndoDAC & 0.242 & 2.014 & 0.584 & 31.79 \\
+        SCARED & Endo DM & 0.203 & 2.063 & 0.612 & 14.58 \\
+        SCARED & Monst3R & 0.198 & 1.965 & 0.626 & 18.68 \\
+        SCARED & Endo3R & 0.124 & 1.209 & 0.839 & 19.17 \\
+        SCARED & DynaDA3 (Ours) & \multicolumn{4}{c}{\tbd} \\
+        \midrule
+        Hamlyn & EndoDAC & 0.275 & 15.669 & 0.519 & 31.79 \\
+        Hamlyn & Endo DM & 0.216 & 14.799 & 0.619 & 14.58 \\
+        Hamlyn & Monst3R & 0.198 & 15.221 & 0.645 & 18.68 \\
+        Hamlyn & Endo3R & 0.170 & 11.569 & 0.707 & 19.17 \\
+        Hamlyn & DynaDA3 (Ours) & \multicolumn{4}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+On both SCARED and Hamlyn, Endo3R reports the best overall balance between reconstruction accuracy and online efficiency among the listed methods. In particular, its substantial improvement in Abs Rel and RMSE suggests that explicitly learning temporally aligned geometry is beneficial for challenging endoscopic video. These results define the most relevant reconstruction reference range for DynaDA3, whose final quantitative results will be inserted under the same experiment type.
+% 在 SCARED 和 Hamlyn 两个数据集上，
+% Endo3R 在所列方法中表现出最好的重建精度与在线效率平衡。
+% 尤其是其在 Abs Rel 和 RMSE 上的明显提升，
+% 说明对时间一致几何进行显式学习对于复杂内窥镜视频是有益的。
+% 这些结果构成了 DynaDA3 最直接相关的重建参考范围，
+% 后续本文方法的定量结果将按同类实验形式填入表中。
+
+\section{3D Scene Quality Results}
+Per-frame depth metrics do not completely capture the global quality of the reconstructed scene. Therefore, Table~\ref{tab:recon_3d} additionally reports explicit 3D reconstruction metrics taken from Endo3DAC~\cite{endo3dac2025}. This comparison evaluates the reconstructed point cloud or scene geometry directly through accuracy, completeness, chamfer distance, precision, recall, and $F_1$ score.
+% 逐帧深度指标并不能完全刻画重建场景的全局几何质量。
+% 因此，表~\ref{tab:recon_3d} 进一步给出了 Endo3DAC~\cite{endo3dac2025}
+% 所报告的显式三维重建指标。
+% 这类比较通过 accuracy、completeness、chamfer distance、
+% precision、recall 和 $F_1$ score 等指标，
+% 直接评价重建点云或场景几何本身。
+
+\begin{table}[htbp]
+    \centering
+    \caption[3D reconstruction results on SCARED]{Comparison of 3D scene reconstruction results on SCARED, reproduced from Endo3DAC~\cite{endo3dac2025}.}
+    \label{tab:recon_3d}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lcccccc}
+        \toprule
+        \textbf{Method} & \textbf{Acc $\downarrow$} & \textbf{Comp $\downarrow$} & \textbf{Cham $\downarrow$} & \textbf{Prec $\uparrow$} & \textbf{Rec $\uparrow$} & \textbf{$F_1$ $\uparrow$} \\
+        \midrule
+        MonoGS & 3.56 & 2.54 & 2.97 & 70.0 & 81.4 & 75.2 \\
+        FrozenRecon & 4.91 & 2.59 & 3.25 & 74.0 & 90.7 & 77.5 \\
+        Endo3DAC & 3.08 & 1.86 & 2.66 & 77.7 & 88.3 & 82.6 \\
+        DynaDA3 (Ours) & \multicolumn{6}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+Compared with MonoGS and FrozenRecon, Endo3DAC achieves the best overall geometric consistency in this benchmark, especially in completeness, chamfer distance, and $F_1$ score. This indicates that stronger depth and pose coupling can translate into more usable reconstructed geometry. For the proposed method, this table will be the natural location to report whether dynamic filtering further improves the final 3D scene quality.
+% 相比 MonoGS 和 FrozenRecon，
+% Endo3DAC 在这一 benchmark 中取得了整体最优的几何一致性，
+% 尤其是在 completeness、chamfer distance 和 $F_1$ score 上更为突出。
+% 这说明更强的深度与位姿耦合能力能够转化为更可用的最终三维重建结果。
+% 对于本文方法而言，这张表将是报告动态区域过滤是否能够进一步提升
+% 最终三维场景质量的最自然位置。
+
+\section{SLAM Results}
+The SLAM comparison is organized into sparse and dense settings. Sparse SLAM results are particularly useful for judging trajectory robustness on joint sequences, whereas dense SLAM results reveal the trade-off between localization, mapping quality, and online visualization. Together, these two perspectives cover the main functional requirements of DynaDA3-SLAM.
+% SLAM 结果分为稀疏和稠密两类设置进行整理。
+% 稀疏 SLAM 结果更适合用于判断关节序列上的轨迹鲁棒性，
+% 而稠密 SLAM 结果则揭示了定位精度、建图质量与在线可视化之间的权衡。
+% 这两个角度共同覆盖了 DynaDA3-SLAM 的主要功能需求。
+
+\subsection{Sparse SLAM Results on Joint Sequences}
+Table~\ref{tab:slam_joint} reproduces the joint-domain SLAM results reported by OneSLAM~\cite{oneslam2024}. This comparison is especially relevant for the present thesis because the dataset category is closer to arthroscopy-like joint scenes than most colonoscopy-only benchmarks.
+% 表~\ref{tab:slam_joint} 复现了 OneSLAM~\cite{oneslam2024}
+% 所报告的关节场景 SLAM 结果。
+% 对本论文而言，这一比较尤其重要，
+% 因为该数据类别比多数仅限结肠镜的 benchmark
+% 更接近关节镜类型的场景。
+
+\begin{table}[htbp]
+    \centering
+    \caption[Joint-sequence SLAM results]{Comparison of sparse SLAM results on joint sequences, reproduced from OneSLAM~\cite{oneslam2024}.}
+    \label{tab:slam_joint}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Method} & \textbf{Trans. ATE $\downarrow$} & \textbf{Rot. ATE $\downarrow$} & \textbf{Trans. RPE $\downarrow$} & \textbf{Rot. RPE $\downarrow$} & \textbf{Tracked Cameras $\uparrow$} \\
+        \midrule
+        OneSLAM & 0.93 & 16.07 & 0.49 & 1.05 & 100\% \\
+        EndoSLAM & 2.50 & 73.64 & 1.09 & 14.38 & 100\% \\
+        ORB-SLAM3 & 0.80 & 63.39 & 0.91 & 1.67 & 20\% \\
+        DynaDA3-SLAM (Ours) & \multicolumn{5}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+The results in Table~\ref{tab:slam_joint} show that OneSLAM maintains full trajectory coverage while keeping low translational drift on joint sequences. ORB-SLAM3 achieves a slightly lower translational ATE, but only tracks 20\% of the cameras, which strongly limits its practical usefulness. This comparison highlights that robust coverage and trajectory continuity are as important as pure error minimization in endoscopic SLAM, and these aspects should therefore be reported explicitly for DynaDA3-SLAM.
+% 表~\ref{tab:slam_joint} 的结果表明，
+% OneSLAM 在关节序列上能够保持完整的轨迹覆盖，
+% 同时维持较低的平移漂移误差。
+% 尽管 ORB-SLAM3 的平移 ATE 略低，
+% 但它仅能跟踪 20\% 的相机位姿，这极大限制了其实用性。
+% 这一比较说明，在内窥镜 SLAM 中，
+% 稳定的覆盖率和连续轨迹与单纯追求最小误差同样重要，
+% 因而这些指标也应在 DynaDA3-SLAM 中被明确报告。
+
+\subsection{Dense SLAM Results}
+For dense SLAM, EndoGSLAM~\cite{endogslam2024} provides a representative benchmark on C3VD. Table~\ref{tab:slam_dense} compares rendering quality, depth reconstruction quality, and localization accuracy in a unified dense online setting.
+% 对于稠密 SLAM，EndoGSLAM~\cite{endogslam2024}
+% 在 C3VD 上提供了一个具有代表性的 benchmark。
+% 表~\ref{tab:slam_dense} 在统一的稠密在线场景下，
+% 同时比较了渲染质量、深度重建质量以及定位精度。
+
+\begin{table}[htbp]
+    \centering
+    \caption[Dense SLAM results on C3VD]{Comparison of dense SLAM results on C3VD, reproduced from EndoGSLAM~\cite{endogslam2024}.}
+    \label{tab:slam_dense}
+    \resizebox{\textwidth}{!}{
+    \begin{tabular}{lccccc}
+        \toprule
+        \textbf{Method} & \textbf{PSNR $\uparrow$} & \textbf{SSIM $\uparrow$} & \textbf{LPIPS $\downarrow$} & \textbf{RMSE (mm) $\downarrow$} & \textbf{ATE (mm) $\downarrow$} \\
+        \midrule
+        ORB-SLAM3 & 17.89 & 0.64 & 0.35 & 7.72 & 0.32 \\
+        NICESLAM & 22.07 & 0.73 & 0.33 & 1.88 & 0.48 \\
+        Endo-Depth & 18.13 & 0.64 & 0.33 & 5.10 & 1.25 \\
+        EndoGSLAM-H & 22.16 & 0.77 & 0.22 & 2.17 & 0.34 \\
+        EndoGSLAM-R & 18.37 & 0.67 & 0.30 & 4.33 & 1.23 \\
+        DynaDA3-SLAM (Ours) & \multicolumn{5}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}}
+\end{table}
+
+EndoGSLAM-H achieves the strongest overall rendering and perceptual quality, whereas ORB-SLAM3 remains competitive only in camera localization error. This result reflects a common pattern in endoscopic SLAM: sparse systems may still localize well, but dense scene quality and online visualization require a different design emphasis. EndoGSLAM further reports tracking/reconstruction times of 151.4/268.0 ms per frame for the high-quality version and 62.4/65.1 ms per frame for the real-time version, while maintaining online rendering above 100 fps~\cite{endogslam2024}. These numbers provide an important runtime reference for the future evaluation of DynaDA3-SLAM.
+% EndoGSLAM-H 在整体渲染质量和感知质量方面取得了最强表现，
+% 而 ORB-SLAM3 仅在相机定位误差上仍保持一定竞争力。
+% 这一结果反映了内窥镜 SLAM 中常见的现象：
+% 稀疏系统可能仍然具有较好的定位能力，
+% 但若要获得高质量的稠密场景和在线可视化，则需要不同的系统设计重点。
+% 此外，EndoGSLAM 还报告了高质量版本 151.4/268.0 ms 每帧、
+% 实时版本 62.4/65.1 ms 每帧的跟踪/重建时间，
+% 同时保持超过 100 fps 的在线渲染速度~\cite{endogslam2024}。
+% 这些结果为后续 DynaDA3-SLAM 的运行效率评估提供了重要参考。
+
+\section{Dynamic Obstacle Prediction Results}
+Besides geometry and tracking, the proposed system explicitly addresses dynamic occlusions. This task is not typically evaluated in the same standardized way as reconstruction or SLAM in the cited literature, but it is essential for the intended surgical setting of the present work. Therefore, the obstacle prediction head is treated as an independent experimental component, and its accuracy will be measured by comparing the predicted binary masks against SAM3-based masks that are manually refined on representative frames.
+% 除了几何重建与跟踪之外，本文方法还显式处理动态遮挡问题。
+% 这一任务在现有文献中通常不像重建或 SLAM 那样具有统一标准化 benchmark，
+% 但它对于本文所面向的手术场景是非常关键的。
+% 因此，本文将障碍物预测头视为一个独立实验组件，
+% 其精度将通过预测二值掩码与基于 SAM3 并经过人工修正的标注掩码进行比较来评估。
+
+\begin{table}[htbp]
+    \centering
+    \caption[Dynamic obstacle prediction results]{Planned quantitative results for dynamic obstacle prediction.}
+    \label{tab:dynamic_mask}
+    \begin{tabular}{lcccc}
+        \toprule
+        \textbf{Method} & \textbf{IoU $\uparrow$} & \textbf{Dice $\uparrow$} & \textbf{Precision $\uparrow$} & \textbf{Recall $\uparrow$} \\
+        \midrule
+        DynaDA3 Motion Mask (Ours) & \multicolumn{4}{c}{\tbd} \\
+        \bottomrule
+    \end{tabular}
+\end{table}
+
+In addition to the quantitative comparison, qualitative examples should later be included for typical dynamic cases such as tool insertion, sudden occlusion, partial tissue motion, and highlight-corrupted frames. Such examples are important because they reveal whether the mask head suppresses only true dynamic distractors or also removes geometrically useful static tissue regions.
+% 除了定量比较之外，后续还应补充若干典型动态场景的定性结果，
+% 例如器械进入、突然遮挡、局部组织运动以及高光污染帧等。
+% 这些可视化示例非常重要，
+% 因为它们能够揭示该掩码头究竟只抑制了真实动态干扰，
+% 还是同时错误去除了对几何重建仍然有用的静态组织区域。
+
+\section{Discussion}
+Taken together, the literature results show that recent endoscopic geometry models have already achieved strong performance in short-window pose estimation, depth prediction, and 3D scene reconstruction quality, while endoscopic SLAM systems still expose a clear trade-off between trajectory robustness, dense scene quality, and real-time efficiency. The proposed DynaDA3 and DynaDA3-SLAM are designed to connect these two lines of development by combining feed-forward geometric prediction with explicit dynamic filtering. Once the experiments of the proposed system are completed, the reserved entries in this chapter will allow a direct comparison under the same experiment types discussed above.
+% 综合来看，现有文献结果表明，
+% 近期的内窥镜几何模型已经在短窗口位姿估计、深度预测
+% 以及三维场景重建质量方面取得了较强性能，
+% 而内窥镜 SLAM 系统则仍然在轨迹鲁棒性、稠密场景质量与实时效率之间存在明显权衡。
+% 本文提出的 DynaDA3 和 DynaDA3-SLAM
+% 正是试图通过结合前馈式几何预测与显式动态过滤，
+% 在这两条技术路线之间建立联系。
+% 在本文方法的实验完成之后，
+% 本章中预留的结果表项将能够支持在上述同类实验类型下的直接比较。

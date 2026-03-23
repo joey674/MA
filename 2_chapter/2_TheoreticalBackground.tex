@@ -1,25 +1,37 @@
 \chapter{Theoretical Background}
-\label{chap:theory}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Medical Background}
-\label{sec:medical_background}
 This section introduces the medical background of the knee joint that is relevant to this work. First, Articular Cartilage (AC) and its structural properties are described, followed by Osteoarthritis (OA) as a degenerative joint disease. Based on this medical context, the TriggerINK project is outlined as a robotic 3D bioprinting approach for cartilage repair, which motivates the subsequent technical requirements of the present work.\cite{Yoo2024,Oliveira2017}
-% 这一段交代了本节的整体逻辑结构：先从膝关节相关的医学基础出发，介绍软骨与骨关节炎，再过渡到 TriggerINK 的修复场景，从而把医学问题和后续技术问题连接起来。
+% 本节介绍与本文相关的膝关节医学背景。
+% 首先介绍关节软骨及其结构特性，然后介绍作为退行性关节疾病的骨关节炎。
+% 在这一医学背景基础上，进一步引出 TriggerINK 项目作为一种用于软骨修复的机器人 3D 生物打印方案，并由此说明本文后续的技术需求。
 \subsection{Articular Cartilage}
 The human body is composed of various cells that not only form organs but also define different types of organic tissue. The four fundamental tissue types are nervous, muscular, epithelial, and connective tissue. Among these, connective tissue is the most widespread and diverse, encompassing fat tissue, blood, fibrous tissue, bone marrow, and cartilage. These connective tissues are highly specialized and rich in matrix, which ensures cohesion, mechanical support, and protection of the body's organs and structures.
-% 这一段先把软骨放回到更大的组织学背景中来理解，说明它属于结缔组织的一类，并强调其在人体中分布广、功能多，为后面单独展开软骨结构做基础。
+% 人体由多种细胞构成，这些细胞不仅形成器官，也构成不同类型的组织。
+% 四种基本组织类型分别是神经组织、肌肉组织、上皮组织和结缔组织。
+% 其中，结缔组织分布最广、种类最多，包括脂肪、血液、纤维组织、骨髓和软骨。
+% 这些结缔组织高度特化，并且富含基质，从而提供凝聚、机械支撑和保护作用。
 
 Among them, cartilage is noted for its combination of flexibility and strength, and it is present in multiple locations throughout the body. Its dense matrix, characterized by a gelatinous base, is heavily infused with collagens and elastic fibers, allowing its categorization into several types based on structural differences:
-% 这一段主要在说明软骨的基本机械特性，并顺势引出不同类型软骨的分类方式，让读者先建立“软骨不是单一组织”的概念。
+% 在这些组织中，软骨兼具柔韧性和强度，并分布于人体多个部位。
+% 它具有致密的基质和胶状基底，其中富含胶原和弹性纤维，因此可根据结构差异分为不同类型。
 
 \begin{itemize}
+    % 透明软骨呈蓝白色，富含胶原纤维和糖胺聚糖，主要与骨骼系统相关。
     \item \textbf{Hyaline cartilage} displays a bluish-white hue and is rich in collagen fibrils and Glycosaminoglycans (GAG), predominantly associated with the skeletal system.
+    % 弹性软骨呈黄色，分布于外耳和会厌，其基质中含有丰富的弹性纤维网络。
     \item \textbf{Elastic cartilage} is identified by its yellowish color and is found in the external ear and epiglottis, characterized by a matrix composed of extensive networks of elastic fibers.
+    % 纤维软骨是最坚固的一类软骨，其海绵状基质中密集分布着胶原。
+    % 半月板、骨痂和椎间盘等结构都由这种软骨组成。
     \item \textbf{Fibrous cartilage} is the strongest cartilage type and consists of a sponge-like matrix densely filled with collagen. Key components such as menisci, calli, and intervertebral discs are made up of this cartilage variant.
 \end{itemize}
 
 Hyaline cartilage is the most commonly found type in the body, with a specialized form known as Articular Cartilage (AC) located in synovial joints.\cite{SophiaFox2009} It plays a crucial role in the musculoskeletal system, particularly in the knee. AC has an average thickness of 2--4 mm and is composed of a dense Extracellular Matrix (ECM) with a sparse distribution of highly specialized cells called chondrocytes. The anatomical relationship between the major structures of the knee joint and the articular cartilage is illustrated in Figure~\ref{fig:medical_background_knee}. In particular, the figure highlights the articulation region where the cartilage layer covers the joint surfaces and enables smooth motion under load.
-% 这一段把讨论范围进一步收缩到与论文最相关的关节软骨，说明其在膝关节中的具体位置、厚度和基本组成，并借助图示帮助理解其解剖位置。
+% 透明软骨是人体中最常见的软骨类型，其中一种特化形式称为关节软骨，位于滑膜关节中。
+% 它在肌肉骨骼系统中具有重要作用，尤其是在膝关节中。
+% 关节软骨的平均厚度约为 2--4 mm，由致密的细胞外基质和少量高度特化的软骨细胞组成。
+% 图~\ref{fig:medical_background_knee} 展示了膝关节主要结构与关节软骨之间的解剖关系。
+% 图中重点标出了关节接触区域，在该区域软骨层覆盖关节表面，使其在受力时仍能平滑运动。
 
 \begin{figure}[H]
     \centering
@@ -29,19 +41,33 @@ Hyaline cartilage is the most commonly found type in the body, with a specialize
 \end{figure}
 
 The ECM is mainly composed of water, collagen, and proteoglycans, where proteoglycans are formed by GAG chains covalently bound to a protein core. Collagens are primarily responsible for the durability of AC, while proteoglycans play a critical role in resilience to compressive loads and elasticity.\cite{Kjellen1991,Akizuki1986} Together, these components result in the rubber-like mechanical functionality of AC, providing a smooth, lubricated joint surface and facilitating load distribution. This significantly reduces contact stress during movement and protects the underlying bone from permanent damage.
-% 这一段解释关节软骨为什么能承担力学功能，核心是说明细胞外基质中水、胶原和蛋白聚糖分别如何影响耐久性、抗压性和润滑性能。
+% 细胞外基质主要由水、胶原和蛋白聚糖组成，其中蛋白聚糖由与蛋白核心共价结合的糖胺聚糖链构成。
+% 胶原主要决定关节软骨的耐久性，而蛋白聚糖对抗压恢复能力和弹性至关重要。
+% 这些成分共同赋予关节软骨类似橡胶的力学特性，使关节表面保持平滑和润滑，并促进载荷分布。
+% 这能显著降低运动过程中的接触应力，并保护下方骨组织免受永久性损伤。
 
 The structure of AC in synovial joints is divided into four zones: superficial, middle, deep, and calcified cartilage. Each zone exhibits distinct structural properties and fulfills specific biomechanical functions.\cite{Yoo2024,SophiaFox2009}
-% 这一段强调关节软骨并不是均匀材料，而是具有明确分层结构，不同分层在组织构型和生物力学功能上都有差异。
+% 滑膜关节中的关节软骨可分为表层、中间层、深层和钙化层四个区域。
+% 每一层都具有不同的结构特征，并承担特定的生物力学功能。
 
 Cartilage is avascular, meaning that there is no direct blood supply and chondrocytes rely on nutrient diffusion from the surrounding environment. The compressive forces that regularly act on cartilage further promote nutrient transport. This indirect supply mechanism is a major factor behind the slow turnover of the extracellular matrix and the limited repair capacity of cartilage.\cite{Oliveira2017}
-% 这一段解释软骨难以自我修复的根本原因，即其无血管供给、营养主要依靠扩散，因此代谢慢、更新慢，也为后文讨论修复技术提供医学动机。
+% 软骨是无血管组织，这意味着它没有直接血液供应，软骨细胞主要依赖周围环境的营养扩散。
+% 经常作用于软骨的压缩力还会进一步促进营养运输。
+% 这种间接供养方式是细胞外基质更新缓慢和软骨修复能力有限的重要原因。
 \subsection{Osteoarthritis}
 Traditionally, Osteoarthritis (OA) was viewed as a disease primarily affecting AC, but it is now recognized as involving the entire joint, with interconnected components all susceptible to OA-related degenerative processes. This broader understanding emphasizes the complex nature of OA, which is influenced by a range of risk factors including age, mechanical stimuli, natural wear and tear, obesity, occupational factors, and lifestyle choices. Globally, around 240 million people suffer from symptomatic OA that limits daily activity, predominantly in the knee joint followed by the hip joint. For instance, nearly 30\% of individuals over 45 years old show knee OA on X-rays, and about half of these cases are symptomatic. This makes OA the most prevalent and most clinically relevant type of arthritis worldwide.\cite{Oliveira2017}
-% 这一段把骨关节炎界定为累及整个关节的退行性疾病，而不只是软骨问题，同时给出其高患病率和主要风险因素，说明这一病症具有明确的临床重要性。
+% 传统上，骨关节炎主要被认为是影响关节软骨的疾病，但现在已经认识到它会累及整个关节。
+% 这种更全面的理解说明了骨关节炎的复杂性，因为它受到年龄、机械刺激、自然磨损、肥胖、职业因素和生活方式等多种风险因素影响。
+% 全球大约有 2.4 亿人患有会限制日常活动的症状性骨关节炎，其中最常见于膝关节，其次是髋关节。
+% 例如，在 45 岁以上人群中，接近 30\% 在 X 光片上可见膝骨关节炎，其中约一半具有症状。
+% 因此，骨关节炎是全球最常见、临床上最重要的一类关节炎。
 
 In general, OA starts with molecular disturbances in joint tissue metabolism and progresses to anatomical and physiological changes. These changes include focal lesions in the cartilage, subchondral bone remodeling, osteophyte formation, joint space narrowing, and synovial inflammation, which in turn can lead to synovial hyperplasia and significant health problems. Within the scope of this work, only focal lesions are discussed in further detail.\cite{Oliveira2017} Figure~\ref{fig:medical_background_lesion} shows a representative cartilage defect in the knee joint. This localized lesion is the type of pathology addressed in the present repair scenario and therefore constitutes the primary target structure for the subsequent reconstruction and treatment workflow.
-% 这一段说明骨关节炎会如何从早期代谢异常逐渐发展为可见的结构性损伤，并明确指出本文聚焦的是其中的局灶性软骨缺损，因为这正是后续重建和修复的直接对象。
+% 一般来说，骨关节炎起始于关节组织代谢的分子层面紊乱，并逐渐发展为解剖和生理变化。
+% 这些变化包括软骨局灶性损伤、软骨下骨重塑、骨赘形成、关节间隙变窄和滑膜炎症，而这些又可能进一步导致滑膜增生和严重健康问题。
+% 在本文范围内，只进一步讨论局灶性损伤。
+% 图~\ref{fig:medical_background_lesion} 展示了膝关节中一个具有代表性的软骨缺损。
+% 这种局部病灶正是本文修复场景所针对的病理类型，因此也是后续重建与治疗流程的主要目标结构。
 
 \begin{figure}[H]
     \centering
@@ -52,7 +78,9 @@ In general, OA starts with molecular disturbances in joint tissue metabolism and
 
 \subsection{3D Bioprinting Techniques}
 One state-of-the-art strategy for cartilage repair relies on a cell-based and partially ex vivo workflow. In such an approach, healthy cartilage cells are first harvested in an initial surgical step, then cultivated outside the body in the laboratory, and after a prolonged preparation period they are seeded onto a supporting matrix before being implanted into the cartilage defect during a second surgery. While this strategy can provide biologically relevant repair material, it also comes with clear disadvantages, including the need for two separate operations, extended treatment time, increased logistical complexity, and the risk of contamination during ex vivo processing.\cite{Yoo2024}
-% 这一段先概括传统软骨修复思路的基本流程：先取细胞、再体外培养、最后二次植入，同时指出它虽然可行，但需要两次手术且整体周期长、流程复杂。
+% 当前一种先进的软骨修复策略依赖于基于细胞、并且部分在体外进行的流程。
+% 在这种方法中，首先在第一次手术中获取健康软骨细胞，然后在体外实验室中培养，经过较长准备期后将其接种到支撑基质上，并在第二次手术中植入软骨缺损区域。
+% 虽然这种策略可以提供具有生物学意义的修复材料，但它也有明显缺点，包括需要两次独立手术、治疗时间更长、流程组织更复杂，以及体外处理过程中的污染风险。
 
 \begin{figure}[H]
     \centering
@@ -62,347 +90,57 @@ One state-of-the-art strategy for cartilage repair relies on a cell-based and pa
 \end{figure}
 
 In contrast, the TriggerINK project pursues an in vivo robotic bioprinting strategy that aims to perform the repair within a single surgery using a fully functional synthetic cartilage tissue as bioink.\cite{Yoo2024} As summarized in Figure~\ref{fig:medical_background_bioprinting}, the vision is to replace the conventional two-stage workflow by a fully automatic process in which defect assessment, geometry acquisition, and material deposition are integrated into one robotic procedure. Within this overall concept, the present thesis addresses the visual information processing that must be solved before automated printing becomes feasible.
-% 这一段与上一段形成对照，说明 TriggerINK 希望把传统多阶段流程压缩为单次手术内完成的机器人生物打印方案，而本文关注的正是其中“如何可靠获取缺损几何信息”这一关键前提。
+% 相比之下，TriggerINK 项目采用体内机器人生物打印策略，目标是在一次手术中使用功能完整的合成软骨组织生物墨水完成修复。
+% 如图~\ref{fig:medical_background_bioprinting} 所示，该项目希望用一个全自动流程取代传统的两阶段流程，在同一机器人操作中完成缺损评估、几何获取和材料沉积。
+% 在这一整体概念下，本文关注的是自动打印实现之前必须解决的视觉信息处理问题。
 
 In principle, such a repair procedure can be realized either through an open surgical approach or through a minimally invasive approach. Compared with open surgery, the minimally invasive setting offers several important advantages, including reduced recovery time, minimal trauma, and less postoperative pain. For this reason, the following technical discussion focuses on the minimally invasive scenario.
-% 这一段进一步比较两种手术实施方式，指出开放式和微创式都可用于修复，但本文选择聚焦微创路径，因为它在恢复时间、创伤和疼痛方面更具临床优势。
+% 原则上，这类修复手术既可以通过开放手术实施，也可以通过微创手术实施。
+% 与开放手术相比，微创方式具有恢复时间更短、创伤更小和术后疼痛更轻等重要优势。
+% 因此，后续技术讨论将重点关注微创场景。
 
 However, the minimally invasive setting also introduces major challenges. Since the intervention takes place inside the joint cavity, the defect cannot be observed directly and its geometry cannot be scanned directly from outside the body. Instead, the available intraoperative information is limited to the video stream delivered by the endoscope.  
-% 这一段明确提出微创场景下最核心的技术难点：手术区域处于体内，医生和系统都无法直接观察或扫描缺损，只能依赖内窥镜视频获取视觉信息。
+% 然而，微创场景也带来了重要挑战。
+% 由于手术发生在关节腔内部，缺损区域无法被直接观察，其几何形状也无法从体外直接扫描获得。
+% 因此，术中可用的信息仅限于内窥镜传输的视频流。
 
 Consequently, the processing pipeline must not only reconstruct the defect region with high geometric accuracy, but also support real-time localization and navigation of the endoscope and surgical tools inside the surgical scene. This leads directly to the technical goals of the present thesis: high-precision dense 3D reconstruction together with real-time localization and navigation. A strongly related technical foundation for these requirements is Simultaneous Localization and Mapping (SLAM), which is introduced in a later section. 
-% 这一段把前面的医学需求正式转化为技术目标，说明系统不仅要高精度重建缺损几何，还要支持器械和内窥镜的实时定位导航，因此自然引出后文要讨论的 SLAM。
+% 因此，该处理流程不仅需要高精度地重建缺损区域，还需要支持内窥镜和手术器械在术野中的实时定位与导航。
+% 这直接引出了本文的技术目标，即高精度稠密三维重建以及实时定位与导航。
+% 与这些需求密切相关的一项技术基础是同时定位与建图，即 SLAM，后文将对此进行介绍。
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Dense 3D Reconstruction}
-\label{sec:dense_3d_theory}
-This chapter presents the theoretical background relevant to this work, with a focus on dense 3D reconstruction from monocular sequences.
-First, related work is reviewed, covering the evolution from traditional geometry-based methods such as Structure-from-Motion (SfM) and Multi-View Stereo (MVS) to recent feed-forward transformer-based reconstruction approaches.
-Then, the reconstruction model adopted in this work, Depth Anything 3 (DA3), is introduced in detail, providing the foundation for the subsequent methodology.
-% 这一段相当于 2.2 的导读，先说明本节会回顾从传统几何重建到现代前馈式重建的发展脉络，最后再把重点收束到本文采用的 DA3 模型。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Vision Transformer (ViT)}
-Vision Transformer (ViT) transfers the standard Transformer architecture from natural language processing to visual recognition by representing an image as a sequence of fixed-size patches rather than as a grid processed by convolutions.\cite{dosovitskiy2021vit} Given an input image of size $H \times W \times C$, the image is split into $N=\frac{HW}{P^2}$ non-overlapping patches of size $P \times P$. Each patch is flattened and linearly projected into a $D$-dimensional embedding. A learnable class token is prepended to the patch sequence, and positional embeddings are added to preserve spatial order before the tokens are passed through stacked Transformer encoder blocks.
-% 这一段先给出 ViT 的基本定义和输入形式，说明它怎样把二维图像改写成一串 patch token，再送入标准 Transformer 编码器中处理。
+\section{Geometric and Optimization Foundations}
+\label{sec:geometric_foundations}
+This section introduces the foundations of 3D geometry together with several common visual tasks in computer vision. It first presents the basic camera and multi-view geometric models, then discusses representative tasks such as Structure-from-Motion (SfM), Multi-View Stereo (MVS), and SLAM, and finally reviews the core estimation and optimization algorithms that are commonly used to solve them, including RANSAC, bundle adjustment, and pose transformations.
+% 本节介绍三维几何基础以及计算机视觉中的几个常见任务。
+% 首先介绍基本的相机模型和多视图几何模型，然后讨论 SfM、MVS 和 SLAM 等代表性任务，最后回顾常用于求解这些任务的核心估计与优化算法，包括 RANSAC、Bundle Adjustment 和位姿变换。
 
-Each Transformer block consists of multi-head self-attention and a feed-forward multilayer perceptron, together with residual connections and layer normalization.\cite{dosovitskiy2021vit} In contrast to convolutional neural networks, ViT does not impose strong image-specific inductive biases such as locality or translation equivariance. Instead, it learns spatial relationships through global self-attention, allowing each patch token to directly interact with all others. This makes ViT especially suitable for capturing long-range dependencies and globally consistent structures across the image, although it also makes the model more dependent on large-scale pretraining data.
-% 这一段进一步解释 ViT 的核心计算机制，并把它和 CNN 做对比，突出 ViT 的特点在于通过全局自注意力显式建模远距离区域之间的关系。
-
-For the present work, ViT is relevant because it serves as the architectural basis of several recent feed-forward geometry models. Its token-based formulation is naturally compatible with cross-view reasoning, and the globally contextualized features it produces are well suited for dense reconstruction tasks, where geometric correspondences and scene structure often extend over large image regions rather than remaining confined to local neighborhoods.
-% 这一段把 ViT 和本文任务直接联系起来，说明这里介绍 ViT 不是孤立的模型背景，而是为了后面理解基于 Transformer 的几何重建网络做铺垫。
-\subsection{Self-Distillation with No Labels (DINO)}
-DINO is a self-supervised representation learning framework that learns visual features without manual annotations by distilling the outputs of a teacher network into a student network of the same architecture.\cite{caron2021dino} In its standard form, both teacher and student are Vision Transformers. For each input image, multiple augmented views are generated. The student processes all views, while the teacher usually receives only the global crops. Training minimizes a cross-entropy loss between the output distributions of the teacher and the student, with gradients stopped on the teacher branch.
-% 这一段先说明 DINO 的基本思想，即不用标签而通过 teacher-student 的自蒸馏方式学习图像表征，并交代它的基本训练流程。
-
-The teacher network is not fixed beforehand. Instead, its parameters are updated as an exponential moving average of the student, which stabilizes training.\cite{caron2021dino} To avoid representational collapse, DINO applies centering and sharpening to the teacher outputs. It also benefits strongly from multi-crop augmentation, where local and global image crops provide complementary supervision. This design avoids the need for labeled data, negative sample mining, or large memory banks while still producing robust and transferable features.
-% 这一段解释 DINO 为什么能够稳定训练，重点在于动量教师、centering、sharpening 和 multi-crop 这些机制如何共同避免塌缩并提升特征质量。
-
-An important observation reported in DINO is that self-supervised ViT features can encode meaningful object-level structure and often reveal salient regions and boundaries in the scene.\cite{caron2021dino} Such properties are valuable for geometric vision because dense reconstruction does not only require semantic robustness, but also spatially coherent and structurally informative features. In the context of DA3, DINO is particularly relevant because the model relies on a DINO-pretrained transformer backbone to provide general-purpose visual representations before the geometry-specific prediction heads are applied.
-% 这一段说明 DINO 特征对本文为什么有意义，核心逻辑是它学到的表示不仅有语义信息，还保留了较好的结构与边界感知能力，因此很适合后续几何预测。
-\subsection{Dense Prediction Transformer (DPT)}
-While ViT was originally proposed for image-level tasks such as classification, dense prediction tasks require high-resolution outputs for every pixel. Dense Prediction Transformer (DPT) addresses this gap by adapting transformer features to dense prediction problems such as monocular depth estimation and semantic segmentation.\cite{ranftl2021dpt} Instead of relying on a convolutional backbone that progressively downsamples the image, DPT uses a ViT encoder that maintains a relatively high and constant feature resolution throughout the encoding process while providing a global receptive field at every stage.
-% 这一段先指出 DPT 要解决的问题，即原始 ViT 更适合图像级任务，而 DPT 的目标是把 Transformer 特征有效转换成逐像素的稠密预测结果。
-
-A key idea in DPT is the reassembly of transformer tokens into image-like feature maps at multiple resolutions.\cite{ranftl2021dpt} Features extracted from several transformer layers are reshaped and projected back into spatial representations, after which fusion modules progressively combine them in a convolutional decoder. In this way, DPT integrates the global contextual reasoning of the transformer encoder with the local refinement capability of dense decoders, yielding predictions that are both globally coherent and locally detailed.
-% 这一段具体介绍 DPT 的结构核心，也就是 token reassembly 和多尺度 fusion，说明它如何把序列式特征重新组织成适合稠密输出的空间特征图。
-
-For this thesis, DPT is important because it provides the architectural template that connects transformer backbones to dense geometric outputs. Modern feed-forward reconstruction models, including the ones discussed later in this chapter, use DPT-style heads to decode shared visual features into depth-related quantities. Therefore, understanding DPT helps explain how high-level transformer representations are converted into the dense depth, point, or ray predictions required for 3D reconstruction.
-% 这一段把 DPT 与本文后续要讲的重建模型联系起来，强调它在整体系统中的作用是把 ViT 或 DINO 产生的特征真正变成可用于三维重建的稠密几何预测。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Feed-Forward Transformer-Based 3D Reconstruction}
-\subsubsection*{Traditional Geometry-based 3D Reconstruction}
-\label{sec:classical_reconstruction}
-The field of 3D reconstruction has been traditionally dominated by pipeline-based approaches, namely Structure-from-Motion (SfM)\cite{schonberger2016SfM} and Multi-View Stereo (MVS)\cite{schonberger2016MVS}.
-% 这一段先从历史视角概括传统三维重建的主流范式，指出 SfM 与 MVS 长期构成经典重建流水线的核心框架。
-
-% Structure from Motion
-\textbf{Structure from Motion} is a classic computer vision problem [45, 77, 80] that involves estimating camera parameters
-and reconstructing sparse point clouds from a set of images
-of a static scene captured from different viewpoints. The
-traditional SfM pipeline [2, 36, 70, 94, 103, 134] consists
-of multiple stages, including image matching, triangulation,
-and bundle adjustment. COLMAP [94] is the most popular framework based on the traditional pipeline.\cite{wang2025vggt}
-% 这一段具体解释 SfM 想解决什么问题，以及它通常经过哪些步骤完成稀疏重建，同时用 COLMAP 作为典型代表帮助读者建立直观认识。
-
-Figure\ref{fig:classical_reconstruction_SfM} illustrates a fundamental SfM framework.The pipeline starts from multi-view image inputs, establishes inter-image correspondences through feature matching and geometric verification, and then incrementally estimates camera poses and 3D scene structure. The reconstruction is continuously refined through triangulation and bundle adjustment, resulting in a globally consistent 3D representation.
-% 这一段结合图示把 SfM 的关键流程串起来，帮助读者从输入图像、特征匹配到位姿估计和三角化优化形成完整流程理解。
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/classical_reconstruction_SfM.png}
-    \caption{Structure-from-Motion pipeline}
-    \label{fig:classical_reconstruction_SfM}
-\end{figure}
-
-
-% Multi-view Stereo
-\textbf{Multi-view Stereo (MVS)} aims to densely reconstruct the geometry of a scene from multiple overlapping images, typically assuming known camera parameters which are often estimated via SfM~\cite{wang2025vggt}.
-The fundamental principle underlying MVS is the Photo Consistency Assumption, which posits that a 3D point in space should exhibit a similar appearance (color or intensity) when projected onto different image planes, provided the surface is approximately Lambertian. To efficiently identify corresponding points across views, MVS leverages Epipolar Geometry. Instead of searching the entire image domain, pairwise matching is constrained to epipolar lines determined by the relative camera poses, thereby significantly reducing computational complexity. Based on these geometric constraints, the algorithm estimates a depth map for each reference image by aggregating information from neighboring views. Finally, in the Fusion stage, these individual depth maps are integrated into a globally consistent point cloud or mesh, filtering out outliers to produce a high-fidelity dense estimation of the scene geometry.
-% 这一段转向 MVS，说明它如何在已知或可估计相机位姿的前提下，通过光度一致性和极线几何实现稠密深度估计与多视图融合。
-
-% early learning methods in SfM/MVS
-Early learning methods injected robustness at the component
-level: learned detectors [20], descriptors for matching [22], and differentiable optimization layers that expose
-pose/depth updates to gradient flow [31, 33, 62]. 
-On the dense side, cost-volume networks [106, 114] for MVS replaced hand-crafted regularization with 3D CNNs, improving depth accuracy especially at large baselines and thin structures compared with classical PatchMatch.\cite{lin2025da3}
-% 这一段说明早期学习方法并没有立刻完全替代传统流程，而是先以模块化方式嵌入到检测、匹配和深度估计等局部环节中提升鲁棒性。
-%% problem with early learning methods 
-They did reduce engineering complexity and demonstrated the feasibility of learned joint depth pose estimation, but they often struggled with scalability, generalization, and handling arbitrary input cardinalities.\cite{lin2025da3}
-% 这一段承接前文，指出这些早期学习式增强虽然降低了工程复杂度，但在多视图规模扩展、泛化和输入灵活性方面仍存在明显限制。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{Feed-forward Transformer-based 3D Reconstruction}
-\label{sec:feed_forward_reconstruction}
-% Intro
-%% problem with traditional methods
-Traditional Geometry-based methods remain strong on well-textured scenes, but their modularity and brittle correspondences complicate robustness under low texture, specularities, or large viewpoint changes.
-% 这一段作为前馈式方法登场前的过渡，强调传统几何法在低纹理、反光和视角变化较大时容易因为对应关系不稳定而失效。
-
-The emergence of feed-forward 3D reconstruction methods is closely tied to the introduction of attention mechanisms. Unlike convolutional operations that rely on local receptive fields, attention enables explicit modeling of long-range dependencies by computing pairwise interactions between elements in a sequence.
-In the context of multi-view geometry, this property is particularly appealing, as 3D reconstruction inherently requires reasoning over global spatial relationships and correspondences across views. By allowing features from different images to directly attend to each other, attention mechanisms provide a natural alternative to explicit feature matching and geometric verification used in traditional pipelines.
-% 这一段解释为什么 attention 机制适合用于多视图几何：因为它能够直接建模跨图像、跨区域的长程依赖，从而为前馈式重建提供理论基础。
-
-Leveraging attention-based architectures, recent approaches formulate 3D reconstruction as a feed-forward prediction problem, where geometric quantities such as depth, camera motion, or point maps are directly inferred from image features. This paradigm eliminates the need for iterative optimization and decoupled processing stages, enabling end-to-end learning of visual geometry from data.
-% 这一段总结前馈式重建的核心变化，即不再依赖传统的逐步优化流水线，而是尝试直接从图像特征回归深度、位姿或点图等几何表示。
-
-\subsubsection*{DUSt3R: A Pioneering Feed-forward Transformer-based Method}
-A turning point came with DUSt3R,a radically novel paradigm for Dense and Unconstrained Stereo 3D Reconstruction of arbitrary image\cite{2024dust3r}, which leveraged transformers to directly predict point map between two views and compute both depth and relative pose in a purely feed-forward manner. This work laid the foundation for subsequent transformer-based methods aiming to unify multi-view geometry estimation at scale.\cite{lin2025da3}
-% 这一段把 DUSt3R 定位为前馈式重建的重要代表，强调它首次较系统地展示了图像对之间直接预测几何表示的可行性。
-
-As illustrated in Fig.~\ref{fig:dust3r_framework}, given two input images $I_1$ and $I_2$, both images are first processed by a shared image feature extractor to obtain dense visual representations. The feature extractor can be implemented using either convolutional neural networks or transformer-based architectures; in DUSt3R, a Vision Transformer (ViT) is adopted as the encoder, whose architectural principles have been introduced above.
-The extracted feature tokens from the two views are then passed to two transformer decoders, which iteratively exchange information through cross-attention. This mechanism allows features from one view to attend to and reason about features from the other view, enabling implicit correspondence discovery without explicit feature matching.
-% 这一段说明 DUSt3R 的主要网络结构，并突出它如何通过跨视图注意力在不显式做特征匹配的情况下实现隐式对应关系建模。
-
-Based on the fused multi-view features, two regression heads predict dense point maps for each input image, along with associated confidence maps. Importantly, both point maps are expressed in a common coordinate frame defined by the first camera view $I_1$, thereby establishing a shared geometric reference across the two images. From the predicted point maps, camera intrinsics such as focal lengths can be estimated using the Weiszfeld algorithm \cite{weiszfeld1937point}, and relative camera poses can be recovered using minimal solvers such as 3-point RANSAC \cite{nister2004fivepointmethod,matas2005ransac}.
-% 这一段进一步说明 DUSt3R 的输出不仅是点图，还能在共享坐标系中恢复相机参数和相对位姿，因此具备完整的几何推理能力。
-
-By directly regressing dense geometry in a feed-forward manner, DUSt3R eliminates the need for explicit feature matching, geometric verification, and iterative optimization, demonstrating the feasibility of learning-based geometric reasoning from image pairs. \cite{maggio2025vggtslam}
-% 这一段总结 DUSt3R 相比传统流水线的关键优势，即减少了显式匹配、几何验证和大量迭代优化带来的复杂度。
-\begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/feed_forward_reconstruction_dust3r.png}
-    \caption{DUSt3R framework overview}
-    \label{fig:dust3r_framework}
-\end{figure}
-
-
-\subsubsection*{Follow-up Works}
-MASt3R follows a similar design but also outputs descriptors that can be used to generate pairwise correspondences between the two frames. MASt3R-SFM [14] demonstrates global optimization of multiple images using MASt3R but computation scales quickly with the number of frames. \cite{maggio2025vggtslam}
-% 这一段简要回顾 DUSt3R 之后的直接延伸工作，说明研究者开始尝试在保留前馈式思想的同时增强特征表达和多图优化能力，但计算代价仍然较高。
-
-To extend the idea of DUSt3R to multiple frames, Spann3R [67] leverages a learned memory module and Cut3R [69] uses a recurrent state model. Both can incrementally reconstruct a scene using multiple images, but are each limited to short sequences. Recently, Pow3R [27] extends the DUSt3R framework to optionally take in any estimates of any combination of camera intrinsics, poses, and depth (which may be sparse or dense) and demonstrates substantial improvement in scene reconstruction and pose estimation given the added inputs. Splatt3R [60] extends the DUSt3R idea to Gaussian Splatting [29] by directly outputting the Gaussian Splatting parameters given two views, and PreF3R [8] extends this to multiple views using a similar memory framework as Spann3R. Reloc3r [13] modifies the DUSt3R framework for directly outputs relative camera poses and uses motion averaging to recover absolute poses with respect to a map database.\cite{maggio2025vggtslam}
-% 这一段从更广的角度总结后续工作，说明前馈式几何推理已经被扩展到多帧重建、先验注入、高斯表示和重定位等多个方向。
-
-\subsubsection*{Visual Geometry Grounded Transformer}
-While DUSt3R and its follow-up works demonstrate that feed-forward models can successfully infer dense geometry from image pairs, their pairwise formulation inherently limits scalability and global reasoning. Extending such methods to multi-view settings typically requires additional post-processing steps, such as pose graph optimization or incremental fusion, which reintroduce elements of traditional pipelines.
-% 这一段重新回到问题本身，指出成对图像建模虽然有效，但在处理长序列和保持全局一致性方面存在天然瓶颈。
-
-These limitations motivate the need for a unified framework that can jointly reason over an arbitrary number of views and directly model global geometric relationships in a feed-forward manner.
-% 这一段起承上启下的作用，说明正因为成对方法存在扩展性问题，所以需要一个能够统一处理任意数量视角的新框架。
-
-As a culmination of feed-forward reconstruction models inspired by DUSt3R, VGGT (Visual Geometry Grounded Transformer) extends pairwise geometric reasoning to arbitrary-length image sequences within a unified architecture. An overview of the VGGT framework is shown in Figure~\ref{fig:vggt_framework}. Given a set of input images, VGGT first decomposes each image into a sequence of visual tokens using a pretrained image feature extractor. In the original formulation, self-supervised features obtained from DINO are employed to provide semantically rich and geometrically consistent representations. These per-image token sequences are then concatenated, and camera-specific tokens are appended to enable explicit modeling of camera parameters.
-% 这一段介绍 VGGT 的核心定位，即把原本针对图像对的几何推理推广到任意长度图像序列，并在一个统一架构内完成。
-
-The core of VGGT consists of multiple transformer layers that alternate between global attention and frame-wise attention. Global attention allows tokens from different views to directly interact, facilitating cross-view information exchange and long-range geometric reasoning. In contrast, frame-wise attention focuses on refining features within each individual image. By alternating between these two attention mechanisms, VGGT jointly captures both intra-view structure and inter-view geometric relationships across the entire image set.
-% 这一段重点解释 VGGT 的信息交互机制，说明它如何通过全局注意力与帧内注意力的交替设计同时处理跨视图关系和单帧内部结构。
-
-Based on the aggregated token representations, VGGT employs multiple prediction heads to regress diverse geometric quantities. A dedicated camera head estimates camera intrinsics and extrinsics, while dense prediction transformer (DPT) heads are used to generate dense depth maps, point maps, and feature tracks. Importantly, these outputs are expressed in a common coordinate frame, enabling consistent multi-view reconstruction without explicit correspondence estimation or incremental optimization.
-% 这一段说明 VGGT 的输出形式不再局限于单一几何量，而是在统一坐标系下联合预测相机、深度、点图和轨迹等多个结果。
-
-By unifying multi-view feature aggregation and geometry prediction within a single feed-forward transformer, VGGT represents a significant step toward holistic and scalable dense 3D reconstruction from unconstrained image collections.
-% 这一段总结 VGGT 的代表性意义，即它展示了前馈式方法也可以在更大规模的多视图场景中进行统一建模和几何预测。
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/feed_forward_reconstruction_vggt.png}
-    \caption{VGGT framework overview}
-    \label{fig:vggt_framework}
-\end{figure}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{State of the Art: DA3}
-\label{sec:da3_reconstruction}
-% 肯定 VGGT 的贡献
-While VGGT represents a significant advancement in unified feed-forward multi-view reconstruction, it still leaves room for improvement in terms of efficiency, scalability, and generalization. 
-% 这一段先对 VGGT 的贡献做出肯定，然后自然转入“为什么还需要新的模型”这一问题，为 DA3 的引入做铺垫。
-% 明确指出三点问题：架构庞大（~1B 参数） 任意长度输入 → 显存 / 算力开销大 不适合轻量化部署
-The VGGT framework is characterized by a large and complex architecture, with model sizes reaching up to one billion parameters, which makes it unsuitable for lightweight deployment scenarios. Although VGGT supports arbitrary-length input sequences, this flexibility comes at the cost of substantial memory consumption and computational overhead, especially when processing long image sequences.
-% 这一段具体指出 VGGT 的一个主要问题在于模型规模大、资源开销高，因此在实际部署尤其是资源受限场景下不够理想。
-% 强调泛化问题 在“完全未见过的场景”（如内窥镜）仍可能失败
-Moreover, despite being trained on large-scale and diverse datasets covering a wide range of common visual scenes, VGGT may still fail when confronted with domains that differ significantly from its training distribution, such as endoscopic imagery. These limitations highlight the need for a more compact and robust reconstruction model that preserves the strengths of VGGT while addressing its practical shortcomings.
-% 这一段补充说明除了效率问题之外，VGGT 在与训练分布差异较大的未见域中仍可能出现泛化不足，这对医疗图像场景尤其重要。
-% DA3 正式登场
-To this end, Depth Anything 3 (DA3) is introduced as an improved variant built upon the VGGT paradigm. Building upon this insight, DA3 proposes a unified feed-forward model that reconstructs the visual space from arbitrary visual inputs, including multi-view image collections and video streams. Given any number of input views, with or without known camera poses, DA3 jointly predicts dense depth maps and ray maps that can be directly fused into geometrically consistent 3D point clouds.
-% 这一段正式引出 DA3，说明它继承前馈式多视图重建思路，但目标是在效率、泛化和表示方式上做进一步改进。
-
-Compared to VGGT, DA3 significantly simplifies the overall framework by relying on a single DINO-based transformer backbone and enabling cross-view reasoning through token rearrangement rather than explicit multi-branch architectures. This design reduces the model size to a configurable range between 0.11B and 0.35B parameters, making DA3 substantially more suitable for lightweight and resource-constrained deployment while maintaining strong reconstruction performance.
-% 这一段主要解释 DA3 在架构层面的改进，即通过更简洁的主干和跨视图推理设计减小模型规模并提升实际部署友好性。
-
-In addition, DA3 leverages a powerful depth teacher model during training, allowing it to learn robust geometric priors from large-scale data. This training strategy improves generalization and enables the model to remain effective even in previously unseen domains. Finally, DA3 introduces a depth-ray representation as a minimal yet sufficient geometric abstraction, which explicitly encodes both scene structure and camera motion while avoiding redundant or constrained prediction targets.
-% 这一段从训练和表示两个角度说明 DA3 的优势：一方面通过教师监督提升泛化，另一方面通过 depth-ray 表示强化几何表达能力。
-
-The following sections provide a detailed description of the DA3  depth-ray formulation, its architecture, and the associated training paradigm.
-% 这一段是对接下来小节的导读，告诉读者后文会依次展开 DA3 的表示、架构和训练策略。
-
-The following sections provide a detailed description of the DA3  depth-ray formulation, its architecture, and the associated training paradigm.
-% 这一句与上一句表达内容重复，作用仍然是在结构上再次强调后文将详细分解介绍 DA3 的几个关键组成部分。
-
-% Depth-ray representation
-\subsubsection*{Depth-ray Representation}
-At the core of DA3 lies the depth--ray representation, which explicitly encodes both scene geometry and camera motion without directly predicting constrained rotation matrices. For each pixel $p=(u,v,1)^\top$, the model predicts a depth value $D(u,v)$ together with a corresponding ray
-\begin{center}
-    $ r=(t,d), \quad d=RK^{-1}p, $
-\end{center}
-where $t \in \mathbb{R}^3$ denotes the camera center and $d \in \mathbb{R}^3$ is the unnormalized ray direction in world coordinates.
-% 这一段首先给出 DA3 的核心几何表示方式，强调模型不是只预测深度，而是为每个像素同时预测深度和空间射线。
-
-The predicted ray map is denoted as
-\begin{center}
-    $ M \in \mathbb{R}^{H \times W \times 6}, $
-\end{center}
-where the first three channels $M(:,:,:3)$ store per-pixel ray origins and the last three channels $M(:,:,3:)$ store the corresponding ray directions. Given the depth and ray predictions, a 3D point can be recovered by
-\begin{center}
-    $ P(u,v) = t + D(u,v) \cdot d. $
-\end{center}
-% 这一段说明了从 depth-ray 表示恢复三维点云的具体方式，也就是说模型输出如何真正转化为可用的三维几何。
-
-Beyond 3D point reconstruction, the depth--ray representation also enables direct recovery of camera parameters. The camera center $t_c$ is estimated by averaging the per-pixel ray origins:
-\begin{center}
-    $ t_c = \frac{1}{HW} \sum_{h=1}^{H} \sum_{w=1}^{W} M(h,w,:3). $
-\end{center}
-% 这一段继续说明这种表示方式的额外价值：它不仅能生成三维点，还能从射线原点中估计相机中心信息。
-
-To recover the camera rotation $R$ and intrinsic matrix $K$, DA3 formulates the problem as estimating a homography. An identity canonical camera is first defined with intrinsics $K_I=I$. For a pixel $p$, the corresponding ray direction in this canonical camera is
-\begin{center}
-    $ d_I = K_I^{-1} p = p. $
-\end{center}
-% 这一段把问题从点云恢复进一步推进到相机参数恢复，说明 DA3 如何借助规范相机和单应关系来推导旋转与内参。
-
-The transformation from the canonical ray $d_I$ to the ray direction $d_{\text{cam}}$ in the target camera coordinate system can be written as
-\begin{center}
-    $ d_{\text{cam}} = KR d_I, $
-\end{center}
-which establishes a homography relationship
-\begin{center}
-    $ H = KR. $
-\end{center}
-% 这一段在数学上建立规范射线与目标射线之间的对应关系，从而为后续的单应矩阵求解和参数分解打基础。
-
-The homography $H$ is then estimated by minimizing the geometric error between transformed canonical rays and the predicted ray directions:
-\begin{center}
-    $ H^* = \arg \min_{\|H\|=1} \sum_{h=1}^{H} \sum_{w=1}^{W} \| H p_{h,w} \times M(h,w,3:) \|. $
-\end{center}
-% 这一段明确给出单应矩阵是如何通过几何误差最小化来求解的，也就是把前面的表示定义落实为实际优化问题。
-
-This optimization corresponds to a standard least-squares problem and can be efficiently solved using the Direct Linear Transform (DLT) algorithm. Once the optimal homography $H^*$ is obtained, the camera intrinsics $K$ and rotation $R$ are uniquely recovered via RQ decomposition, exploiting the upper-triangular structure of $K$ and the orthonormality of $R$.
-% 这一段说明在求得单应矩阵之后，可以进一步通过标准分解方法恢复相机内参和旋转矩阵，形成完整相机参数估计。
-
-By jointly modeling depth and rays, this representation avoids explicit pose constraints while ensuring geometric consistency across views, and provides a compact yet expressive abstraction for feed-forward 3D reconstruction.
-% 这一段对 depth-ray 表示做总结，强调它在表示紧凑、几何表达充分以及跨视图一致性方面的综合优势。
-
-% Architecture 
-\subsubsection*{Architecture}
-\begin{figure}
-    \centering
-    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/da3_reconstruction_da3.png}
-    \caption{DA3 framework overview}
-    \label{fig:da3_framework}
-\end{figure}
-As illustrated in Fig.~\ref{fig:da3_framework} shows an overview of the DA3 framework.
-Architecturally, DA3 adopts a deliberately simple design centered around a single pretrained Vision Transformer (ViT) backbone. For an input set 
-\begin{center}
-    $\mathcal{I}=\{I_i\}_{i=1}^{N_v}, I_i \in \mathbb{R}^{H \times W \times 3}$
-\end{center}
-the transformer serves as a shared feature extractor across all views, enabling the model to naturally handle variable input cardinalities.
-% 这一段从整体上介绍 DA3 的网络结构，重点说明它依赖单一 ViT 主干来处理多视图输入，因此具有较好的统一性和灵活性。
-
-Cross-view geometric reasoning is achieved through an input-adaptive self-attention mechanism. Instead of introducing additional transformer stacks or specialized modules, DA3 rearranges token sequences in selected layers, allowing standard self-attention to operate either within individual views or across all views jointly.
-% 这一段聚焦于跨视图信息交互机制，说明 DA3 不是通过额外复杂模块，而是通过 token 重排来实现跨视图注意力。
-
-Dense geometric predictions in DA3 are produced by a novel dual Dense Prediction Transformer (Dual-DPT) head, which jointly regresses dense depth maps and ray maps from a shared set of visual features. As illustrated in Fig.~\ref{fig:da3_architecture}, the Dual-DPT head first processes backbone features through a common set of reassembly modules, ensuring that both prediction tasks operate on a unified and compact intermediate representation.
-% 这一段转向输出头设计，说明 DA3 如何在共享特征基础上同时预测深度图和射线图，从而保证任务之间的信息共享。
-
-After this shared processing stage, the features are routed into two parallel branches, corresponding to depth prediction and ray prediction, respectively. Each branch applies its own set of fusion layers to aggregate contextual information relevant to the target geometric quantity. Finally, separate output layers generate the depth map and ray map predictions. By sharing the majority of the feature processing pipeline and diverging only at the final fusion stage, the Dual-DPT design promotes strong interaction between depth and ray estimation while avoiding redundant intermediate representations.
-% 这一段进一步展开 Dual-DPT 的具体结构逻辑，强调共享主干、末端分支的设计如何兼顾预测能力和计算效率。
-
-In addition to dense geometric outputs, DA3 optionally predicts camera parameters through a lightweight camera head operating on dedicated camera tokens, incurring minimal computational overhead. This joint prediction framework further reinforces geometric consistency without compromising the overall efficiency of the model.
-% 这一段补充说明 DA3 还可以以较小额外代价预测相机参数，从而进一步增强整体几何建模的一致性。
-\begin{figure}
-    \centering
-    \includegraphics[width=0.7\textwidth]{4_images/2_TheoreticalBackground/da3_reconstruction_dpt.png}
-    \caption{DA3 Dual-DPT Head}
-    \label{fig:da3_architecture}
-\end{figure}
-
-% Training
-\subsubsection*{Training}
-To train a generalist geometry model across diverse data sources, DA3 adopts a teacher--student learning paradigm. A teacher model is first trained on large-scale synthetic data to generate dense and reliable pseudo-depth supervision, which is then combined with sparse or noisy real-world depth measurements. This strategy enables effective knowledge transfer while preserving geometric fidelity across diverse domains.
-% 这一段首先说明 DA3 的训练总体框架，即如何利用教师-学生范式把合成数据和真实数据中的几何监督有效结合起来。
-
-Formally, the DA3 model $F_\theta$ maps an input image set $\mathcal{I}$ to a set of geometric predictions, including a depth map $\hat{D}$, a ray map $\hat{R}$, and an optional camera pose $\hat{c}$:
-\begin{center}
-    $F_\theta(\mathcal{I}) \to \{\hat{D}, \hat{R}, \hat{c}\}.$
-\end{center}
-The camera pose prediction is optional and primarily included for practical convenience.
-% 这一段用形式化记号给出 DA3 的输入输出关系，让读者明确模型在训练和推理时分别预测哪些几何量。
-
-Prior to loss computation, all ground-truth geometric signals are normalized by a common scale factor to ensure consistent magnitude across different modalities. This scale is defined as the mean $\ell_2$ norm of the valid reprojected 3D point maps $P$, which stabilizes optimization when jointly supervising depth, rays, and reconstructed points.
-% 这一段强调在多任务联合训练之前需要对不同类型几何真值做统一尺度归一化，否则训练过程会变得不稳定。
-
-The overall training objective is defined as a weighted sum of several loss terms:
-\begin{center}
-    $L = L_D(\hat{D}, D) + L_M(\hat{R}, M) + L_P(\hat{D} \odot d + t, P) + \beta L_C(\hat{c}, c) + \alpha L_{\text{grad}}(\hat{D}, D),$
-\end{center}
-where $L_D$ supervises depth prediction, $L_M$ enforces consistency of ray maps, $L_P$ penalizes geometric errors in reconstructed 3D points, and $L_C$ is an optional camera pose loss.
-% 这一段把 DA3 的总体训练目标写成统一损失函数，说明不同损失项分别对应深度、射线、点云和相机等几何约束。
-
-The depth supervision term is defined as
-\begin{center}
-    $ L_D(\hat{D}, D; D_c) = \frac{1}{|\Omega|} \sum_{p \in \Omega} m_p (D_{c,p} |\hat{D}_p - D_p| - \lambda_c \log D_{c,p}), $
-\end{center}
-where $D_{c,p}$ denotes the confidence associated with the ground-truth depth $D_p$, $m_p$ is a validity mask, and $\Omega$ denotes the set of valid pixels. All loss terms are based on the $\ell_1$ norm.
-% 这一段单独展开最重要的深度监督项，解释其中引入置信度和有效像素掩码的原因与作用。
-
-To further regularize the depth predictions, a gradient loss is introduced:
-\begin{center}
-    $ L_{\text{grad}}(\hat{D}, D) = \| \nabla_x \hat{D} - \nabla_x D \|_1 + \| \nabla_y \hat{D} - \nabla_y D \|_1, $
-\end{center}
-where $\nabla_x$ and $\nabla_y$ denote horizontal and vertical finite difference operators. This term preserves sharp depth discontinuities while encouraging smoothness in planar regions. In practice, the weighting factors are set to $\alpha=1$ and $\beta=1$.
-% 这一段说明为什么仅用像素级深度损失还不够，因此还需要梯度损失来保持边界清晰并约束局部表面连续性。
-
-This training strategy enables DA3 to effectively leverage heterogeneous datasets while maintaining consistent geometric supervision, resulting in a scalable and robust feed-forward reconstruction model.
-% 这一段总结整个训练设计的目标，即同时兼顾多源数据利用、训练稳定性和最终模型的几何鲁棒性。
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{SLAM and Optimization}
-\label{sec:slam_and_optimization}
-Visual Simultaneous Localization and Mapping (SLAM) estimates the camera trajectory while building a map of the environment from image streams. A comprehensive survey of the field can be found in~\cite{cadena2016slam}. Classical visual SLAM systems are often keyframe-based and feature-driven, e.g., PTAM~\cite{klein2007ptam} and ORB-SLAM/ORB-SLAM2~\cite{murartal2015orbslam,murartal2017orbslam2}. In contrast, direct methods such as LSD-SLAM~\cite{engel2014lsdslam} and DSO~\cite{engel2018dso} avoid explicit feature matching and minimize photometric error over selected pixels. These two families share a common structure: a front-end responsible for data association and pose tracking, and a back-end that enforces global consistency via optimization.
-% 这一段从总体上定义视觉 SLAM 的任务，即同时估计相机轨迹并构建环境地图，同时区分特征法和直接法这两条经典技术路线。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Preliminaries: Multi-View Geometry}
-In this section, we define the geometric models and optimization objectives employed in the visual SLAM system. Notationally, vectors are denoted by bold lowercase letters (e.g., $\mathbf{x}$) and matrices by bold uppercase letters (e.g., $\mathbf{R}$).
-% 这一段是 SLAM 数学基础部分的导语，说明接下来会先建立多视图几何和优化问题所需的基本记号与模型。
+\subsection{Camera Model}
 
 \textbf{Rigid Body Transformation} \\
 Camera motion is modeled as a rigid body transformation. A point $\mathbf{P}_w \in \mathbb{R}^3$ in the world frame is transformed into the camera coordinate frame $\mathbf{P}_c$ via a rotation $\mathbf{R} \in SO(3)$ and a translation $\mathbf{t} \in \mathbb{R}^3$:
-\begin{equation}
-    \mathbf{P}_c = \mathbf{R}\mathbf{P}_w + \mathbf{t}
-\end{equation}
+\begin{center}
+    $\displaystyle \mathbf{P}_c = \mathbf{R}\mathbf{P}_w + \mathbf{t}$
+\end{center}
 The pose is represented using the Special Euclidean group $\mathbf{T}_{cw} \in SE(3)$:
-\begin{equation}
-    \mathbf{T}_{cw} =
+\begin{center}
+    $\displaystyle \mathbf{T}_{cw} =
     \begin{bmatrix}
         \mathbf{R} & \mathbf{t} \\
         \mathbf{0}^\top & 1
-    \end{bmatrix}
-\end{equation}
-% 这一段给出相机运动最基本的刚体变换模型，并引入 SE(3) 作为位姿表示，这是后续几何推导和优化的基础。
+    \end{bmatrix}$
+\end{center}
+% 相机运动可建模为刚体变换。
+% 世界坐标系中的点可通过旋转矩阵和平移向量变换到相机坐标系中。
+% 相机位姿通常用特殊欧氏群 $SE(3)$ 表示。
 
 \textbf{Pinhole Camera Projection} \\
 We utilize the standard pinhole camera model. The projection function $\pi: \mathbb{R}^3 \to \mathbb{R}^2$ maps a 3D point $\mathbf{P}_c = [x_c, y_c, z_c]^\top$ to 2D pixel coordinates $\mathbf{u} = [u, v]^\top$:
-\begin{equation}
-    s
+\begin{center}
+    $\displaystyle s
     \begin{bmatrix}
         u \\
         v \\
@@ -420,106 +158,700 @@ We utilize the standard pinhole camera model. The projection function $\pi: \mat
         x_c \\
         y_c \\
         z_c
-    \end{bmatrix}
-\end{equation}
+    \end{bmatrix}$
+\end{center}
 where $s$ is the depth factor ($z_c$), $f_x$ and $f_y$ are the focal lengths, and $(c_x, c_y)$ denotes the principal point.
-% 这一段引入针孔相机模型，说明三维点是如何通过相机内参投影到二维图像平面上的，这也是视觉测量方程的基础。
+% 这里采用标准针孔相机模型。
+% 投影函数将三维点映射为二维像素坐标。
+% 其中，$s$ 是深度因子 $z_c$，$f_x$ 和 $f_y$ 是焦距，$(c_x,c_y)$ 是主点。
 
 \textbf{Epipolar Geometry Constraint} \\
 For two views observing the same 3D point, the geometric relationship is encoded by the Essential Matrix $\mathbf{E}$. Let $\mathbf{x}_1$ and $\mathbf{x}_2$ be the normalized coordinates of matched feature points in two frames. They satisfy
-\begin{equation}
-    \mathbf{x}_2^\top \mathbf{E}\mathbf{x}_1 = 0, \quad \text{where } \mathbf{E} = [\mathbf{t}]_\times \mathbf{R}
-\end{equation}
+\begin{center}
+    $\displaystyle \mathbf{x}_2^\top \mathbf{E}\mathbf{x}_1 = 0, \quad \text{where } \mathbf{E} = [\mathbf{t}]_\times \mathbf{R}$
+\end{center}
 where $[\mathbf{t}]_\times$ is the skew-symmetric matrix of the translation vector $\mathbf{t}$. This constraint is commonly utilized during pose initialization.
-% 这一段说明双视图之间最重要的几何约束来自本质矩阵和极几何关系，它们通常被用于初始化相机相对位姿。
+% 当两个视角观察同一个三维点时，它们之间的几何关系可由本质矩阵描述。
+% 设 $\mathbf{x}_1$ 和 $\mathbf{x}_2$ 是两帧中匹配特征点的归一化坐标，则它们满足极几何约束。
+% 其中，$[\mathbf{t}]_\times$ 是平移向量的反对称矩阵。
+% 这一约束常用于相机相对位姿初始化。
 
-\textbf{Optimization (Bundle Adjustment)} \\
-The core backend objective is the minimization of reprojection error to refine poses and map points. Let $\mathcal{K}$ be the set of keyframes and $\mathcal{P}$ the set of map points. We minimize the cost function $J(\mathbf{T}, \mathbf{X})$:
-\begin{equation}
-    J(\mathbf{T}, \mathbf{X}) = \sum_{i \in \mathcal{K}} \sum_{j \in \mathcal{P}} \rho \left( \left\| \mathbf{u}_{ij}^{obs} - \pi(\mathbf{T}_i, \mathbf{X}_j) \right\|_{\Sigma_{ij}}^2 \right)
-\end{equation}
-where $\mathbf{u}_{ij}^{obs}$ is the observed feature position, $\pi(\cdot)$ is the projection function, and $\rho(\cdot)$ is a robust kernel such as the Huber loss to suppress outliers.
-% 这一段把多视图几何与实际优化联系起来，说明后端通常通过最小化重投影误差来联合优化位姿和地图点。
-\subsection{Standard Visual SLAM Pipeline}
+\subsection{Structure from Motion (SfM)}
+\label{sec:classical_reconstruction}
+\textbf{Structure from Motion} is a classic computer vision problem [45, 77, 80] that involves estimating camera parameters
+and reconstructing sparse point clouds from a set of images
+of a static scene captured from different viewpoints. The
+traditional SfM pipeline [2, 36, 70, 94, 103, 134] consists
+of multiple stages, including image matching, triangulation,
+and bundle adjustment. COLMAP [94] is the most popular framework based on the traditional pipeline.\cite{wang2025vggt}
+% Structure from Motion 是经典计算机视觉问题。
+% 它的目标是从静态场景的多视角图像中估计相机参数并重建稀疏点云。
+% 传统 SfM 流程通常包括图像匹配、三角化和 Bundle Adjustment 等多个阶段。
+% COLMAP 是基于该传统流程最常用的框架之一。
+
+Figure\ref{fig:classical_reconstruction_SfM} illustrates a fundamental SfM framework.The pipeline starts from multi-view image inputs, establishes inter-image correspondences through feature matching and geometric verification, and then incrementally estimates camera poses and 3D scene structure. The reconstruction is continuously refined through triangulation and bundle adjustment, resulting in a globally consistent 3D representation.
+% 图~\ref{fig:classical_reconstruction_SfM} 展示了一个基本的 SfM 框架。
+% 该流程从多视图图像输入开始，通过特征匹配和几何验证建立图像间对应关系，然后逐步估计相机位姿和三维场景结构。
+% 重建结果会通过三角化和 Bundle Adjustment 持续优化，最终得到全局一致的三维表示。
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/Geometric_and_Optimization_Foundations/SfM.png}
+    \caption{Structure-from-Motion pipeline}
+    \label{fig:classical_reconstruction_SfM}
+\end{figure}
+
+\subsection{Multi-View Stereo (MVS)}
+\textbf{Multi-view Stereo (MVS)} aims to densely reconstruct the geometry of a scene from multiple overlapping images, typically assuming known camera parameters which are often estimated via SfM~\cite{wang2025vggt}.
+The fundamental principle underlying MVS is the Photo Consistency Assumption, which posits that a 3D point in space should exhibit a similar appearance (color or intensity) when projected onto different image planes, provided the surface is approximately Lambertian. To efficiently identify corresponding points across views, MVS leverages Epipolar Geometry. Instead of searching the entire image domain, pairwise matching is constrained to epipolar lines determined by the relative camera poses, thereby significantly reducing computational complexity. Based on these geometric constraints, the algorithm estimates a depth map for each reference image by aggregating information from neighboring views. Finally, in the Fusion stage, these individual depth maps are integrated into a globally consistent point cloud or mesh, filtering out outliers to produce a high-fidelity dense estimation of the scene geometry.
+% 多视图立体匹配的目标是从多张重叠图像中稠密重建场景几何，通常假设相机参数已知，而这些参数往往由 SfM 估计得到。
+% MVS 的基本原理是光度一致性假设，即如果表面近似朗伯体，则同一个三维点投影到不同图像平面上时应具有相似外观。
+% 为了高效寻找跨视角对应点，MVS 利用极几何约束。
+% 它不在整张图像中搜索，而是将两两匹配限制在由相对位姿决定的极线上，从而显著降低计算复杂度。
+% 在这些几何约束基础上，算法通过聚合邻近视图信息为每个参考图像估计深度图。
+% 最后，在融合阶段，这些深度图会被整合成全局一致的点云或网格，并去除外点，从而得到高保真的稠密场景几何。
+
+\subsection{Point Cloud Registration}
+\textbf{Point cloud registration} seeks a transformation that aligns one set of 3D points with another. Depending on the geometric assumptions of the problem, different transformation groups are used. The most common case is a rigid transformation in $SE(3)$, which preserves distances and is appropriate when the two point sets describe the same object or scene up to rotation and translation. When the relative scale is unknown, as in monocular reconstruction or map alignment, a similarity transformation in $Sim(3)$ is required. More general formulations may further employ projective transformations represented by matrices in $SL(4)$, which can model perspective distortions in a homogeneous 3D representation and have recently appeared in learning-based geometric pipelines. In practice, these models form a hierarchy from physically interpretable rigid alignment to more flexible but less constrained projective alignment.
+% 点云配准的目标是寻找一个变换，使一组三维点与另一组三维点对齐。
+% 根据问题的几何假设不同，可以采用不同的变换群。
+% 最常见的情况是 $SE(3)$ 刚体变换，它保持距离不变，适用于两组点仅相差旋转和平移的情况。
+% 当相对尺度未知时，例如单目重建或地图对齐中，则需要使用 $Sim(3)$ 相似变换。
+% 更一般的情形还可以使用由 $SL(4)$ 矩阵表示的射影变换，它能在齐次三维表示中建模透视畸变，并且近期已出现在一些学习式几何流程中。
+% 总体来看，这些模型形成了一个从物理意义明确的刚体对齐，到更灵活但约束更弱的射影对齐的层次结构。
+
+\subsubsection*{\boldmath$SE(3)$ Point Alignment: ICP with SVD Solution}
+For rigid registration, let the source point set be $P=\{p_i\in\mathbb{R}^3\}_{i=1}^{N}$ and the target point set be $Q=\{q_i\in\mathbb{R}^3\}_{i=1}^{N}$. Under known correspondences, the point-to-point alignment problem seeks the rigid transformation $(\mathbf{R},\mathbf{t})$ that minimizes the squared Euclidean distance
+\begin{center}
+    $\displaystyle \min_{\mathbf{R}\in SO(3),\,\mathbf{t}\in\mathbb{R}^3} \sum_{i=1}^{N}\|\mathbf{R}p_i+\mathbf{t}-q_i\|^2,$
+\end{center}
+where $SO(3)=\{\mathbf{R}\mid \mathbf{R}^\top \mathbf{R}=\mathbf{I},\ \det(\mathbf{R})=1\}$. In the Iterative Closest Point (ICP) algorithm, these correspondences are updated iteratively by nearest-neighbor search, and the rigid alignment is recomputed after each update~\cite{besl1992icp,hartley2004multiple}.
+% 对于刚体配准，设源点集为 $P$，目标点集为 $Q$。
+% 在对应关系已知的情况下，点到点对齐问题的目标是求解使平方欧氏距离最小的刚体变换 $(\mathbf{R},\mathbf{t})$。
+% 其中，$SO(3)$ 表示满足正交性且行列式为 1 的旋转矩阵集合。
+% 在 ICP 算法中，这些对应关系会通过最近邻搜索迭代更新，并在每次更新后重新计算刚体对齐结果。
+
+For a fixed rotation $\mathbf{R}$, the optimal translation is obtained by aligning the centroids of the two point sets. Defining the centroids
+\begin{center}
+    $\displaystyle \bar p = \frac{1}{N}\sum_{i=1}^{N} p_i,\qquad \bar q = \frac{1}{N}\sum_{i=1}^{N} q_i,$
+\end{center}
+the translation can be written as
+\begin{center}
+    $\displaystyle \mathbf{t}^*(\mathbf{R}) = \bar q - \mathbf{R}\bar p.$
+\end{center}
+Thus, after centering the point sets with $p'_i = p_i-\bar p$ and $q'_i = q_i-\bar q$, the optimization reduces to
+\begin{center}
+    $\displaystyle \min_{\mathbf{R}\in SO(3)} \sum_{i=1}^{N}\|\mathbf{R}p'_i-q'_i\|^2.$
+\end{center}
+Expanding the squared norm shows that the terms independent of $\mathbf{R}$ can be discarded, yielding the equivalent trace maximization problem
+\begin{center}
+    $\displaystyle \max_{\mathbf{R}\in SO(3)} \operatorname{tr}(\mathbf{R}\mathbf{H}),\qquad \mathbf{H}=\sum_{i=1}^{N} p'_i (q'_i)^\top,$
+\end{center}
+where $\mathbf{H}$ is the cross-covariance matrix between the centered point sets.
+% 当旋转矩阵固定时，最优平移可以通过对齐两组点的质心得到。
+% 定义两组点的质心后，平移可以写成质心之间的关系式。
+% 因此，对点集做中心化处理后，优化问题可化为仅关于旋转矩阵的最小化问题。
+% 将平方项展开后，与旋转无关的项可以去掉，从而得到等价的迹最大化问题。
+% 其中，$\mathbf{H}$ 是中心化点集之间的互协方差矩阵。
+
+The optimal rotation is then obtained from the singular value decomposition
+\begin{center}
+    $\displaystyle \mathbf{H}=\mathbf{U}\mathbf{\Sigma}\mathbf{V}^\top.$
+\end{center}
+To avoid reflections and enforce $\det(\mathbf{R})=1$, a correction matrix
+\begin{center}
+    $\displaystyle \mathbf{S}=\operatorname{diag}(1,1,\det(\mathbf{V}\mathbf{U}^\top))$
+\end{center}
+is introduced, giving the closed-form solution
+\begin{center}
+    $\displaystyle \mathbf{R}^*=\mathbf{V}\mathbf{S}\mathbf{U}^\top,\qquad \mathbf{t}^*=\bar q-\mathbf{R}^*\bar p.$
+\end{center}
+This SVD-based solver provides the rigid update used inside each ICP iteration and is efficient enough to be recomputed repeatedly as correspondences change.
+% 最优旋转可由互协方差矩阵的奇异值分解得到。
+% 为了避免出现反射并保证 $\det(\mathbf{R})=1$，需要引入一个修正矩阵。
+% 在此基础上，就可以写出旋转和平移的闭式解。
+% 这一基于 SVD 的求解器提供了 ICP 每次迭代中所需的刚体更新，并且计算效率足够高，可以在对应关系变化时反复重算。
+
+In one ICP iteration, the current estimate $(\mathbf{R},\mathbf{t})$ first transforms the source point cloud, then nearest-neighbor search establishes tentative correspondences, and finally the SVD solution above yields an incremental rigid update. The global estimate is composed as
+\begin{center}
+    $\displaystyle \mathbf{R} \leftarrow \mathbf{R}_\Delta \mathbf{R},\qquad \mathbf{t} \leftarrow \mathbf{R}_\Delta \mathbf{t} + \mathbf{t}_\Delta.$
+\end{center}
+The process repeats until the residual change falls below a threshold or a maximum number of iterations is reached.
+% 在一次 ICP 迭代中，当前估计的位姿会先将源点云变换到目标坐标系附近。
+% 然后通过最近邻搜索建立候选对应关系，并利用上面的 SVD 解求出增量刚体变换。
+% 全局位姿估计通过将该增量更新组合到当前位姿上来完成。
+% 这一过程会不断重复，直到残差变化小于阈值或达到最大迭代次数。
+
+\subsubsection*{\boldmath$Sim(3)$ Alignment: Umeyama Algorithm}
+Rigid alignment is insufficient when the two point sets differ by an unknown global scale. This is common in monocular vision, where reconstruction is only determined up to scale. In that case, the alignment is modeled by a similarity transformation with scale factor $s>0$,
+\begin{center}
+    $\displaystyle \mathbf{x}' = s\mathbf{R}\mathbf{x}+\mathbf{t}, \qquad \mathbf{S}=
+    \begin{bmatrix}
+    s\mathbf{R} & \mathbf{t} \\
+    \mathbf{0}^\top & 1
+    \end{bmatrix}\in Sim(3).$
+\end{center}
+Given corresponding points $\{p_i\}$ and $\{q_i\}$, the least-squares objective becomes
+\begin{center}
+    $\displaystyle \min_{s,\mathbf{R},\mathbf{t}} \sum_{i=1}^{N}\|p_i-(s\mathbf{R}q_i+\mathbf{t})\|^2.$
+\end{center}
+% 当两组点之间存在未知的全局尺度差异时，刚体对齐就不再充分。
+% 这在单目视觉中很常见，因为单目重建通常只能确定到尺度不定。
+% 在这种情况下，配准应建模为带尺度因子 $s>0$ 的相似变换。
+% 对于对应点 $\{p_i\}$ 和 $\{q_i\}$，相应的最小二乘目标函数也需要同时对尺度、旋转和平移进行优化。
+
+The standard closed-form solution is the Umeyama algorithm~\cite{umeyama1991least}. As in the rigid case, the method first computes the centroids $\mu_p$ and $\mu_q$, centers the point sets, and forms a covariance matrix from the centered coordinates. The rotation is again recovered by SVD, while the scale is estimated by comparing the aligned covariance with the variance of the source points. In compact form, the scale and translation can be written as
+\begin{center}
+    $\displaystyle s^* = \frac{\sum_{i=1}^{N} (p'_i)^\top \mathbf{R} q'_i}{\sum_{i=1}^{N}\|q'_i\|^2},\qquad \mathbf{t}^* = \mu_p - s^*\mathbf{R}\mu_q.$
+\end{center}
+Compared with the $SE(3)$ case, the key difference is that the recovered transformation not only aligns orientation and position but also compensates for accumulated scale drift. This makes $Sim(3)$ alignment particularly important for monocular SLAM and map merging.
+% 标准的闭式解是 Umeyama 算法。
+% 与刚体情形类似，该方法先计算质心、对点集去中心化，并由中心化后的坐标构造协方差矩阵。
+% 随后通过 SVD 恢复旋转，并通过比较对齐后的协方差与源点方差来估计尺度。
+% 因此，尺度和平移都可以写成闭式表达式。
+% 与 $SE(3)$ 情况相比，关键区别在于这里恢复的变换不仅对齐方向和位置，还补偿了累计的尺度漂移。
+% 这使得 $Sim(3)$ 对齐在单目 SLAM 和地图合并中尤其重要。
+
+\subsubsection*{\boldmath$SL(4)$ and More General Projective Alignment}
+In projective geometry, $SL(4)$ denotes the special linear group of real $4\times 4$ matrices with unit determinant. Unlike $SE(3)$ and $Sim(3)$, which model rigid and similarity transformations in Euclidean space, $SL(4)$ acts on homogeneous 3D coordinates and can represent a full projective correction with 15 degrees of freedom. This additional flexibility becomes relevant when a reconstruction is only projectively consistent, as may happen with uncalibrated monocular inputs or feed-forward reconstruction models~\cite{wang2025vggt,maggio2025vggtslam}. In these settings, the discrepancy between two local reconstructions may include not only rotation, translation, and scale, but also shear, anisotropic stretch, and perspective distortion that cannot be captured by $Sim(3)$ alone.
+% 在射影几何中，$SL(4)$ 表示由实数 $4\times 4$ 单位行列式矩阵构成的特殊线性群。
+% 与在欧氏空间中建模刚体和相似变换的 $SE(3)$、$Sim(3)$ 不同，$SL(4)$ 作用于齐次三维坐标，并可表示一个具有 15 个自由度的完整射影校正。
+% 当一个重建结果只在射影意义下保持一致时，这种更高的灵活性就变得重要，例如在未标定单目输入或前馈式重建模型中。
+% 在这些情况下，两组局部重建之间的差异不仅可能包含旋转、平移和尺度，还可能包含 $Sim(3)$ 无法描述的剪切、各向异性拉伸和透视畸变。
+
+More generally, suppose two projectively related reconstructions provide corresponding homogeneous 3D points $X_i$ and $Y_i$. The goal is to estimate a projective transformation $\mathbf{H}$ such that
+\begin{center}
+    $\displaystyle X_i \sim \mathbf{H} Y_i, \qquad \mathbf{H} \in \mathbb{R}^{4\times 4},$
+\end{center}
+where $\sim$ denotes equality up to scale in homogeneous coordinates. Since a $4\times 4$ matrix has 16 entries but one global scale is irrelevant, the resulting projective alignment problem has 15 effective degrees of freedom.
+% 更一般地，设两组在射影意义下相关的重建结果提供了对应的齐次三维点 $X_i$ 和 $Y_i$。
+% 目标是估计一个射影变换 $\mathbf{H}$，使两者在齐次坐标下满足相差一个尺度因子的关系。
+% 其中，$\sim$ 表示在齐次坐标中的按比例相等。
+% 由于一个 $4\times 4$ 矩阵共有 16 个元素，但其中一个全局尺度无关，因此该射影配准问题实际上有 15 个有效自由度。
+
+The estimation can be formulated as a direct linear transform (DLT) problem. By vectorizing the unknown matrix into $h\in\mathbb{R}^{16}$, each point correspondence contributes a homogeneous linear constraint of the form
+\begin{center}
+    $\displaystyle \mathbf{A}_k h = 0,$
+\end{center}
+and stacking multiple correspondences yields a linear system whose null space defines the candidate transformation. In the noise-free case, five point correspondences are sufficient to constrain a 15-DOF projective transform minimally. In practice, however, the dense predictions of feed-forward geometry models remain noisy, so directly solving the linear system from all points is not robust enough.
+% 这一估计问题可写成直接线性变换（DLT）问题。
+% 将未知矩阵向量化为 $h\in\mathbb{R}^{16}$ 后，每一对点对应都会给出一个齐次线性约束。
+% 将多组对应关系堆叠起来后，就得到一个线性系统，其零空间给出候选变换。
+% 在无噪声情况下，五对点对应已足以对一个 15 自由度的射影变换给出最小约束。
+% 但在实际中，前馈式几何模型输出的稠密预测仍然带有噪声，因此直接利用全部点求解线性系统往往不够鲁棒。
+
+For this reason, robust estimation is usually applied on top of the DLT solver, for example by combining it with RANSAC in recent SLAM systems that optimize on the $SL(4)$ manifold~\cite{maggio2025vggtslam}. Each iteration samples a minimal set of five correspondences, computes a candidate $\mathbf{H}$, and evaluates its support on the remaining points. The hypothesis with the best consensus set is then retained. This combination of a minimal linear solver and robust sampling is suitable for dense but imperfect correspondences produced by modern reconstruction networks.
+% 因此，实际中通常会在 DLT 求解器之外叠加稳健估计。
+% 例如，近期一些在 $SL(4)$ 流形上优化的 SLAM 系统会将其与 RANSAC 结合使用。
+% 在每次迭代中，算法从中采样五对最小对应，计算候选变换 $\mathbf{H}$，并在其余点上评估支持度。
+% 最终保留拥有最大一致集的假设。
+% 这种最小线性求解器与稳健采样相结合的方式，适合处理现代重建网络给出的稠密但不完美的对应关系。
+
+The matrix recovered by DLT is only defined up to scale and therefore does not automatically satisfy the unit-determinant constraint of $SL(4)$. After selecting an orientation-preserving estimate with positive determinant, the matrix is normalized by
+\begin{center}
+    $\displaystyle \mathbf{H}_{SL(4)} = \frac{\mathbf{H}_{\mathrm{est}}}{\sqrt[4]{\det(\mathbf{H}_{\mathrm{est}})}},$
+\end{center}
+which enforces
+\begin{center}
+    $\displaystyle \det(\mathbf{H}_{SL(4)}) = 1.$
+\end{center}
+This projection step converts the estimated homography into a valid element of $SL(4)$ and allows subsequent optimization to remain on the intended manifold.
+% DLT 恢复出的矩阵只在尺度意义下确定，因此不会自动满足 $SL(4)$ 的单位行列式约束。
+% 在选择一个保持方向且行列式为正的估计后，需要通过归一化将其映射到 $SL(4)$ 上。
+% 这样便可强制满足单位行列式条件。
+% 这一投影步骤将估计得到的单应矩阵转换为一个合法的 $SL(4)$ 元素，并使后续优化保持在目标流形上进行。
+
+Compared with $SE(3)$ and $Sim(3)$ alignment, the main advantage of $SL(4)$ is its ability to absorb residual projective ambiguity before the scene has been fully metricized. The trade-off is that the transformation is less physically interpretable and less constrained. Therefore, $SL(4)$ is mainly useful in settings that operate in a projective or learned visual geometry space~\cite{maggio2025vggtslam}, whereas classical metric point cloud registration still primarily relies on $SE(3)$ or $Sim(3)$.
+% 与 $SE(3)$ 和 $Sim(3)$ 配准相比，$SL(4)$ 的主要优势在于它能在场景尚未完全度量化之前吸收残余射影歧义。
+% 相应的代价是，这种变换的物理意义更弱，约束也更少。
+% 因此，$SL(4)$ 主要适用于在射影空间或学习式视觉几何空间中工作的系统，而经典的度量点云配准仍主要依赖 $SE(3)$ 或 $Sim(3)$。
+
+\subsection{Robust Estimation with RANSAC}
+In practical scenes, data association inevitably contains outliers due to repetitive textures, motion blur, and dynamic objects. RANSAC (Random Sample Consensus) addresses this by repeatedly sampling minimal sets to hypothesize a model, scoring it by the number of inliers, and finally re-estimating the model using the best consensus set~\cite{fischler1981ransac}. In visual SLAM, RANSAC is widely used for essential matrix estimation (e.g., the five-point method) and for PnP pose estimation~\cite{nister2004fivepointmethod,matas2005ransac}. A typical iteration evaluates the geometric residual
+\begin{center}
+    $\displaystyle \| \mathbf{x}' - \pi(\mathbf{T}\,\mathbf{X}) \| < \tau, $
+\end{center}
+where $\pi(\cdot)$ denotes the projection model, $\mathbf{T}\in SE(3)$ is the pose, and $\tau$ is an inlier threshold. Given an inlier ratio $w$ and a minimal sample size $s$, the required number of iterations for confidence $p$ is $N=\log(1-p)/\log(1-w^s)$~\cite{fischler1981ransac}. This procedure provides a robust front-end estimate that can be further refined by non-linear optimization.
+% 在实际场景中，由于重复纹理、运动模糊和动态物体，数据关联不可避免地会包含外点。
+% RANSAC 通过反复采样最小样本集来提出模型假设，并根据内点数量为其评分，最后再利用最佳一致集重新估计模型。
+% 在视觉 SLAM 中，RANSAC 广泛用于本质矩阵估计和 PnP 位姿估计。
+% 一次典型迭代会通过几何残差来判断内点。
+% 其中，$\pi(\cdot)$ 表示投影模型，$\mathbf{T}\in SE(3)$ 是位姿，$\tau$ 是内点阈值。
+% 若已知内点比例 $w$ 和最小样本大小 $s$，则为达到置信度 $p$ 所需的迭代次数可以由给定公式计算。
+% 这一过程为前端提供了一个稳健的初始估计，随后可再通过非线性优化进一步精化。
+
+\subsection{Global Optimization}
+Global optimization refines the intermediate geometric estimates produced by front-end matching, triangulation, and tracking, with the goal of enforcing consistency over many views or long trajectories. In visual reconstruction and SLAM, two widely used formulations are bundle adjustment (BA), which optimizes poses and 3D points in the reprojection domain, and pose graph optimization (PGO), which optimizes only inter-pose constraints on a graph. Both belong to the back-end of SLAM/SfM systems and are commonly formulated as non-linear least-squares problems, but they differ in their optimization variables and in the types of constraints they use.
+% 全局优化的目标是对前端匹配、三角化和跟踪得到的中间几何结果进行进一步精化，
+% 从而在多视图或长时轨迹范围内保证整体一致性。
+% 在视觉重建和 SLAM 中，最常见的两类形式是 Bundle Adjustment（BA）
+% 和 Pose Graph Optimization（PGO）。
+% 前者在重投影域中同时优化位姿与三维点，后者则在图结构中仅优化位姿之间的约束。
+% 这两类方法都属于 SLAM/SfM 系统的后端，
+% 通常都可写成非线性最小二乘问题，
+% 但它们在优化变量以及约束类型上存在明显差异。
+
+\subsubsection{Bundle Adjustment (BA)}
+Bundle adjustment jointly refines camera poses and 3D landmark positions by minimizing reprojection error~\cite{triggs2000bundle}. Given camera poses $\{\mathbf{T}_i\}$ and landmarks $\{\mathbf{X}_j\}$, the classical objective is
+\begin{center}
+    $\displaystyle \min_{\{\mathbf{T}_i,\mathbf{X}_j\}} \sum_{i,j} \rho\left(\left\| \mathbf{x}_{ij} - \pi(\mathbf{T}_i\,\mathbf{X}_j) \right\|^2\right), $
+\end{center}
+where $\mathbf{x}_{ij}$ is the observed feature and $\rho(\cdot)$ is a robust loss. The optimization variables in BA usually include camera poses $\{\mathbf{T}_i\}$ and 3D points $\{\mathbf{X}_j\}$, and in some settings camera intrinsics may also be refined jointly. In essence, BA directly enforces that a reconstructed 3D point should project as closely as possible to the measured image observation. BA is typically solved with Levenberg--Marquardt using sparse linear algebra and the Schur complement to eliminate point variables efficiently~\cite{triggs2000bundle,agarwal2010bundle}. In practice, SfM often applies BA repeatedly as more images are added, while SLAM systems usually run local BA over a sliding window of recent keyframes to maintain real-time performance.
+% Bundle Adjustment 通过最小化重投影误差来联合优化相机位姿和三维路标点位置。
+% 给定相机位姿和路标点，经典目标函数如上式所示。
+% 其中，$\mathbf{x}_{ij}$ 是观测到的特征，$\rho(\cdot)$ 是稳健损失函数。
+% BA 的优化变量通常包括相机位姿 $\{\mathbf{T}_i\}$ 和三维点 $\{\mathbf{X}_j\}$，
+% 在某些情形下还会进一步联合优化相机内参。
+% 从本质上看，BA 直接要求重建得到的三维点在投影回图像之后，
+% 应尽可能与真实观测像素对齐。
+% BA 通常通过 Levenberg--Marquardt、稀疏线性代数以及 Schur 补来高效求解，
+% 以便在优化过程中消除点变量。
+% 在实际系统中，SfM 会随着图像逐步加入而反复执行 BA，
+% 而 SLAM 更常在最近关键帧的滑动窗口上执行局部 BA，以兼顾实时性。
+
+\subsubsection{Pose Graph Optimization (PGO)}
+Pose graph optimization focuses on the global consistency of a trajectory after relative pose constraints have been estimated, for example from odometry edges and loop closures. In a typical pose graph, each node corresponds to a camera pose $\mathbf{T}_i$, while each edge encodes a relative motion constraint between two poses. Such constraints may arise from frame-to-frame odometry, loop-closure detection, ICP-based alignment, or relative transformations estimated between local submaps. Let the graph nodes be poses $\{\mathbf{T}_i\}$ and let each edge $(i,j)$ provide a measured relative transformation $\hat{\mathbf{T}}_{ij}$. A common objective is
+\begin{center}
+    $\displaystyle \min_{\{\mathbf{T}_i\}} \sum_{(i,j)\in\mathcal{E}} \left\| \operatorname{Log}\!\left(\hat{\mathbf{T}}_{ij}^{-1}\left(\mathbf{T}_i^{-1}\mathbf{T}_j\right)\right) \right\|_{\mathbf{\Omega}_{ij}}^2, $
+\end{center}
+where $\operatorname{Log}(\cdot)$ maps the pose residual from $SE(3)$ to its tangent space and $\mathbf{\Omega}_{ij}$ is the information matrix of the constraint. In contrast to BA, there are no explicit 3D landmarks in this optimization: only poses are updated so that the relative constraints become globally consistent. Compared with BA, PGO is computationally cheaper because it optimizes only poses and omits explicit landmark variables. It is therefore widely used in SLAM back-ends to distribute loop-closure corrections over the full trajectory and to reduce accumulated drift, often with graph optimization frameworks such as g2o~\cite{kummerle2011g2o} and GTSAM~\cite{dellaert2012gtsam}.
+% 位姿图优化关注的是在相对位姿约束已经给定之后，如何恢复整条轨迹的全局一致性。
+% 在典型的位姿图中，每个节点对应一个相机位姿 $\mathbf{T}_i$，
+% 每条边则表示两个位姿之间的相对运动约束。
+% 这些约束通常来自里程计边、回环闭合边、ICP 配准约束，
+% 或局部子地图之间估计得到的相对变换。
+% 设图中的节点为位姿 $\{\mathbf{T}_i\}$，每条边 $(i,j)$ 提供测得的相对变换 $\hat{\mathbf{T}}_{ij}$，
+% 则常见目标函数如上式所示。
+% 其中，$\operatorname{Log}(\cdot)$ 将 $SE(3)$ 上的残差映射到其切空间，
+% $\mathbf{\Omega}_{ij}$ 表示对应约束的信息矩阵。
+% 与 BA 不同，PGO 中并不显式优化三维路标点，
+% 而是仅通过调整位姿来使所有相对约束在全局上尽可能一致。
+% 与 BA 相比，PGO 只优化位姿而不显式包含路标点，因此计算代价更低。
+% 因而它常被用于 SLAM 后端，将回环约束带来的修正分配到整条轨迹中，并减小累计漂移。
+
+Taken together, BA and PGO are closely related because both are graph-based back-end optimization methods and are often solved with similar non-linear least-squares frameworks. The main difference is that BA jointly optimizes motion and structure under reprojection constraints, whereas PGO optimizes only poses under relative transformation constraints.
+% 综合来看，BA 和 PGO 之所以经常被放在一起讨论，
+% 是因为它们都属于图优化形式的后端方法，
+% 并且通常都依赖相似的非线性最小二乘求解框架。
+% 二者最核心的区别在于：
+% BA 在重投影约束下同时优化运动与结构，
+% 而 PGO 在相对位姿约束下只优化位姿本身。
+% 因此，BA 通常能够提供更高的几何精度，但计算开销也更大；
+% 相比之下，PGO 更适合在回环之后快速完成全局轨迹一致化修正。
+
+For recent feed-forward neural reconstruction systems, however, the preference in the back-end often shifts from classical global BA to submap-level graph optimization. The reason is that the front-end no longer follows a traditional SfM pipeline built upon persistent feature tracks, explicitly maintained landmarks, and a clean reprojection-based measurement model. Instead, a neural network typically processes a short sequence jointly and directly predicts local depth, point clouds, poses, intrinsics, or confidence maps. Under this formulation, the front-end behaves more like a local reconstruction module that outputs a self-consistent submap, and the back-end is more naturally interpreted as aligning and stitching such submaps together.
+% 然而，对于近年来的前馈式神经重建系统而言，
+% 后端的偏好往往会从经典的全局 BA 转向子图级图优化。
+% 原因在于，这类系统的前端不再遵循传统 SfM 那种
+% 依赖长期稳定特征轨迹、显式路标点以及干净重投影观测模型的建模方式。
+% 相反，神经网络通常会联合处理一个短序列，
+% 并直接输出局部深度、点云、位姿、内参或置信度图等结果。
+% 在这种问题建模下，前端更像是一个能够直接给出局部重建结果的模块，
+% 而后端则更自然地被理解为对子图进行对齐与拼接。
+
+This design choice is also motivated by efficiency and model structure. Since feed-forward reconstruction pipelines are already constrained by GPU memory, long sequences are commonly divided into multiple chunks or submaps. Performing global BA on top of these outputs would require jointly maintaining all camera poses, a large number of 3D points, and a massive set of reprojection residuals, which quickly becomes expensive. At the same time, many such systems do not provide a clean BA observation model with reliable long-term sparse tracks and clearly identified landmarks. In engineering practice, it is therefore more convenient to trust the network for local geometric recovery, estimate relative transformations between overlapping or loop-related submaps, and enforce global consistency through graph optimization. VGGT-SLAM follows this route by estimating inter-submap homographies from shared dense 3D points and optimizing them in a graph, rather than reformulating the full problem as a global pixel-level BA~\cite{maggio2025vggtslam}.
+% 这种设计选择同时也受到效率和模型结构的驱动。
+% 由于前馈式重建流程本身就常常受到 GPU 显存限制，
+% 长序列通常需要被拆分为多个局部子图进行处理。
+% 如果在这些网络输出之上再执行全局 BA，
+% 就需要同时维护所有相机位姿、大量三维点以及海量重投影残差，
+% 其计算与存储代价会迅速增大。
+% 与此同时，这类系统往往也不具备传统 BA 所依赖的那种干净观测模型，
+% 例如可靠的长期稀疏特征轨迹和定义清晰的路标点身份。
+% 因此，从工程实现角度看，更常见的做法是：
+% 将局部几何恢复交给网络完成，再在重叠子图或回环子图之间估计相对变换，
+% 最终通过图优化来恢复全局一致性。
+% VGGT-SLAM 便采用了这一思路：
+% 它利用共享帧上的稠密三维点估计子图之间的单应变换，
+% 并将其放入图中优化，而不是把整个问题重新写成全局像素级 BA~\cite{maggio2025vggtslam}。
+
+\subsection{Depth-ray Representation}
+\label{sec:depth_ray_representation}
+Recent learning-based reconstruction methods have also introduced new geometric parameterizations. In particular, DA3 proposes the depth--ray representation as a compact way to jointly encode scene geometry and camera motion without directly regressing constrained rotation matrices~\cite{lin2025da3}. For each pixel $p=(u,v,1)^\top$, the model predicts a depth value $D(u,v)$ together with a corresponding ray
+\begin{center}
+    $\displaystyle r=(t,d), \quad d=RK^{-1}p, $
+\end{center}
+where $t \in \mathbb{R}^3$ denotes the camera center and $d \in \mathbb{R}^3$ is the unnormalized ray direction in world coordinates.
+% 近期的学习式重建方法也引入了新的几何参数化方式。
+% 其中，DA3 提出了 depth--ray 表示，用一种紧凑方式联合编码场景几何和相机运动，而不必直接回归带约束的旋转矩阵。
+% 对于每个像素 $p=(u,v,1)^\top$，模型会同时预测一个深度值 $D(u,v)$ 和一条对应的射线。
+% 其中，$t \in \mathbb{R}^3$ 表示相机中心，$d \in \mathbb{R}^3$ 表示世界坐标系中的未归一化射线方向。
+
+The predicted ray map is denoted as
+\begin{center}
+    $\displaystyle M \in \mathbb{R}^{H \times W \times 6}, $
+\end{center}
+where the first three channels $M(:,:,:3)$ store per-pixel ray origins and the last three channels $M(:,:,3:)$ store the corresponding ray directions. Given the depth and ray predictions, a 3D point can be recovered by
+\begin{center}
+    $\displaystyle P(u,v) = t + D(u,v) \cdot d. $
+\end{center}
+% 预测得到的射线图记为 $M \in \mathbb{R}^{H \times W \times 6}$。
+% 其中，前三个通道 $M(:,:,:3)$ 存储每个像素的射线原点，后三个通道 $M(:,:,3:)$ 存储对应的射线方向。
+% 给定深度和射线预测后，就可以利用公式恢复对应的三维点。
+
+Beyond 3D point reconstruction, the depth--ray representation also enables direct recovery of camera parameters. The camera center $t_c$ is estimated by averaging the per-pixel ray origins:
+\begin{center}
+    $\displaystyle t_c = \frac{1}{HW} \sum_{h=1}^{H} \sum_{w=1}^{W} M(h,w,:3). $
+\end{center}
+% 除了三维点重建之外，depth--ray 表示还支持直接恢复相机参数。
+% 相机中心 $t_c$ 可以通过对所有像素的射线原点取平均来估计。
+
+To recover the camera rotation $R$ and intrinsic matrix $K$, DA3 formulates the problem as estimating a homography. An identity canonical camera is first defined with intrinsics $K_I=I$. For a pixel $p$, the corresponding ray direction in this canonical camera is
+\begin{center}
+    $\displaystyle d_I = K_I^{-1} p = p. $
+\end{center}
+The transformation from the canonical ray $d_I$ to the ray direction $d_{\text{cam}}$ in the target camera coordinate system can be written as
+\begin{center}
+    $\displaystyle d_{\text{cam}} = KR d_I, $
+\end{center}
+which establishes a homography relationship
+\begin{center}
+    $\displaystyle H = KR. $
+\end{center}
+% 为了恢复相机旋转矩阵 $R$ 和内参矩阵 $K$，DA3 将该问题写成一个单应矩阵估计问题。
+% 首先定义一个内参为单位矩阵的规范相机。
+% 对于像素 $p$，该规范相机中的对应射线方向为 $d_I = K_I^{-1}p = p$。
+% 从规范射线 $d_I$ 到目标相机坐标系中射线方向 $d_{\text{cam}}$ 的变换可以写为给定公式。
+% 这就建立了一个单应关系 $H = KR$。
+
+The homography $H$ is then estimated by minimizing the geometric error between transformed canonical rays and the predicted ray directions:
+\begin{center}
+    $\displaystyle H^* = \arg \min_{\|H\|=1} \sum_{h=1}^{H} \sum_{w=1}^{W} \| H p_{h,w} \times M(h,w,3:) \|. $
+\end{center}
+This optimization corresponds to a standard least-squares problem and can be efficiently solved using the Direct Linear Transform (DLT) algorithm. Once the optimal homography $H^*$ is obtained, the camera intrinsics $K$ and rotation $R$ are uniquely recovered via RQ decomposition, exploiting the upper-triangular structure of $K$ and the orthonormality of $R$.
+% 随后，通过最小化变换后的规范射线与预测射线方向之间的几何误差来估计单应矩阵 $H$。
+% 这一优化问题属于标准最小二乘问题，因此可以用直接线性变换算法高效求解。
+% 在得到最优单应矩阵 $H^*$ 后，可利用 $K$ 的上三角结构和 $R$ 的正交性，通过 RQ 分解唯一恢复相机内参和旋转矩阵。
+
+By jointly modeling depth and rays, this representation avoids explicit pose constraints while ensuring geometric consistency across views, and provides a compact yet expressive abstraction for feed-forward 3D reconstruction.
+% 通过联合建模深度和射线，这种表示避免了显式位姿约束，同时仍能保持跨视图的几何一致性。
+% 因而，它为前馈式三维重建提供了一种紧凑且表达能力强的几何抽象。
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{SLAM}
+\label{sec:slam_theory}
+\label{sec:slam_and_optimization}
+Building upon the geometric representations and optimization tools introduced above, Visual Simultaneous Localization and Mapping (SLAM) combines these components into a complete online system that estimates the camera trajectory while incrementally constructing a map of the environment from image streams. A comprehensive survey of the field can be found in~\cite{cadena2016slam}. Classical visual SLAM systems are often keyframe-based and feature-driven, e.g., PTAM~\cite{klein2007ptam} and ORB-SLAM/ORB-SLAM2~\cite{murartal2015orbslam,murartal2017orbslam2}. In contrast, direct methods such as LSD-SLAM~\cite{engel2014lsdslam} and DSO~\cite{engel2018dso} avoid explicit feature matching and minimize photometric error over selected pixels. These two families share a common structure: a front-end responsible for data association and pose tracking, and a back-end that enforces global consistency via optimization.
+% 在前文介绍的几何表示和优化工具基础上，视觉同时定位与建图将这些组成部分整合成一个完整的在线系统。
+% 它能够在图像流输入下估计相机轨迹，并逐步构建环境地图。
+% 关于该领域的系统性综述可参考相关文献。
+% 经典视觉 SLAM 系统通常是基于关键帧、并依赖特征的，例如 PTAM 和 ORB-SLAM/ORB-SLAM2。
+% 相比之下，LSD-SLAM 和 DSO 等直接法避免了显式特征匹配，而是在选定像素上最小化光度误差。
+% 这两类方法都共享一个共同结构：前端负责数据关联和位姿跟踪，后端通过优化保证全局一致性。
+
+\subsubsection*{Standard Visual SLAM Pipeline}
 Despite differences in sensors and implementations, most classical visual SLAM systems follow a modular pipeline that separates tracking, mapping, and optimization~\cite{cadena2016slam,murartal2015orbslam,murartal2017orbslam2}, as illustrated in Fig.~\ref{fig:slam_pipeline}.
-% 这一段开始从系统层面介绍经典视觉 SLAM，说明大多数方法都会遵循相似的模块化处理流程。
+% 尽管传感器和具体实现方式不同，大多数经典视觉 SLAM 系统都遵循一种模块化流程，将跟踪、建图和优化分开处理，如图~\ref{fig:slam_pipeline} 所示。
 
 \begin{enumerate}
+    % 初始化阶段通过短序列图像估计初始相机位姿和地图点，单目情况常依赖极几何，双目或 RGB-D 情况则可直接利用深度信息。
     \item \textbf{Initialization:} the system is bootstrapped by estimating an initial set of camera poses and map points from a short image sequence, typically using monocular epipolar geometry or direct depth measurements in stereo/RGB-D settings.
 
+    % 跟踪阶段会从每帧中提取视觉特征并与局部地图匹配，然后通过 PnP 或极几何问题估计当前位姿，通常还结合 RANSAC 去除错误对应。
     \item \textbf{Tracking (front-end):} for each incoming frame, visual features (e.g., ORB keypoints) are extracted and matched against the local map. The current camera pose is estimated by solving a Perspective-$n$-Point (PnP) or epipolar geometry problem, with robust outlier rejection commonly performed using RANSAC to handle incorrect correspondences.
 
+    % 局部建图阶段会插入关键帧、三角化新路标，并剔除冗余点和关键帧，同时通过局部 BA 保持最近区域的一致性。
     \item \textbf{Local mapping:} selected keyframes are inserted into the map, new 3D landmarks are triangulated, and redundant points or keyframes are culled. To maintain local consistency, a local bundle adjustment (BA) is applied to jointly refine recent camera poses and map points.
 
+    % 回环闭合与全局优化阶段通过地点识别发现已访问区域，并在确认回环后利用位姿图优化或全局 BA 修正累计漂移。
     \item \textbf{Loop closure and global optimization:} revisited places are detected using visual place recognition. Once a loop is confirmed, global consistency is enforced by pose graph optimization or global bundle adjustment, correcting accumulated drift in camera poses and the map.
 \end{enumerate}
 
 This clear separation between a fast front-end for real-time pose tracking and a back-end for global optimization has been a defining characteristic of classical visual SLAM systems.
-% 这一段对前面的流程做总结，强调经典 SLAM 的核心思想是把快速前端跟踪与较慢但更全局的后端优化明确分离开来。
+% 这种将快速前端实时跟踪与较慢后端全局优化明确分开的结构，是经典视觉 SLAM 系统的一个典型特征。
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/slam_and_optimization_orbslam.png}
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/Geometric_and_Optimization_Foundations/slam_pipeline.png}
     \caption{Standard visual SLAM pipeline}
     \label{fig:slam_pipeline}
 \end{figure}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Point Cloud Registration}
-\subsection{Robust Estimation with RANSAC}
-In practical scenes, data association inevitably contains outliers due to repetitive textures, motion blur, and dynamic objects. RANSAC (Random Sample Consensus) addresses this by repeatedly sampling minimal sets to hypothesize a model, scoring it by the number of inliers, and finally re-estimating the model using the best consensus set~\cite{fischler1981ransac}. In visual SLAM, RANSAC is widely used for essential matrix estimation (e.g., the five-point method) and for PnP pose estimation~\cite{nister2004fivepointmethod,matas2005ransac}. A typical iteration evaluates the geometric residual
-\begin{center}
-    $ \| \mathbf{x}' - \pi(\mathbf{T}\,\mathbf{X}) \| < \tau, $
-\end{center}
-where $\pi(\cdot)$ denotes the projection model, $\mathbf{T}\in SE(3)$ is the pose, and $\tau$ is an inlier threshold. Given an inlier ratio $w$ and a minimal sample size $s$, the required number of iterations for confidence $p$ is $N=\log(1-p)/\log(1-w^s)$~\cite{fischler1981ransac}. This procedure provides a robust front-end estimate that can be further refined by non-linear optimization.
-% 这一段专门讨论前端中的稳健估计问题，说明 RANSAC 如何在匹配存在大量外点时仍然提供可靠的模型初值。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Bundle Adjustment}
-Bundle adjustment (BA) is the core optimization that jointly refines camera poses and 3D landmark positions by minimizing reprojection error~\cite{triggs2000bundle}. Given camera poses $\{\mathbf{T}_i\}$ and landmarks $\{\mathbf{X}_j\}$, the classical objective is
-\begin{center}
-    $ \min_{\{\mathbf{T}_i,\mathbf{X}_j\}} \sum_{i,j} \rho\left(\left\| \mathbf{x}_{ij} - \pi(\mathbf{T}_i\,\mathbf{X}_j) \right\|^2\right), $
-\end{center}
-where $\mathbf{x}_{ij}$ is the observed feature and $\rho(\cdot)$ is a robust loss. BA is typically solved with Levenberg--Marquardt using sparse linear algebra and Schur complement to eliminate point variables efficiently~\cite{triggs2000bundle,agarwal2010bundle}. In SLAM, local BA is executed on a sliding window of recent keyframes for real-time performance, while pose-graph optimization (e.g., with g2o) is used to enforce global consistency after loop closure~\cite{kummerle2011g2o}.
-% 这一段把注意力转到 SLAM 后端，说明 BA 为什么被视为核心优化步骤，以及它如何通过联合优化提升轨迹和地图的一致性。
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Pose and Map Transformations}
-Rigid-body poses in SLAM are commonly represented on the Lie group $SE(3)$, where a transformation is
-\begin{center}
-    $ \mathbf{T} =
-    \begin{bmatrix}
-    \mathbf{R} & \mathbf{t} \\
-    \mathbf{0}^\top & 1
-    \end{bmatrix}, \quad \mathbf{R}\in SO(3),\ \mathbf{t}\in\mathbb{R}^3. $
-\end{center}
-Small updates are applied in the Lie algebra via the exponential map,
-$
-\mathbf{T} \leftarrow \exp(\hat{\boldsymbol{\xi}})\,\mathbf{T},
-$
-where $\boldsymbol{\xi}\in\mathbb{R}^6$ is a twist vector~\cite{barfoot2017state,sola2018lie}. This representation enables stable optimization in BA and pose-graph problems.
-% 这一段介绍位姿优化中常用的李群李代数表示，说明为什么优化时通常不直接在线性空间里更新位姿矩阵。
-
-For monocular SLAM, scale is unobservable and drift accumulates over time. Loop closure often requires a similarity transformation $Sim(3)$ that includes scale:
-\begin{center}
-    $ \mathbf{S} =
-    \begin{bmatrix}
-    s\mathbf{R} & \mathbf{t} \\
-    \mathbf{0}^\top & 1
-    \end{bmatrix}, \quad s>0. $
-\end{center}
-Closed-form alignment between two point sets under $Sim(3)$ can be obtained by Umeyama's method~\cite{umeyama1991least}, and such transformations are routinely used for loop closure correction in monocular systems like ORB-SLAM~\cite{murartal2015orbslam}. Together, $SE(3)$ and $Sim(3)$ provide the mathematical foundation for pose estimation, map alignment, and drift correction in visual SLAM~\cite{hartley2004multiple}.
-% 这一段进一步说明单目系统由于缺少绝对尺度信息，因此往往需要 Sim(3) 变换来完成回环校正和全局对齐。
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Learning-Based Dense 3D Reconstruction}
+\label{sec:dense_3d_theory}
+This section introduces the learning-based dense reconstruction methods that are most relevant to this thesis. It first summarizes the transformer-based backbone and dense prediction modules used in modern geometry networks, and then reviews the transition from early learned components to recent feed-forward multi-view reconstruction models, culminating in the DA3 model adopted in this work.
+% 本节介绍与本文最相关的学习式稠密重建方法。
+% 首先概述现代几何网络中使用的基于 Transformer 的主干网络和稠密预测模块，然后回顾从早期学习组件到近期前馈式多视图重建模型的发展过程，最后落到本文采用的 DA3 模型。
+
+\subsection{Vision Transformer (ViT)}
+Vision Transformer (ViT) transfers the standard Transformer architecture from natural language processing to visual recognition by representing an image as a sequence of fixed-size patches rather than as a grid processed by convolutions.\cite{dosovitskiy2021vit} Given an input image of size $H \times W \times C$, the image is split into $N=\frac{HW}{P^2}$ non-overlapping patches of size $P \times P$. Each patch is flattened and linearly projected into a $D$-dimensional embedding. A learnable class token is prepended to the patch sequence, and positional embeddings are added to preserve spatial order before the tokens are passed through stacked Transformer encoder blocks.
+% Vision Transformer 将自然语言处理中使用的标准 Transformer 架构迁移到了视觉识别任务中，它不再将图像看作卷积处理的网格，而是表示为固定大小 patch 的序列。
+% 对于大小为 $H \times W \times C$ 的输入图像，图像会被划分为 $N=\frac{HW}{P^2}$ 个互不重叠的 $P \times P$ patch。
+% 每个 patch 会被展平并线性投影为一个 $D$ 维嵌入向量。
+% 在这些 patch token 前还会加上一个可学习的类别 token，并加入位置编码以保留空间顺序，然后再送入堆叠的 Transformer 编码器块中。
+
+Each Transformer block consists of multi-head self-attention and a feed-forward multilayer perceptron, together with residual connections and layer normalization.\cite{dosovitskiy2021vit} In contrast to convolutional neural networks, ViT does not impose strong image-specific inductive biases such as locality or translation equivariance. Instead, it learns spatial relationships through global self-attention, allowing each patch token to directly interact with all others. This makes ViT especially suitable for capturing long-range dependencies and globally consistent structures across the image, although it also makes the model more dependent on large-scale pretraining data.
+% 每个 Transformer 块由多头自注意力、前馈多层感知机、残差连接和层归一化组成。
+% 与卷积神经网络不同，ViT 不显式加入局部性或平移等变性等强图像归纳偏置。
+% 相反，它通过全局自注意力来学习空间关系，使每个 patch token 都能直接与其他所有 token 交互。
+% 这使得 ViT 尤其适合建模图像中的长距离依赖和全局一致结构，但也使模型更加依赖大规模预训练数据。
+
+For the present work, ViT is relevant because it serves as the architectural basis of several recent feed-forward geometry models. Its token-based formulation is naturally compatible with cross-view reasoning, and the globally contextualized features it produces are well suited for dense reconstruction tasks, where geometric correspondences and scene structure often extend over large image regions rather than remaining confined to local neighborhoods.
+% 对本文而言，ViT 的意义在于它构成了多个近期前馈式几何模型的架构基础。
+% 它基于 token 的表示方式天然适合跨视图推理。
+% 同时，它产生的全局上下文化特征也很适用于稠密重建任务，因为几何对应关系和场景结构往往跨越较大图像区域，而不只局限在局部邻域内。
+
+\subsection{Self-Distillation with No Labels (DINO)}
+DINO is a self-supervised representation learning framework that learns visual features without manual annotations by distilling the outputs of a teacher network into a student network of the same architecture.\cite{caron2021dino} In its standard form, both teacher and student are Vision Transformers. For each input image, multiple augmented views are generated. The student processes all views, while the teacher usually receives only the global crops. Training minimizes a cross-entropy loss between the output distributions of the teacher and the student, with gradients stopped on the teacher branch.
+% DINO 是一种自监督表示学习框架，它通过将教师网络的输出蒸馏到相同架构的学生网络中来学习视觉特征，而不需要人工标注。
+% 在标准设置下，教师网络和学生网络都采用 Vision Transformer。
+% 对于每张输入图像，系统会生成多个增强视图。
+% 学生网络处理所有视图，而教师网络通常只接收全局裁剪图像。
+% 训练时通过最小化教师与学生输出分布之间的交叉熵损失来完成，并且教师分支不反向传播梯度。
+
+The teacher network is not fixed beforehand. Instead, its parameters are updated as an exponential moving average of the student, which stabilizes training.\cite{caron2021dino} To avoid representational collapse, DINO applies centering and sharpening to the teacher outputs. It also benefits strongly from multi-crop augmentation, where local and global image crops provide complementary supervision. This design avoids the need for labeled data, negative sample mining, or large memory banks while still producing robust and transferable features.
+% 教师网络并不是预先固定的。
+% 相反，它的参数通过学生网络参数的指数滑动平均来更新，从而稳定训练过程。
+% 为了避免表示塌缩，DINO 对教师输出使用了 centering 和 sharpening。
+% 它还很大程度受益于 multi-crop 增强，其中局部裁剪和全局裁剪提供互补监督。
+% 这种设计不需要标注数据、负样本挖掘或大型记忆库，同时仍能得到鲁棒且可迁移的特征。
+
+An important observation reported in DINO is that self-supervised ViT features can encode meaningful object-level structure and often reveal salient regions and boundaries in the scene.\cite{caron2021dino} Such properties are valuable for geometric vision because dense reconstruction does not only require semantic robustness, but also spatially coherent and structurally informative features. In the context of DA3, DINO is particularly relevant because the model relies on a DINO-pretrained transformer backbone to provide general-purpose visual representations before the geometry-specific prediction heads are applied.
+% DINO 中一个重要观察是，自监督训练得到的 ViT 特征能够编码有意义的物体级结构，并且常常能够显现出场景中的显著区域和边界。
+% 这些性质对几何视觉任务非常重要，因为稠密重建不仅需要语义上的鲁棒性，还需要空间一致且结构信息丰富的特征。
+% 在 DA3 的语境中，DINO 尤其相关，因为该模型使用经过 DINO 预训练的 Transformer 主干，在几何预测头工作之前先提供通用视觉表示。
+
+\subsection{Dense Prediction Transformer (DPT)}
+While ViT was originally proposed for image-level tasks such as classification, dense prediction tasks require high-resolution outputs for every pixel. Dense Prediction Transformer (DPT) addresses this gap by adapting transformer features to dense prediction problems such as monocular depth estimation and semantic segmentation.\cite{ranftl2021dpt} Instead of relying on a convolutional backbone that progressively downsamples the image, DPT uses a ViT encoder that maintains a relatively high and constant feature resolution throughout the encoding process while providing a global receptive field at every stage.
+% 虽然 ViT 最初是为分类这类图像级任务提出的，但稠密预测任务要求对每个像素输出高分辨率结果。
+% Dense Prediction Transformer 通过将 Transformer 特征适配到单目深度估计、语义分割等稠密预测问题中来弥补这一差距。
+% 与依赖逐步下采样图像的卷积主干不同，DPT 使用 ViT 编码器，在整个编码过程中保持相对较高且稳定的特征分辨率，同时在每个阶段都具有全局感受野。
+
+A key idea in DPT is the reassembly of transformer tokens into image-like feature maps at multiple resolutions.\cite{ranftl2021dpt} Features extracted from several transformer layers are reshaped and projected back into spatial representations, after which fusion modules progressively combine them in a convolutional decoder. In this way, DPT integrates the global contextual reasoning of the transformer encoder with the local refinement capability of dense decoders, yielding predictions that are both globally coherent and locally detailed.
+% DPT 的一个核心思想是将 Transformer token 重新组装为多尺度的类图像特征图。
+% 从多个 Transformer 层提取的特征会被重新整形并投影回空间表示，然后通过卷积解码器中的融合模块逐步结合。
+% 这样一来，DPT 将 Transformer 编码器的全局上下文推理能力与稠密解码器的局部细化能力结合起来，从而得到同时具备全局一致性和局部细节的预测结果。
+
+For this thesis, DPT is important because it provides the architectural template that connects transformer backbones to dense geometric outputs. Modern feed-forward reconstruction models, including the ones discussed later in this chapter, use DPT-style heads to decode shared visual features into depth-related quantities. Therefore, understanding DPT helps explain how high-level transformer representations are converted into the dense depth, point, or ray predictions required for 3D reconstruction.
+% 对本文而言，DPT 的重要性在于它提供了将 Transformer 主干与稠密几何输出连接起来的架构模板。
+% 包括本章后文讨论的模型在内，现代前馈式重建方法通常都使用类似 DPT 的头部结构，将共享视觉特征解码为与深度相关的量。
+% 因此，理解 DPT 有助于说明高层 Transformer 表征是如何被转化为三维重建所需的稠密深度、点图或射线预测的。
+
+\subsection{Feed-Forward Transformer-Based 3D Reconstruction}
+Early learning methods injected robustness at the component
+level: learned detectors [20], descriptors for matching [22], and differentiable optimization layers that expose
+pose/depth updates to gradient flow [31, 33, 62]. 
+On the dense side, cost-volume networks [106, 114] for MVS replaced hand-crafted regularization with 3D CNNs, improving depth accuracy especially at large baselines and thin structures compared with classical PatchMatch.\cite{lin2025da3}
+% 早期学习方法主要在模块层面增强传统流程，例如学习式检测器、匹配描述子以及可微优化层。
+% 在稠密重建方面，用于 MVS 的代价体网络以 3D CNN 替代了手工设计的正则化方式，与经典 PatchMatch 相比，尤其在大基线和细薄结构上提升了深度精度。
+
+They did reduce engineering complexity and demonstrated the feasibility of learned joint depth pose estimation, but they often struggled with scalability, generalization, and handling arbitrary input cardinalities.\cite{lin2025da3}
+% 这些方法确实降低了工程复杂度，也证明了联合学习深度与位姿估计的可行性。
+% 但它们通常仍在可扩展性、泛化能力以及处理任意输入数量方面存在困难。
+
+\label{sec:feed_forward_reconstruction}
+Traditional geometry-based methods remain strong on well-textured scenes, but their modularity and brittle correspondences complicate robustness under low texture, specularities, or large viewpoint changes.
+% 传统几何方法在纹理丰富的场景中仍然表现很强。
+% 但其模块化结构和脆弱的对应关系，使其在低纹理、镜面反光或大视角变化条件下难以保持鲁棒性。
+
+The emergence of feed-forward 3D reconstruction methods is closely tied to the introduction of attention mechanisms. Unlike convolutional operations that rely on local receptive fields, attention enables explicit modeling of long-range dependencies by computing pairwise interactions between elements in a sequence.
+In the context of multi-view geometry, this property is particularly appealing, as 3D reconstruction inherently requires reasoning over global spatial relationships and correspondences across views. By allowing features from different images to directly attend to each other, attention mechanisms provide a natural alternative to explicit feature matching and geometric verification used in traditional pipelines.
+% 前馈式三维重建方法的出现与注意力机制的引入密切相关。
+% 与依赖局部感受野的卷积操作不同，注意力机制通过计算序列中元素之间的两两交互来显式建模长程依赖。
+% 在多视图几何中，这一点尤其有吸引力，因为三维重建天然需要对跨视图的全局空间关系和对应关系进行推理。
+% 通过让不同图像中的特征彼此直接关注，注意力机制为传统流程中的显式特征匹配和几何验证提供了自然替代方案。
+
+Leveraging attention-based architectures, recent approaches formulate 3D reconstruction as a feed-forward prediction problem, where geometric quantities such as depth, camera motion, or point maps are directly inferred from image features. This paradigm eliminates the need for iterative optimization and decoupled processing stages, enabling end-to-end learning of visual geometry from data.
+% 利用基于注意力的架构，近期方法将三维重建建模为一个前馈预测问题。
+% 在这种范式下，深度、相机运动或点图等几何量可直接从图像特征中推断出来。
+% 这种方法省去了迭代优化和解耦处理阶段，从而实现了基于数据的端到端视觉几何学习。
+
+\subsubsection*{DUSt3R: A Pioneering Feed-forward Transformer-based Method}
+A turning point came with DUSt3R,a radically novel paradigm for Dense and Unconstrained Stereo 3D Reconstruction of arbitrary image\cite{2024dust3r}, which leveraged transformers to directly predict point map between two views and compute both depth and relative pose in a purely feed-forward manner. This work laid the foundation for subsequent transformer-based methods aiming to unify multi-view geometry estimation at scale.\cite{lin2025da3}
+% 一个重要转折点出现在 DUSt3R，它提出了一种针对任意图像对的稠密、无约束立体三维重建新范式。
+% 该方法利用 Transformer 直接预测两个视图之间的点图，并以纯前馈方式同时计算深度和相对位姿。
+% 这项工作为后续旨在大规模统一多视图几何估计的 Transformer 方法奠定了基础。
+
+As illustrated in Fig.~\ref{fig:dust3r_framework}, given two input images $I_1$ and $I_2$, both images are first processed by a shared image feature extractor to obtain dense visual representations. The feature extractor can be implemented using either convolutional neural networks or transformer-based architectures; in DUSt3R, a Vision Transformer (ViT) is adopted as the encoder, whose architectural principles have been introduced above.
+The extracted feature tokens from the two views are then passed to two transformer decoders, which iteratively exchange information through cross-attention. This mechanism allows features from one view to attend to and reason about features from the other view, enabling implicit correspondence discovery without explicit feature matching.
+% 如图~\ref{fig:dust3r_framework} 所示，给定两张输入图像 $I_1$ 和 $I_2$，它们首先通过共享的图像特征提取器得到稠密视觉表示。
+% 该特征提取器可以由卷积网络或 Transformer 架构实现，而在 DUSt3R 中采用的是 ViT 编码器，其原理已在前文介绍。
+% 然后，这两个视图的特征 token 会送入两个 Transformer 解码器，并通过跨注意力反复交换信息。
+% 这种机制使一个视图的特征能够关注并推理另一个视图的特征，从而在不进行显式特征匹配的情况下隐式发现对应关系。
+
+Based on the fused multi-view features, two regression heads predict dense point maps for each input image, along with associated confidence maps. Importantly, both point maps are expressed in a common coordinate frame defined by the first camera view $I_1$, thereby establishing a shared geometric reference across the two images. From the predicted point maps, camera intrinsics such as focal lengths can be estimated using the Weiszfeld algorithm \cite{weiszfeld1937point}, and relative camera poses can be recovered using minimal solvers such as 3-point RANSAC \cite{nister2004fivepointmethod,matas2005ransac}.
+% 基于融合后的多视图特征，两个回归头会为每张输入图像预测稠密点图和对应的置信图。
+% 重要的是，这两个点图都表示在由第一相机视图 $I_1$ 定义的同一坐标系中，从而为两张图像建立共享几何参考。
+% 基于这些预测点图，可以利用 Weiszfeld 算法估计焦距等相机内参，并通过 3 点 RANSAC 等最小求解器恢复相对相机位姿。
+
+By directly regressing dense geometry in a feed-forward manner, DUSt3R eliminates the need for explicit feature matching, geometric verification, and iterative optimization, demonstrating the feasibility of learning-based geometric reasoning from image pairs. \cite{maggio2025vggtslam}
+% 由于 DUSt3R 以前馈方式直接回归稠密几何，它不再需要显式特征匹配、几何验证和迭代优化。
+% 这证明了可以从图像对中通过学习实现几何推理。
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/Feed-Forward_Transformer-Based_3D_Reconstruction/dust3r_framework.png}
+    \caption{DUSt3R framework overview}
+    \label{fig:dust3r_framework}
+\end{figure}
+
+
+\subsubsection*{Follow-up Works}
+MASt3R follows a similar design but also outputs descriptors that can be used to generate pairwise correspondences between the two frames. MASt3R-SFM [14] demonstrates global optimization of multiple images using MASt3R but computation scales quickly with the number of frames. \cite{maggio2025vggtslam}
+% MASt3R 延续了相似设计，但额外输出了可用于生成两帧间对应关系的描述子。
+% MASt3R-SFM 进一步展示了基于 MASt3R 对多张图像进行全局优化的可行性，但其计算量会随着帧数快速增长。
+
+To extend the idea of DUSt3R to multiple frames, Spann3R [67] leverages a learned memory module and Cut3R [69] uses a recurrent state model. Both can incrementally reconstruct a scene using multiple images, but are each limited to short sequences. Recently, Pow3R [27] extends the DUSt3R framework to optionally take in any estimates of any combination of camera intrinsics, poses, and depth (which may be sparse or dense) and demonstrates substantial improvement in scene reconstruction and pose estimation given the added inputs. Splatt3R [60] extends the DUSt3R idea to Gaussian Splatting [29] by directly outputting the Gaussian Splatting parameters given two views, and PreF3R [8] extends this to multiple views using a similar memory framework as Spann3R. Reloc3r [13] modifies the DUSt3R framework for directly outputs relative camera poses and uses motion averaging to recover absolute poses with respect to a map database.\cite{maggio2025vggtslam}
+% 为了将 DUSt3R 的思想扩展到多帧场景，Spann3R 引入了学习式记忆模块，Cut3R 采用了循环状态模型。
+% 两者都能够利用多张图像逐步重建场景，但都仅适用于较短序列。
+% 近期，Pow3R 进一步扩展了 DUSt3R 框架，使其可以选择性接收任意组合的相机内参、位姿和深度估计，并在引入这些附加输入后显著提升了场景重建和位姿估计性能。
+% Splatt3R 将 DUSt3R 的思想扩展到 Gaussian Splatting，通过两视图直接输出高斯参数，而 PreF3R 则借助与 Spann3R 类似的记忆框架将其推广到多视图。
+% Reloc3r 修改了 DUSt3R 框架，使其能够直接输出相对相机位姿，并通过运动平均恢复相对于地图数据库的绝对位姿。
+
+\subsubsection*{Visual Geometry Grounded Transformer}
+While DUSt3R and its follow-up works demonstrate that feed-forward models can successfully infer dense geometry from image pairs, their pairwise formulation inherently limits scalability and global reasoning. Extending such methods to multi-view settings typically requires additional post-processing steps, such as pose graph optimization or incremental fusion, which reintroduce elements of traditional pipelines.
+% 尽管 DUSt3R 及其后续工作证明了前馈模型可以从图像对中成功推断稠密几何，但它们基于图像对的建模方式天然限制了可扩展性和全局推理能力。
+% 将这类方法扩展到多视图场景通常还需要额外的后处理步骤，例如位姿图优化或增量融合，这又重新引入了传统流程中的一些组成部分。
+
+These limitations motivate the need for a unified framework that can jointly reason over an arbitrary number of views and directly model global geometric relationships in a feed-forward manner.
+% 因此，需要一种统一框架，能够对任意数量视图进行联合推理，并以纯前馈方式直接建模全局几何关系。
+
+As a culmination of feed-forward reconstruction models inspired by DUSt3R, VGGT (Visual Geometry Grounded Transformer) extends pairwise geometric reasoning to arbitrary-length image sequences within a unified architecture. An overview of the VGGT framework is shown in Figure~\ref{fig:vggt_framework}. Given a set of input images, VGGT first decomposes each image into a sequence of visual tokens using a pretrained image feature extractor. In the original formulation, self-supervised features obtained from DINO are employed to provide semantically rich and geometrically consistent representations. These per-image token sequences are then concatenated, and camera-specific tokens are appended to enable explicit modeling of camera parameters.
+% 作为受 DUSt3R 启发的前馈式重建模型的进一步发展，VGGT 将图像对级别的几何推理扩展到了任意长度图像序列中的统一建模。
+% 图~\ref{fig:vggt_framework} 给出了 VGGT 框架的整体概览。
+% 给定一组输入图像，VGGT 首先利用预训练图像特征提取器将每张图像分解为一串视觉 token。
+% 在原始设计中，采用了来自 DINO 的自监督特征，以提供具有丰富语义信息和几何一致性的表示。
+% 随后，这些逐图像 token 序列会被拼接起来，并加入相机专属 token，以便显式建模相机参数。
+
+The core of VGGT consists of multiple transformer layers that alternate between global attention and frame-wise attention. Global attention allows tokens from different views to directly interact, facilitating cross-view information exchange and long-range geometric reasoning. In contrast, frame-wise attention focuses on refining features within each individual image. By alternating between these two attention mechanisms, VGGT jointly captures both intra-view structure and inter-view geometric relationships across the entire image set.
+% VGGT 的核心由多层 Transformer 组成，这些层在全局注意力和逐帧注意力之间交替工作。
+% 全局注意力使来自不同视图的 token 能够直接交互，从而促进跨视图信息交换和长程几何推理。
+% 相比之下，逐帧注意力更关注每张图像内部特征的细化。
+% 通过在这两种注意力机制之间交替，VGGT 可以在整个图像集合上同时建模单视图内部结构和跨视图几何关系。
+
+Based on the aggregated token representations, VGGT employs multiple prediction heads to regress diverse geometric quantities. A dedicated camera head estimates camera intrinsics and extrinsics, while dense prediction transformer (DPT) heads are used to generate dense depth maps, point maps, and feature tracks. Importantly, these outputs are expressed in a common coordinate frame, enabling consistent multi-view reconstruction without explicit correspondence estimation or incremental optimization.
+% 在聚合后的 token 表示基础上，VGGT 通过多个预测头回归不同的几何量。
+% 一个专门的相机头负责估计相机内参和外参，而 DPT 头则用于生成稠密深度图、点图和特征轨迹。
+% 重要的是，这些输出都表达在同一个坐标系下，因此无需显式对应估计或增量式优化，也能实现一致的多视图重建。
+
+By unifying multi-view feature aggregation and geometry prediction within a single feed-forward transformer, VGGT represents a significant step toward holistic and scalable dense 3D reconstruction from unconstrained image collections.
+% 通过将多视图特征聚合与几何预测统一到单个前馈 Transformer 中，VGGT 朝着从无约束图像集合进行整体化、可扩展的稠密三维重建迈出了重要一步。
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/Feed-Forward_Transformer-Based_3D_Reconstruction/vggt_framework.png}
+    \caption{VGGT framework overview}
+    \label{fig:vggt_framework}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{DepthAnything3}
+\label{sec:da3_reconstruction}
+While VGGT represents a significant advancement in unified feed-forward multi-view reconstruction, it still leaves room for improvement in terms of efficiency, scalability, and generalization. 
+% 虽然 VGGT 在统一前馈式多视图重建方面是一个重要进展，但它在效率、可扩展性和泛化能力上仍有进一步改进空间。
+The VGGT framework is characterized by a large and complex architecture, with model sizes reaching up to one billion parameters, which makes it unsuitable for lightweight deployment scenarios. Although VGGT supports arbitrary-length input sequences, this flexibility comes at the cost of substantial memory consumption and computational overhead, especially when processing long image sequences.
+% VGGT 的架构较大且复杂，模型规模最高可达十亿级参数，因此并不适合轻量化部署场景。
+% 虽然 VGGT 支持任意长度输入序列，但这种灵活性也带来了较高的显存占用和计算开销，尤其是在处理长图像序列时更为明显。
+Moreover, despite being trained on large-scale and diverse datasets covering a wide range of common visual scenes, VGGT may still fail when confronted with domains that differ significantly from its training distribution, such as endoscopic imagery. These limitations highlight the need for a more compact and robust reconstruction model that preserves the strengths of VGGT while addressing its practical shortcomings.
+% 此外，尽管 VGGT 已在大规模且多样化的数据集上训练，覆盖了大量常见视觉场景，但当面对与训练分布差异很大的领域时，例如内窥镜图像，它仍可能失效。
+% 这些局限说明，需要一种更紧凑、更鲁棒的重建模型，在保留 VGGT 优势的同时解决其实际应用中的不足。
+To this end, Depth Anything 3 (DA3) is introduced as an improved variant built upon the VGGT paradigm. Building upon this insight, DA3 proposes a unified feed-forward model that reconstructs the visual space from arbitrary visual inputs, including multi-view image collections and video streams. Given any number of input views, with or without known camera poses, DA3 jointly predicts dense depth maps and ray maps that can be directly fused into geometrically consistent 3D point clouds.
+% 为此，Depth Anything 3 被提出，作为建立在 VGGT 思路上的改进版本。
+% 基于这一思路，DA3 提出了一种统一的前馈模型，可从任意视觉输入中重建视觉空间，包括多视图图像集合和视频流。
+% 无论输入视图数量多少、是否已知相机位姿，DA3 都能联合预测稠密深度图和射线图，并将其直接融合成几何一致的三维点云。
+\begin{figure}
+    \centering
+    \includegraphics[width=1\textwidth]{4_images/2_TheoreticalBackground/Feed-Forward_Transformer-Based_3D_Reconstruction/da3_framework.png}
+    \caption{DA3 framework overview}
+    \label{fig:da3_framework}
+\end{figure}
+The depth--ray representation proposed by DA3 provides an important geometric abstraction and has therefore been introduced earlier in Section~\ref{sec:depth_ray_representation}. The focus here is on the overall model design and training strategy.
+% DA3 提出的 depth--ray 表示是一种重要的几何抽象，因此已在前文第~\ref{sec:depth_ray_representation} 节中介绍。
+% 这里重点说明 DA3 的整体模型设计和训练策略。
+
+Compared to VGGT, DA3 significantly simplifies the overall framework by relying on a single DINO-based transformer backbone and enabling cross-view reasoning through token rearrangement rather than explicit multi-branch architectures. This design reduces the model size to a configurable range between 0.11B and 0.35B parameters, making DA3 substantially more suitable for lightweight and resource-constrained deployment while maintaining strong reconstruction performance. As illustrated in Fig.~\ref{fig:da3_framework}, the model takes an arbitrary set of input views and processes them with a shared transformer backbone.
+% 与 VGGT 相比，DA3 通过依赖单一的 DINO Transformer 主干，并利用 token 重排而不是显式多分支架构来实现跨视图推理，从而显著简化了整体框架。
+% 这种设计将模型规模缩减到 0.11B 到 0.35B 的可配置范围内，使 DA3 在保持较强重建性能的同时，更适合轻量化和资源受限的部署场景。
+% 如图~\ref{fig:da3_framework} 所示，该模型可以接收任意数量的输入视图，并通过一个共享的 Transformer 主干进行处理。
+
+Cross-view geometric reasoning is achieved through an input-adaptive self-attention mechanism. Instead of introducing additional transformer stacks or specialized modules, DA3 rearranges token sequences in selected layers, allowing standard self-attention to operate either within individual views or across all views jointly.
+% 跨视图几何推理通过一种输入自适应的自注意力机制实现。
+% DA3 没有引入额外的 Transformer 堆叠或专门模块，而是在选定层中重新排列 token 序列，使标准自注意力既可以在单个视图内工作，也可以在所有视图之间联合工作。
+
+Dense geometric predictions in DA3 are produced by a novel dual Dense Prediction Transformer (Dual-DPT) head, which jointly regresses dense depth maps and ray maps from a shared set of visual features. As illustrated in Fig.~\ref{fig:da3_architecture}, the Dual-DPT head first processes backbone features through a common set of reassembly modules, ensuring that both prediction tasks operate on a unified and compact intermediate representation.
+% DA3 的稠密几何预测由一种新的双重 Dense Prediction Transformer 头完成，它从共享视觉特征中联合回归稠密深度图和射线图。
+% 如图~\ref{fig:da3_architecture} 所示，Dual-DPT 头首先通过一组共享的重组模块处理主干特征，以确保两个预测任务都基于统一且紧凑的中间表示。
+
+After this shared processing stage, the features are routed into two parallel branches, corresponding to depth prediction and ray prediction, respectively. Each branch applies its own set of fusion layers to aggregate contextual information relevant to the target geometric quantity. Finally, separate output layers generate the depth map and ray map predictions. By sharing the majority of the feature processing pipeline and diverging only at the final fusion stage, the Dual-DPT design promotes strong interaction between depth and ray estimation while avoiding redundant intermediate representations.
+% 在共享处理阶段之后，特征会被送入两个并行分支，分别对应深度预测和射线预测。
+% 每个分支都使用自己的融合层来聚合与目标几何量相关的上下文信息。
+% 最终，独立的输出层生成深度图和射线图预测结果。
+% 由于大部分特征处理流程是共享的，仅在最后融合阶段分开，因此 Dual-DPT 既增强了深度和射线估计之间的交互，又避免了冗余的中间表示。
+
+In addition to dense geometric outputs, DA3 optionally predicts camera parameters through a lightweight camera head operating on dedicated camera tokens, incurring minimal computational overhead. This joint prediction framework further reinforces geometric consistency without compromising the overall efficiency of the model.
+% 除了稠密几何输出外，DA3 还可以通过一个作用于专用相机 token 的轻量级相机头来预测相机参数，并且带来的额外计算开销很小。
+% 这种联合预测框架在不损害整体效率的前提下，进一步增强了几何一致性。
+
+\begin{figure}
+    \centering
+    \includegraphics[width=0.7\textwidth]{4_images/2_TheoreticalBackground/Feed-Forward_Transformer-Based_3D_Reconstruction/da3_dpthead.png}
+    \caption{DA3 Dual-DPT Head}
+    \label{fig:da3_architecture}
+\end{figure}
+
+To train a generalist geometry model across diverse data sources, DA3 adopts a teacher--student learning paradigm. A teacher model is first trained on large-scale synthetic data to generate dense and reliable pseudo-depth supervision, which is then combined with sparse or noisy real-world depth measurements. This strategy enables effective knowledge transfer while preserving geometric fidelity across diverse domains.
+% 为了在多样化数据源上训练一个通用几何模型，DA3 采用了教师--学生学习范式。
+% 首先会在大规模合成数据上训练教师模型，以生成稠密且可靠的伪深度监督，然后再将这些监督与稀疏或带噪的真实世界深度测量结合起来。
+% 这种策略可以实现有效的知识迁移，同时在不同领域中保持几何保真度。
+
+Formally, the DA3 model $F_\theta$ maps an input image set $\mathcal{I}$ to a set of geometric predictions, including a depth map $\hat{D}$, a ray map $\hat{R}$, and an optional camera pose $\hat{c}$:
+\begin{center}
+    $\displaystyle F_\theta(\mathcal{I}) \to \{\hat{D}, \hat{R}, \hat{c}\}.$
+\end{center}
+The camera pose prediction is optional and primarily included for practical convenience.
+% 从形式上看，DA3 模型 $F_\theta$ 将输入图像集 $\mathcal{I}$ 映射为一组几何预测结果，包括深度图 $\hat{D}$、射线图 $\hat{R}$ 和可选的相机位姿 $\hat{c}$。
+% 相机位姿预测是可选的，主要是出于实际使用上的便利性。
+
+Prior to loss computation, all ground-truth geometric signals are normalized by a common scale factor to ensure consistent magnitude across different modalities. This scale is defined as the mean $\ell_2$ norm of the valid reprojected 3D point maps $P$, which stabilizes optimization when jointly supervising depth, rays, and reconstructed points.
+% 在计算损失之前，所有几何真值信号都会通过一个统一的尺度因子进行归一化，以保证不同模态之间的量纲一致。
+% 这个尺度被定义为有效重投影三维点图 $P$ 的平均 $\ell_2$ 范数，它有助于在联合监督深度、射线和重建点时稳定优化过程。
+
+The overall training objective is defined as a weighted sum of several loss terms:
+\begin{center}
+    $\displaystyle L = L_D(\hat{D}, D) + L_M(\hat{R}, M) + L_P(\hat{D} \odot d + t, P) + \beta L_C(\hat{c}, c) + \alpha L_{\text{grad}}(\hat{D}, D),$
+\end{center}
+where $L_D$ supervises depth prediction, $L_M$ enforces consistency of ray maps, $L_P$ penalizes geometric errors in reconstructed 3D points, and $L_C$ is an optional camera pose loss.
+% 整体训练目标被定义为多个损失项的加权和。
+% 其中，$L_D$ 用于监督深度预测，$L_M$ 用于约束射线图一致性，$L_P$ 惩罚重建三维点中的几何误差，而 $L_C$ 是一个可选的相机位姿损失。
+
+The depth supervision term is defined as
+\begin{center}
+    $\displaystyle L_D(\hat{D}, D; D_c) = \frac{1}{|\Omega|} \sum_{p \in \Omega} m_p (D_{c,p} |\hat{D}_p - D_p| - \lambda_c \log D_{c,p}), $
+\end{center}
+where $D_{c,p}$ denotes the confidence associated with the ground-truth depth $D_p$, $m_p$ is a validity mask, and $\Omega$ denotes the set of valid pixels. All loss terms are based on the $\ell_1$ norm.
+% 深度监督项可写为给定公式。
+% 其中，$D_{c,p}$ 表示与真值深度 $D_p$ 对应的置信度，$m_p$ 是有效性掩码，$\Omega$ 表示有效像素集合。
+% 所有损失项都基于 $\ell_1$ 范数。
+
+To further regularize the depth predictions, a gradient loss is introduced:
+\begin{center}
+    $\displaystyle L_{\text{grad}}(\hat{D}, D) = \| \nabla_x \hat{D} - \nabla_x D \|_1 + \| \nabla_y \hat{D} - \nabla_y D \|_1, $
+\end{center}
+where $\nabla_x$ and $\nabla_y$ denote horizontal and vertical finite difference operators. This term preserves sharp depth discontinuities while encouraging smoothness in planar regions. In practice, the weighting factors are set to $\alpha=1$ and $\beta=1$.
+% 为了进一步正则化深度预测，DA3 还引入了梯度损失。
+% 其中，$\nabla_x$ 和 $\nabla_y$ 分别表示水平方向和垂直方向的有限差分算子。
+% 这一项有助于保留清晰的深度边界，同时在平面区域鼓励平滑性。
+% 在实际设置中，权重系数取 $\alpha=1$ 和 $\beta=1$。
+
+This training strategy enables DA3 to effectively leverage heterogeneous datasets while maintaining consistent geometric supervision, resulting in a scalable and robust feed-forward reconstruction model.
+% 这种训练策略使 DA3 能够有效利用异构数据集，同时保持一致的几何监督，从而得到一个具有可扩展性和鲁棒性的前馈式重建模型。
+
+
 \section{State of the Art}
 \label{sec:sota}
-The specific application of SLAM in endoscopic scenarios presents significant challenges due to the harsh and dynamic environment. The scene is typically characterized by non-rigid tissue deformation, a lack of distinctive visual features, and complex illumination changes, all of which can cause tracking failures and scale ambiguity in purely monocular visual systems. As a result, recent work has increasingly focused on improving robustness and accuracy through the integration of additional sensing modalities, external priors, and dedicated fusion frameworks.
-% 这一段作为 2.4 的开场，先概括内窥镜 SLAM 面临的典型困难，例如组织形变、纹理缺失和复杂照明，并指出这些问题会直接削弱跟踪与建图稳定性。
+This section reviews the state of the art most relevant to the present work, which combines dense reconstruction of endoscopic scenes with real-time localization and mapping. In endoscopic settings, both tasks are significantly harder than in standard outdoor or rigid indoor scenes because the visual input often contains specular highlights, low-texture tissue surfaces, repeated patterns, rapid viewpoint changes, and local non-rigid deformations. As a result, methods must balance geometric accuracy, robustness, and computational efficiency much more carefully than in conventional vision pipelines.
+% 本节回顾与本文最相关的研究现状，即内窥镜场景下的稠密重建与实时定位建图。
+% 在内窥镜环境中，这两项任务都比标准室外场景或刚性室内场景更困难，因为输入图像常常包含高光、低纹理组织表面、重复纹理、快速视角变化以及局部非刚性形变。
+% 因此，与常规视觉流程相比，这类方法必须更加谨慎地平衡几何精度、鲁棒性和计算效率。
 
-One important research direction is to constrain the estimation problem by incorporating external sensors or kinematic priors, thereby reducing the dependence on degraded visual cues alone. Another line of work investigates fusion frameworks that combine visual measurements with complementary sources such as depth, magnetic localization, or ultrasound. These methods aim to maintain dense reconstruction and reliable localization in real time even when the visual signal becomes unstable because of occlusions, blur, or low-texture regions. The overall structure of representative methods in these directions is summarized in Table~\ref{tab:sota_slam}.
-% 这一段总结当前相关研究的两条主要路线：一类是引入额外传感器或运动先验来约束估计，另一类是通过多模态融合框架增强系统鲁棒性和实时性。
+Accordingly, Table~\ref{tab:sota_slam} is organized into two groups. The first group summarizes dense endoscopic reconstruction methods, including both endoscopy-specific approaches and recent general reconstruction foundation models that are relevant as transferable backbones. The second group focuses on endoscopic SLAM systems that jointly address camera tracking and online map building. Methods that are mainly generic fusion backbones without direct endoscopic validation are omitted here to keep the comparison aligned with the problem setting of this thesis.
+% 因此，表~\ref{tab:sota_slam} 被分成两组进行整理。
+% 第一组总结了内窥镜稠密重建方法，其中既包括专门面向内窥镜的方案，也包括可作为可迁移骨干的一般重建基础模型。
+% 第二组聚焦于同时处理相机跟踪和在线建图的内窥镜 SLAM 系统。
+% 为了使比较更加贴合本文的问题设定，这里省略了那些主要作为通用融合后端、但缺乏直接内窥镜验证的方法。
 
 \begin{footnotesize}
 \begin{longtable}{>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}>{\raggedright\arraybackslash}p{0.22\textwidth}}
-    \caption{Overview of State-of-the-Art Endoscopic SLAM Methods and Fusion Frameworks}
+    \caption{Overview of State-of-the-Art Methods for Endoscopic Dense Reconstruction and Endoscopic SLAM}\label{tab:sota_slam} \\
     \toprule
     \textbf{Source} & \textbf{Goal} & \textbf{Methods} & \textbf{Key Results} \\
     \midrule
@@ -531,24 +863,28 @@ One important research direction is to constrain the estimation problem by incor
     \bottomrule
     \endfoot
 
-    \multicolumn{4}{c}{\textbf{Sensors and Priors}} \\
+    \multicolumn{4}{c}{\textbf{Dense 3D Reconstruction}} \\
     \midrule
-    KV-EndoNeRF (Wei et al., 2024) & Scale-consistent monocular endoscopic reconstruction and localization for robot-assisted surgery & NeRF-based scene representation fused with robot-arm kinematics as a metric pose and scale prior. Sensor: robot kinematics. & Achieves scale-consistent reconstruction and improved stability compared with purely vision-based methods by leveraging kinematic priors. \\
+    Endo3R ~\cite{endo3r2025} & Online and scale-consistent dense reconstruction from monocular endoscopic video & Feed-forward reconstruction foundation model with pointmap, depth, and camera prediction; uses a dual-memory design for long video streams. & Shows strong zero-shot depth and pose estimation with online reconstruction, supporting feed-forward foundation models for surgical videos. \\
     \addlinespace
-    Magnetic-Visual Sensor Fusion SLAM for Capsule Endoscopy (Turan et al., 2017) & Robust localization and dense reconstruction when vision degrades because of low texture or occlusions & Magnetic localization and visual fusion; magnetic constraints are used to reduce drift. Sensor: magnetic sensors. & Demonstrates robust localization and dense reconstruction in ex-vivo environments, with significantly reduced drift compared with vision-only methods. \\
+    EndoDAC ~\cite{endodac2024} & Self-supervised monocular depth estimation for downstream endoscopic reconstruction & Foundation-model adaptation of Depth Anything with DV-LoRA, convolutional neck blocks, and joint pose--intrinsics prediction. & Improves self-supervised endoscopic depth estimation with only about 1.6M trainable parameters and without requiring known camera intrinsics. \\
     \addlinespace
-    Real-Time Dense Reconstruction with Binocular Endoscopy (Huo et al., 2023) & Improve metric depth estimation and mapping robustness in endoscopy & Stereo matching and fusion to provide RGB-D-like input for downstream SLAM components. Sensor: stereo camera. & Shows that stereo-derived depth can support dense reconstruction and provide more stable tracking than monocular setups. \\
+    SfMDiffusion~\cite{sfmdiffusion2025} & Self-supervised monocular depth estimation for downstream endoscopic reconstruction & Diffusion-based depth estimation with teacher--student distillation, pseudo-ground-truth depth diffusion, and discriminative priors. & Achieves strong depth accuracy on SCARED and Hamlyn, e.g. Abs Rel 0.049 and RMSE 4.305 on SCARED, showing the benefit of diffusion priors in surgical scenes. \\
     \addlinespace
-    EndoGSLAM (MICCAI 2024) & Real-time endoscopic tracking and dense tissue reconstruction for intraoperative use & 3D Gaussian Splatting with online pose optimization. & Achieves real-time dense reconstruction with high rendering quality and tracking efficiency, outperforming NeRF-style approaches in speed. \\
+    Endo3DAC~\cite{endo3dac2025} & Self-supervised endoscopic 3D scene reconstruction from arbitrary cameras & Foundation-model adaptation with a frozen ViT backbone, GDV-LoRA modules, and an integrated depth--pose--intrinsics network. & Outperforms earlier self-supervised endoscopic baselines across four datasets while using only surgical videos and about 10.2M trainable parameters. \\
     \addlinespace
-    Vision-based Endoscope Tracking + 3D Ultrasound (Yang et al., 2015) & Robust navigation and pose estimation when endoscopic vision is unreliable & Endoscope video fused with 3D ultrasound, where ultrasound contributes complementary anatomical constraints. Sensor: 3D ultrasound. & Improves tracking robustness in soft-tissue navigation by leveraging anatomical structure from ultrasound. \\
+    DA3~\cite{lin2025da3} & General feed-forward multi-view geometry recovery from arbitrary views & Feed-forward transformer geometry model with a ViT backbone and Dual-DPT depth--ray prediction head. & Delivers strong dense geometry and camera recovery in a single forward pass, making it a strong transferable reconstruction baseline. \\
+    \addlinespace
+    VGGT~\cite{wang2025vggt} & Unified visual geometry prediction across multi-view image sets & Feed-forward transformer foundation model that jointly predicts cameras and dense structure in a projective-consistent visual space. & Demonstrates strong general multi-view geometry reasoning. \\
+    \addlinespace
+    Real-Time Dense Reconstruction with Binocular Endoscopy~\cite{huo2023stereo} & Dense metric reconstruction with stronger geometric scale control in endoscopic scenes & Classical stereo depth plus ORB-SLAM and point-cloud fusion in an RGB-D-style pipeline. & Achieves real-time metric reconstruction and denser point clouds \\
     \midrule
-    \multicolumn{4}{c}{\textbf{Generic Fusion Backbones}} \\
+    \multicolumn{4}{c}{\textbf{SLAM}} \\
     \midrule
-    Kimera / Kimera-VIO (Rosinol et al., 2020) & Real-time and scalable visual-inertial estimation suitable as a backend for multi-modal fusion & Keyframe MAP estimation with either fixed-lag smoothing or full smoothing in a nonlinear factor-graph backend. Framework: metric-semantic VIO. & Provides metric accuracy with bounded computation and allows additional sensors or priors to be inserted as factors in a modular manner. \\
+    OneSLAM~\cite{oneslam2024} & General monocular SLAM for multiple endoscopic domains without retraining & Monocular SLAM built on TAP-based sparse correspondence tracking and local bundle adjustment for joint pose and sparse map refinement. & Achieves better or comparable performance, showing strong cross-domain generalization out of the box. \\
     \addlinespace
-    Basalt / Non-linear Factor Recovery (Usenko et al., 2020) & Abstract local VIO information into reusable factors for globally consistent mapping & Recovers non-linear factors from VIO and optimizes them jointly with loop closures or global constraints. Framework: VIO factor recovery. & Enables efficient fusion of local odometry with global or external constraints by structuring VIO outputs as reusable factors. \\
+    EndoGSLAM~\cite{endogslam2024} & Real-time endoscopic tracking and dense tissue reconstruction for intraoperative use & Monocular dense SLAM with online camera pose optimization and differentiable rendering-based map updates for real-time tracking. & Achieves a strong speed--quality trade-off, with the Gaussian representation enabling dense reconstruction and rendering above 100 fps. \\
     \addlinespace
-    DM-VIO (von Stumberg and Cremers, 2022) & Improve consistency and scale estimation in sliding-window optimization & Delayed marginalization maintains a delay graph so that marginalization priors can be compensated or updated later. Framework: delayed marginalization. & Reduces consistency issues caused by fixed-lag marginalization while preserving real-time performance and improving scale stability. \\
-\end{longtable}
+    Magnetic-Visdeual Sensor Fusion for Capsule Endoscopy~\cite{turan2017magnetic} & Robust localization and dense reconstruction when visual information becomes unreliable & Multi-sensor SLAM that fuses magnetic tracking with endoscopic vision. & Demonstrates that external sensing can substantially reduce drift under low texture and occlusion, at the cost of additional hardware. \\
+    \end{longtable}
 \end{footnotesize}
